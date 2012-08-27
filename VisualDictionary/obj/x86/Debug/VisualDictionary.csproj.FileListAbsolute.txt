@@ -1,0 +1,27 @@
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.exe
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.pdb
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.Properties.Resources.resources
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.exe
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.pdb
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.exe.config
+C:\Users\Luong\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.OverlayForm.resources
+C:\Program Files (x86)\Tesseract-OCR\tessdata\VisualDictionary.exe.config
+C:\Program Files (x86)\Tesseract-OCR\tessdata\VisualDictionary.exe
+C:\Program Files (x86)\Tesseract-OCR\tessdata\VisualDictionary.pdb
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.exe.config
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.exe
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\VisualDictionary.pdb
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.OverlayForm.resources
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.Properties.Resources.resources
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.exe
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.pdb
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.csproj.ResolveComReference.cache
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\bin\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\obj\x86\Debug\VisualDictionary.WordInfoForm.resources

@@ -1,0 +1,2 @@
+Added check to prevent multiple instances of the application from running at the same time
+Increased copy/paste delay to allow for applications with slower response time to properly report clipboard content

@@ -1,0 +1,1 @@
+Fixed bug where if user copies something from the translation window, the next invocation of it will throw a .Net exception because the clipboard is still locked
