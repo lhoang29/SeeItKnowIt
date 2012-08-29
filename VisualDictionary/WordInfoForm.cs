@@ -38,8 +38,6 @@ namespace VisualDictionary
 
             this.LoadPersonalSettings();
             this.GetTranslation(word);
-
-            //Region = new System.Drawing.Region(CreateRoundRectGraphicsPath(0, 0, Width, Height, m_CornerRadius));
         }
 
         private void GetTranslation(string word)
@@ -47,20 +45,6 @@ namespace VisualDictionary
             wbWordInfo.ScriptErrorsSuppressed = true;
             if (!m_Online)
             {
-                lblWord.Text = m_Word;
-                string translationFilePath = @"C:\Users\lhoang\Dropbox\Personal\Projects\VisualDictionary\VisualDictionary\Translations\" +
-                    Enum.GetName(typeof(TranslationLanguage), m_Language) + @"\" + word + ".html";
-                if (File.Exists(translationFilePath))
-                {
-                    using (StreamReader sr = new StreamReader(File.Open(translationFilePath, FileMode.Open)))
-                    {
-                        wbWordInfo.DocumentText = this.TrimScript(sr.ReadToEnd());
-                    }
-                }
-                else
-                {
-                    wbWordInfo.DocumentText = "Word \"" + word + "\" not found in dictionary.";
-                }
             }
             else
             {
@@ -107,11 +91,6 @@ namespace VisualDictionary
 
             cbLanguage.SelectedIndex = (int)m_Language;
         }
-        
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            //e.Graphics.DrawPath(new Pen(Color.DarkGray), CreateRoundRectGraphicsPath(0, 0, Width - 1, Height - 1, m_CornerRadius));
-        }
 
         protected override CreateParams CreateParams
         {
@@ -121,34 +100,6 @@ namespace VisualDictionary
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
-        }
-
-        private GraphicsPath CreateRoundRectGraphicsPath(float X, float Y, float width, float height, float radius)
-        {
-            GraphicsPath gp = new GraphicsPath();
-            gp.AddLine(X + radius, Y, X + width - (radius * 2), Y); // Top
-            gp.AddArc(X + width - (radius * 2), Y, radius * 2, radius * 2, 270, 90); // Top right corner
-            gp.AddLine(X + width, Y + radius, X + width, Y + height - (radius * 2)); // Bottom right
-            gp.AddArc(X + width - (radius * 2), Y + height - (radius * 2), radius * 2, radius * 2, 0, 90); // Bottom right corner
-            gp.AddLine(X + width - (radius * 2), Y + height, X + radius, Y + height); // Bottom
-            gp.AddArc(X, Y + height - (radius * 2), radius * 2, radius * 2, 90, 90); // Bottom left corner
-            gp.AddLine(X, Y + height - (radius * 2), X, Y + radius); // Left
-            gp.AddArc(X, Y, radius * 2, radius * 2, 180, 90); // Top left corner
-            gp.CloseFigure();
-            return gp;
-        }
-
-        private string TrimScript(string htmlDocText)
-        {
-            string bodyText = "";
-            string trimJavascript = "<script type=\"text/javascript\"((.|\r|\n)*?)</script>";
-            Regex regexTrimJs = new Regex(trimJavascript);
-            bodyText = regexTrimJs.Replace(htmlDocText, "");
-
-            string trimEmptyDivTags = @"<div([^<])*>(\s)*</div>";
-            Regex regexTrimEmpties = new Regex(trimEmptyDivTags);
-            bodyText = regexTrimEmpties.Replace(bodyText, "");
-            return bodyText;
         }
 
         private void WordInfoForm_KeyDown(object sender, KeyEventArgs e)

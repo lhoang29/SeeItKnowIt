@@ -119,6 +119,7 @@
             this.Controls.Add(this.wbWordInfo);
             this.Controls.Add(this.pnlTitleBar);
             this.Controls.Add(this.lblWord);
+            this.MinimumSize = new System.Drawing.Size(200, 0);
             this.Name = "WordInfoForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
