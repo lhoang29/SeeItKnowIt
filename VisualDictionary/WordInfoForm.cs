@@ -185,5 +185,18 @@ namespace VisualDictionary
                 btnPin.BackColor = Color.Transparent;
             }
         }
+
+        private void btnPastWords_Click(object sender, EventArgs e)
+        {
+            splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;
+            if (splitContainerMain.Panel2Collapsed)
+            {
+                btnPastWords.BackColor = Color.Transparent;
+            }
+            else
+            {
+                btnPastWords.BackColor = Color.White;
+            }
+        }
     }
 }
