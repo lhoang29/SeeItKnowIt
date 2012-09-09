@@ -188,6 +188,7 @@ namespace VisualDictionary
 
         private void btnPastWords_Click(object sender, EventArgs e)
         {
+            splitContainerMain.SplitterDistance = splitContainerMain.Width - 100;
             splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;
             if (splitContainerMain.Panel2Collapsed)
             {
