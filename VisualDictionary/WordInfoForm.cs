@@ -221,8 +221,8 @@ namespace VisualDictionary
                 flowLayoutPanelPastWords.Controls.Clear();
                 foreach (object key in Properties.Settings.Default.PastWords.Keys)
                 {
-                    string word = key as string;
-                    this.CreatePastWordButton(word);
+                    string pastWord = key as string;
+                    this.CreatePastWordButton(pastWord);
                 }
             }
         }
