@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblWord = new System.Windows.Forms.Label();
             this.wbWordInfo = new System.Windows.Forms.WebBrowser();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
@@ -39,6 +40,10 @@
             this.splitContainerPastWords = new System.Windows.Forms.SplitContainer();
             this.lblPastWords = new System.Windows.Forms.Label();
             this.flowLayoutPanelPastWords = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnPastWordsToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnPinToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnCloseToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.comboBoxLanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -157,6 +162,7 @@
             this.splitContainerMain.Size = new System.Drawing.Size(284, 240);
             this.splitContainerMain.SplitterDistance = 94;
             this.splitContainerMain.TabIndex = 3;
+            this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
             this.splitContainerMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.splitContainerMain_MouseDown);
             this.splitContainerMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.splitContainerMain_MouseUp);
             // 
@@ -192,12 +198,14 @@
             // 
             // flowLayoutPanelPastWords
             // 
+            this.flowLayoutPanelPastWords.AutoScroll = true;
             this.flowLayoutPanelPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
             this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(186, 205);
             this.flowLayoutPanelPastWords.TabIndex = 0;
+            this.flowLayoutPanelPastWords.WrapContents = false;
             // 
             // WordInfoForm
             // 
@@ -218,6 +226,7 @@
             this.Deactivate += new System.EventHandler(this.WordInfoForm_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WordInfoForm_FormClosing);
             this.Shown += new System.EventHandler(this.WordInfoForm_Shown);
+            this.SizeChanged += new System.EventHandler(this.WordInfoForm_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordInfoForm_KeyDown);
             this.pnlTitleBar.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
@@ -247,5 +256,9 @@
         private System.Windows.Forms.Label lblPastWords;
         private System.Windows.Forms.Button btnPastWords;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelPastWords;
+        private System.Windows.Forms.ToolTip btnPastWordsToolTip;
+        private System.Windows.Forms.ToolTip btnPinToolTip;
+        private System.Windows.Forms.ToolTip btnCloseToolTip;
+        private System.Windows.Forms.ToolTip comboBoxLanguageToolTip;
     }
 }

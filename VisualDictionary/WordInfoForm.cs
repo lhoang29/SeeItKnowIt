@@ -32,9 +32,14 @@ namespace VisualDictionary
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
-            m_Word = word;
+
             m_Online = online;
-            m_Pinned = false;
+
+            btnPastWordsToolTip.SetToolTip(btnPastWords, Properties.Resources.ButtonPastWordsToolTip);
+            btnPinToolTip.SetToolTip(btnPin, Properties.Resources.ButtonPinToolTip);
+            btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
+            comboBoxLanguageToolTip.SetToolTip(cbLanguage, Properties.Resources.ComboBoxLanguageToolTip);
+
             cbLanguage.DataSource = Enum.GetValues(typeof(TranslationLanguage));
 
             this.LoadPersonalSettings();
@@ -43,6 +48,7 @@ namespace VisualDictionary
 
         private void GetTranslation(string word)
         {
+            m_Word = word;
             wbWordInfo.ScriptErrorsSuppressed = true;
             if (!m_Online)
             {
@@ -90,7 +96,10 @@ namespace VisualDictionary
             m_Pinned = Properties.Settings.Default.WindowPinned;
             m_Language = (TranslationLanguage)Properties.Settings.Default.Language;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
-            splitContainerMain.SplitterDistance = splitContainerMain.Width - Properties.Settings.Default.PastWordsPanelExpandedWidth;
+            if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)
+            {
+                splitContainerMain.SplitterDistance = splitContainerMain.Width - Properties.Settings.Default.PastWordsPanelExpandedWidth;
+            }
             
             this.RedrawPastWordsButton();
             this.RedrawPinButton();
@@ -137,18 +146,20 @@ namespace VisualDictionary
                 this.Close();
             }
         }
+        
+        private void WordInfoForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.Created)
+            {
+                Properties.Settings.Default.WindowWidth = this.Width;
+                Properties.Settings.Default.WindowHeight = this.Height;
+            }
+        }
 
         private void WordInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (m_WebRequest != null) m_WebRequest.Abort();
             if (m_WebResponse != null) m_WebResponse.Close();
-
-            Properties.Settings.Default.WindowWidth = this.Width;
-            Properties.Settings.Default.WindowHeight = this.Height;
-            Properties.Settings.Default.WindowPinned = m_Pinned;
-            Properties.Settings.Default.Language = (int)m_Language;
-            Properties.Settings.Default.PastWordsPanelExpanded = !splitContainerMain.Panel2Collapsed;
-            Properties.Settings.Default.PastWordsPanelExpandedWidth = splitContainerMain.Width - splitContainerMain.SplitterDistance;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -179,18 +190,21 @@ namespace VisualDictionary
         private void cbLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
             m_Language = (TranslationLanguage)cbLanguage.SelectedIndex;
+            Properties.Settings.Default.Language = (int)m_Language;
             this.GetTranslation(m_Word);
         }
 
         private void btnPin_Click(object sender, EventArgs e)
         {
             m_Pinned = !m_Pinned;
+            Properties.Settings.Default.WindowPinned = m_Pinned;
             this.RedrawPinButton();
         }
 
         private void btnPastWords_Click(object sender, EventArgs e)
         {
             splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;
+            Properties.Settings.Default.PastWordsPanelExpanded = !splitContainerMain.Panel2Collapsed;
             this.RedrawPastWordsButton();
             this.UpdatePastWordsPanel();
         }
@@ -198,6 +212,14 @@ namespace VisualDictionary
         private void splitContainerMain_Panel2_SizeChanged(object sender, EventArgs e)
         {
             lblPastWords.Location = new Point((splitContainerMain.Panel2.Width - lblPastWords.Width) / 2, lblPastWords.Top);
+        }
+
+        private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            if (this.Created)
+            {
+                Properties.Settings.Default.PastWordsPanelExpandedWidth = splitContainerMain.Width - splitContainerMain.SplitterDistance;
+            }
         }
 
         private void splitContainerMain_MouseDown(object sender, MouseEventArgs e)
@@ -245,8 +267,28 @@ namespace VisualDictionary
             pastWordButton.BackColor = Color.Transparent;
             pastWordButton.Text = word;
             pastWordButton.FlatAppearance.BorderSize = 0;
+            ContextMenu pastWordButtonContextMenu = new System.Windows.Forms.ContextMenu();
+            pastWordButtonContextMenu.MenuItems.Add(new MenuItem("Delete", PastWordButton_ContextMenu_Delete));
+            pastWordButton.ContextMenu = pastWordButtonContextMenu;
             pastWordButton.Click += new EventHandler(pastWordButton_Click);
             flowLayoutPanelPastWords.Controls.Add(pastWordButton);
+        }
+
+        private void PastWordButton_ContextMenu_Delete(object sender, EventArgs e)
+        {
+            if (sender is MenuItem)
+            {
+                ContextMenu contextMenu = ((MenuItem)sender).Parent as ContextMenu;
+                if (contextMenu != null)
+                {
+                    Button pastWordButton = contextMenu.SourceControl as Button;
+                    if (pastWordButton != null)
+                    {
+                        flowLayoutPanelPastWords.Controls.Remove(pastWordButton);
+                        Properties.Settings.Default.PastWords.Remove(pastWordButton.Text.ToUpper());
+                    }
+                }
+            }
         }
 
         private Control GetFocused(Control.ControlCollection controls)

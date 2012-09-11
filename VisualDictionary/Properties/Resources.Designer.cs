@@ -61,12 +61,48 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string ButtonCloseToolTip {
+            get {
+                return ResourceManager.GetString("ButtonCloseToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Past Words.
+        /// </summary>
+        internal static string ButtonPastWordsToolTip {
+            get {
+                return ResourceManager.GetString("ButtonPastWordsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin This Window.
+        /// </summary>
+        internal static string ButtonPinToolTip {
+            get {
+                return ResourceManager.GetString("ButtonPinToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap close {
             get {
                 object obj = ResourceManager.GetObject("close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the translation language.
+        /// </summary>
+        internal static string ComboBoxLanguageToolTip {
+            get {
+                return ResourceManager.GetString("ComboBoxLanguageToolTip", resourceCulture);
             }
         }
         

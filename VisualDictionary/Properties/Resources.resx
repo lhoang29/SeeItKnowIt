@@ -130,4 +130,16 @@
   <data name="pastwordsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pastwords.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ButtonCloseToolTip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ButtonPastWordsToolTip" xml:space="preserve">
+    <value>Show Past Words</value>
+  </data>
+  <data name="ButtonPinToolTip" xml:space="preserve">
+    <value>Pin This Window</value>
+  </data>
+  <data name="ComboBoxLanguageToolTip" xml:space="preserve">
+    <value>Change the translation language</value>
+  </data>
 </root>
