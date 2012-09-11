@@ -22,6 +22,7 @@ namespace VisualDictionary
         private WebRequest m_WebRequest = null;
         private WebResponse m_WebResponse = null;
         private Point m_MouseDownPoint = Point.Empty;
+        private Control m_FocusedControl = null;
 
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
@@ -81,13 +82,19 @@ namespace VisualDictionary
 
         private void LoadPersonalSettings()
         {
-            SavedSetings personalSettings = OverlayForm.g_PersonalSettings;
-            if (personalSettings.TranslateWindow_Width != 0 && personalSettings.TranslateWindow_Height != 0)
+            if (Properties.Settings.Default.WindowWidth != 0 && Properties.Settings.Default.WindowHeight != 0)
             {
-                this.Width = personalSettings.TranslateWindow_Width;
-                this.Height = personalSettings.TranslateWindow_Height;
+                this.Width = Properties.Settings.Default.WindowWidth;
+                this.Height = Properties.Settings.Default.WindowHeight;
             }
-            m_Language = personalSettings.Language;
+            m_Pinned = Properties.Settings.Default.WindowPinned;
+            m_Language = (TranslationLanguage)Properties.Settings.Default.Language;
+            splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
+            splitContainerMain.SplitterDistance = splitContainerMain.Width - Properties.Settings.Default.PastWordsPanelExpandedWidth;
+            
+            this.RedrawPastWordsButton();
+            this.RedrawPinButton();
+            this.UpdatePastWordsPanel();
 
             cbLanguage.SelectedIndex = (int)m_Language;
         }
@@ -136,10 +143,12 @@ namespace VisualDictionary
             if (m_WebRequest != null) m_WebRequest.Abort();
             if (m_WebResponse != null) m_WebResponse.Close();
 
-            SavedSetings settings = OverlayForm.g_PersonalSettings;
-            settings.TranslateWindow_Width = this.Width;
-            settings.TranslateWindow_Height = this.Height;
-            settings.Language = m_Language;
+            Properties.Settings.Default.WindowWidth = this.Width;
+            Properties.Settings.Default.WindowHeight = this.Height;
+            Properties.Settings.Default.WindowPinned = m_Pinned;
+            Properties.Settings.Default.Language = (int)m_Language;
+            Properties.Settings.Default.PastWordsPanelExpanded = !splitContainerMain.Panel2Collapsed;
+            Properties.Settings.Default.PastWordsPanelExpandedWidth = splitContainerMain.Width - splitContainerMain.SplitterDistance;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -176,28 +185,83 @@ namespace VisualDictionary
         private void btnPin_Click(object sender, EventArgs e)
         {
             m_Pinned = !m_Pinned;
-            if (m_Pinned)
-            {
-                btnPin.BackColor = Color.White;
-            }
-            else
-            {
-                btnPin.BackColor = Color.Transparent;
-            }
+            this.RedrawPinButton();
         }
 
         private void btnPastWords_Click(object sender, EventArgs e)
         {
-            splitContainerMain.SplitterDistance = splitContainerMain.Width - 100;
             splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;
-            if (splitContainerMain.Panel2Collapsed)
+            this.RedrawPastWordsButton();
+            this.UpdatePastWordsPanel();
+        }
+
+        private void splitContainerMain_Panel2_SizeChanged(object sender, EventArgs e)
+        {
+            lblPastWords.Location = new Point((splitContainerMain.Panel2.Width - lblPastWords.Width) / 2, lblPastWords.Top);
+        }
+
+        private void splitContainerMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            m_FocusedControl = this.GetFocused(this.Controls);
+        }
+
+        private void splitContainerMain_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (m_FocusedControl != null)
             {
-                btnPastWords.BackColor = Color.Transparent;
+                m_FocusedControl.Focus();
+                m_FocusedControl = null;
             }
-            else
+        }
+
+        private void UpdatePastWordsPanel()
+        {
+            if (!splitContainerMain.Panel2Collapsed)
             {
-                btnPastWords.BackColor = Color.White;
+                flowLayoutPanelPastWords.Controls.Clear();
+                foreach (object key in Properties.Settings.Default.PastWords.Keys)
+                {
+                    string word = key as string;
+                    Button wordButton = new Button();
+                    wordButton.AutoSize = true;
+                    wordButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+                    wordButton.FlatStyle = FlatStyle.Flat;
+                    wordButton.BackColor = Color.Transparent;
+                    wordButton.Text = word;
+                    wordButton.FlatAppearance.BorderSize = 0;
+                    flowLayoutPanelPastWords.Controls.Add(wordButton);
+                }
             }
+        }
+
+        private Control GetFocused(Control.ControlCollection controls)
+        {
+            foreach (Control c in controls)
+            {
+                if (c.Focused)
+                {
+                    // Return the focused control
+                    return c;
+                }
+                else if (c.ContainsFocus)
+                {
+                    // If the focus is contained inside a control's children
+                    // return the child
+                    return GetFocused(c.Controls);
+                }
+            }
+            // No control on the form has focus
+            return null;
+        }
+
+        private void RedrawPastWordsButton()
+        {
+            btnPastWords.BackColor = splitContainerMain.Panel2Collapsed ? Color.Transparent : Color.White;
+        }
+
+        private void RedrawPinButton()
+        {
+            btnPin.BackColor = m_Pinned ? Color.White : Color.Transparent;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -18,6 +19,8 @@ namespace VisualDictionary
         private Rectangle m_CaptureRectangle;
         private Point m_MouseDownPosition;
         private Color m_TransparencyKey = Color.Gray;
+        private OrderedDictionary m_PastWords = null;
+        private NotifyIcon m_TrayIcon = null;
 
         private static WordInfoForm g_WordInfoForm = null;
 
@@ -36,15 +39,21 @@ namespace VisualDictionary
         public static int MOD_SHIFT = 0x4;
         public static int MOD_WIN = 0x8;
 
-        private static string g_SettingsFile = "Settings.dat";
         private static string g_ShortCutName = "VisualDictionary.lnk";
-        public static SavedSetings g_PersonalSettings = new SavedSetings();
 
         private const int HotKey_ActivateWindow = 1;
 
         public OverlayForm()
         {
             InitializeComponent();
+
+            this.CreateTrayIcon();
+
+            if (Properties.Settings.Default.PastWords == null)
+            {
+                Properties.Settings.Default.PastWords = new OrderedDictionary();
+            }
+            m_PastWords = Properties.Settings.Default.PastWords;
 
             string startupFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), g_ShortCutName);
             if (!File.Exists(startupFilePath))
@@ -61,7 +70,22 @@ namespace VisualDictionary
             //this.Cursor = Cursors.Cross;
             //this.Opacity = 0.6;
             //this.TransparencyKey = m_TransparencyKey;
-            this.LoadPersonalSettings(g_SettingsFile);
+        }
+
+        private void CreateTrayIcon()
+        {
+            m_TrayIcon = new NotifyIcon();
+            m_TrayIcon.Icon = Properties.Resources.pastwordsIcon;
+            m_TrayIcon.BalloonTipText = "VisualDictionary is running";
+            m_TrayIcon.Visible = true;
+            ContextMenu trayIconContextMenu = new ContextMenu();
+            trayIconContextMenu.MenuItems.Add("Exit", new EventHandler(this.TrayIcon_MenuItem_Exit_Clicked));
+            m_TrayIcon.ContextMenu = trayIconContextMenu;
+            if (Properties.Settings.Default.DisplayTrayIconBalloonTip)
+            {
+                m_TrayIcon.ShowBalloonTip(2000);
+                Properties.Settings.Default.DisplayTrayIconBalloonTip = false;
+            }
         }
 
         private void OverlayForm_KeyDown(object sender, KeyEventArgs e)
@@ -203,6 +227,17 @@ namespace VisualDictionary
                     catch (ExternalException) { }
                 }
 
+                // Remember words that have been looked up
+                string capitalWord = paste.ToUpper();
+                if (m_PastWords[capitalWord] != null)
+                {
+                    m_PastWords[capitalWord] = (int)m_PastWords[capitalWord] + 1;
+                }
+                else
+                {
+                    m_PastWords.Add(capitalWord, 1);
+                }
+
                 g_WordInfoForm = new WordInfoForm(paste, true);
                 g_WordInfoForm.Location = Cursor.Position;
                 g_WordInfoForm.Show();
@@ -221,47 +256,10 @@ namespace VisualDictionary
             UnregisterHotKey(this.Handle, HotKey_ActivateWindow);
         }
 
-        private void OverlayForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void TrayIcon_MenuItem_Exit_Clicked(object sender, EventArgs e)
         {
-            this.SavePersonalSettings(g_SettingsFile);
-        }
-
-        private void LoadPersonalSettings(string file)
-        {
-            if (File.Exists(file))
-            {
-                using (StreamReader sr = new StreamReader(File.Open(file, FileMode.Open)))
-                {
-                    string[] size = sr.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    g_PersonalSettings.TranslateWindow_Width = Convert.ToInt32(size[0].Trim());
-                    g_PersonalSettings.TranslateWindow_Height = Convert.ToInt32(size[1].Trim());
-                    g_PersonalSettings.Language = (TranslationLanguage)Convert.ToInt32(sr.ReadLine().Trim());
-                }
-            }
-            else
-            {
-                g_PersonalSettings.TranslateWindow_Width = 0;
-                g_PersonalSettings.TranslateWindow_Height = 0;
-                g_PersonalSettings.Language = TranslationLanguage.English;
-            }
-        }
-
-        private void SavePersonalSettings(string file)
-        {
-            StreamWriter sw = null;
-            if (File.Exists(file))
-            {
-                sw = new StreamWriter(File.Open(file, FileMode.Truncate));
-            }
-            else
-            {
-                sw = new StreamWriter(File.Create(file));
-            }
-            using (sw)
-            {
-                sw.WriteLine(g_PersonalSettings.TranslateWindow_Width + " " + g_PersonalSettings.TranslateWindow_Height);
-                sw.WriteLine((int)g_PersonalSettings.Language);
-            }
+            m_TrayIcon.Visible = false;
+            this.Close();
         }
 
         private void CreateShortcut(string fromPath, string toPath)
@@ -281,6 +279,12 @@ namespace VisualDictionary
         {
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void OverlayForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.PastWords = m_PastWords;
+            Properties.Settings.Default.Save();
+        }
     }
 
     public enum TranslationLanguage
@@ -288,13 +292,6 @@ namespace VisualDictionary
         English = 0,
         Vietnamese,
         Chinese
-    }
-
-    public class SavedSetings
-    {
-        public int TranslateWindow_Width;
-        public int TranslateWindow_Height;
-        public TranslationLanguage Language;
     }
 }
 
