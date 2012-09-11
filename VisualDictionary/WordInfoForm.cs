@@ -57,10 +57,10 @@ namespace VisualDictionary
                         address = "http://hk.dictionary.yahoo.com/dictionary?p=" + m_Word;
                         break;
                     case TranslationLanguage.Vietnamese:
-                        address = "http://vdict.com/" + m_Word + ",1,0,0.html";
+                        address = "http://vdict.com/" + word + ",1,0,0.html";
                         break;
                     case TranslationLanguage.English:
-                        address = "http://dictionary.com/browse/" + m_Word;
+                        address = "http://dictionary.com/browse/" + word;
                         break;
                 }
 
@@ -222,16 +222,31 @@ namespace VisualDictionary
                 foreach (object key in Properties.Settings.Default.PastWords.Keys)
                 {
                     string word = key as string;
-                    Button wordButton = new Button();
-                    wordButton.AutoSize = true;
-                    wordButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-                    wordButton.FlatStyle = FlatStyle.Flat;
-                    wordButton.BackColor = Color.Transparent;
-                    wordButton.Text = word;
-                    wordButton.FlatAppearance.BorderSize = 0;
-                    flowLayoutPanelPastWords.Controls.Add(wordButton);
+                    this.CreatePastWordButton(word);
                 }
             }
+        }
+
+        void pastWordButton_Click(object sender, EventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button pastWordButton = sender as Button;
+                this.GetTranslation(pastWordButton.Text);
+            }
+        }
+
+        private void CreatePastWordButton(string word)
+        {
+            Button pastWordButton = new Button();
+            pastWordButton.AutoSize = true;
+            pastWordButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            pastWordButton.FlatStyle = FlatStyle.Flat;
+            pastWordButton.BackColor = Color.Transparent;
+            pastWordButton.Text = word;
+            pastWordButton.FlatAppearance.BorderSize = 0;
+            pastWordButton.Click += new EventHandler(pastWordButton_Click);
+            flowLayoutPanelPastWords.Controls.Add(pastWordButton);
         }
 
         private Control GetFocused(Control.ControlCollection controls)
