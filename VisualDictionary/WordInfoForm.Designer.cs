@@ -69,6 +69,7 @@
             this.wbWordInfo.Location = new System.Drawing.Point(0, 0);
             this.wbWordInfo.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbWordInfo.Name = "wbWordInfo";
+            this.wbWordInfo.ScriptErrorsSuppressed = true;
             this.wbWordInfo.Size = new System.Drawing.Size(94, 240);
             this.wbWordInfo.TabIndex = 1;
             this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);

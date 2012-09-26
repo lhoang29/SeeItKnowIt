@@ -49,7 +49,6 @@ namespace VisualDictionary
         private void GetTranslation(string word)
         {
             m_Word = word;
-            wbWordInfo.ScriptErrorsSuppressed = true;
             if (!m_Online)
             {
             }

@@ -229,15 +229,19 @@ namespace VisualDictionary
 
                 // Remember words that have been looked up
                 string capitalWord = paste.ToUpper();
-                if (m_PastWords[capitalWord] != null)
+                if (capitalWord.Length > 0) // Don't add empty word to history
                 {
-                    m_PastWords[capitalWord] = (int)m_PastWords[capitalWord] + 1;
-                }
-                else
-                {
-                    m_PastWords.Add(capitalWord, 1);
+                    if (m_PastWords[capitalWord] != null)
+                    {
+                        m_PastWords[capitalWord] = (int)m_PastWords[capitalWord] + 1;
+                    }
+                    else
+                    {
+                        m_PastWords.Add(capitalWord, 1);
+                    }
                 }
 
+                // Show the translation window regardless of whether a word was highlighted to be translated.
                 g_WordInfoForm = new WordInfoForm(paste, true);
                 g_WordInfoForm.Location = Cursor.Position;
                 g_WordInfoForm.Show();
