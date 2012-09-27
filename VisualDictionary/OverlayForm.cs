@@ -10,7 +10,6 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.IO;
-using ShortCutLibrary = IWshRuntimeLibrary;
 
 namespace VisualDictionary
 {
@@ -39,8 +38,6 @@ namespace VisualDictionary
         public static int MOD_SHIFT = 0x4;
         public static int MOD_WIN = 0x8;
 
-        private static string g_ShortCutName = "VisualDictionary.lnk";
-
         private const int HotKey_ActivateWindow = 1;
 
         public OverlayForm()
@@ -55,11 +52,7 @@ namespace VisualDictionary
             }
             m_PastWords = Properties.Settings.Default.PastWords;
 
-            string startupFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), g_ShortCutName);
-            if (!File.Exists(startupFilePath))
-            {
-                this.CreateShortcut(System.Reflection.Assembly.GetExecutingAssembly().Location, startupFilePath);
-            }
+            ClickOnceHelper.AddShortcutToStartupGroup("Luong Hoang", "VisualDictionary");
 
             //Rectangle bounds = Screen.AllScreens.Select(x => x.Bounds).Aggregate(Rectangle.Union);
             //this.Left = bounds.Left;
@@ -264,14 +257,6 @@ namespace VisualDictionary
         {
             m_TrayIcon.Visible = false;
             this.Close();
-        }
-
-        private void CreateShortcut(string fromPath, string toPath)
-        {
-            ShortCutLibrary.WshShell shell = new ShortCutLibrary.WshShell();
-            ShortCutLibrary.IWshShortcut shortcut = (ShortCutLibrary.IWshShortcut)shell.CreateShortcut(toPath);
-            shortcut.TargetPath = fromPath;
-            shortcut.Save();
         }
 
         public static void PromptInformation(string message)
