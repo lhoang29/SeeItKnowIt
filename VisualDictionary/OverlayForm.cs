@@ -22,6 +22,9 @@ namespace VisualDictionary
         private NotifyIcon m_TrayIcon = null;
 
         private static WordInfoForm g_WordInfoForm = null;
+        private static uint[] g_PotentialHotKeys = { (uint)'Z', (uint)'A', (uint)'X', (uint)'C' };
+
+        private uint m_HotKey = 0;
 
         // Register a hot key with Windows
         [DllImport("user32.dll")]
@@ -52,7 +55,7 @@ namespace VisualDictionary
             }
             m_PastWords = Properties.Settings.Default.PastWords;
 
-            ClickOnceHelper.AddShortcutToStartupGroup("Luong Hoang", "VisualDictionary");
+            ClickOnceHelper.AddShortcutToStartupGroup(this.CompanyName, this.ProductName);
 
             //Rectangle bounds = Screen.AllScreens.Select(x => x.Bounds).Aggregate(Rectangle.Union);
             //this.Left = bounds.Left;
@@ -65,22 +68,37 @@ namespace VisualDictionary
             //this.TransparencyKey = m_TransparencyKey;
         }
 
+        /// <summary>
+        /// Create tray icon for the application.
+        /// </summary>
         private void CreateTrayIcon()
         {
             m_TrayIcon = new NotifyIcon();
             m_TrayIcon.Icon = Properties.Resources.pastwordsIcon;
-            m_TrayIcon.BalloonTipText = "VisualDictionary is running";
+            m_TrayIcon.BalloonTipText = String.Format(Properties.Resources.TrayIcon_BalloonTipText, this.ProductName);
             m_TrayIcon.Visible = true;
+            
+            // Set the text to display on mouse hover over tray icon
+            Version currentVersion = ClickOnceHelper.GetApplicationVersion();
+            m_TrayIcon.Text = (currentVersion != null) ? 
+                String.Format(Properties.Resources.TrayIcon_Text, currentVersion.ToString()) : 
+                String.Empty;
+            
+            // Set the context menu when clicking on tray icon
             ContextMenu trayIconContextMenu = new ContextMenu();
-            trayIconContextMenu.MenuItems.Add("Exit", new EventHandler(this.TrayIcon_MenuItem_Exit_Clicked));
+            trayIconContextMenu.MenuItems.Add(Properties.Resources.TrayIcon_MenuItem_Exit, new EventHandler(this.TrayIcon_MenuItem_Exit_Clicked));
             m_TrayIcon.ContextMenu = trayIconContextMenu;
-            if (Properties.Settings.Default.DisplayTrayIconBalloonTip)
+            
+            // Only show the balloon tooltip the first time the application runs
+            if (Properties.Settings.Default.FirstUse)
             {
                 m_TrayIcon.ShowBalloonTip(2000);
-                Properties.Settings.Default.DisplayTrayIconBalloonTip = false;
             }
         }
 
+        /// <summary>
+        /// Handles KeyDown event for the form
+        /// </summary>
         private void OverlayForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -89,6 +107,9 @@ namespace VisualDictionary
             }
         }
 
+        /// <summary>
+        /// Minimizes the application, also sets the visibility to false.
+        /// </summary>
         private void MinimizeApplication()
         {
             this.WindowState = FormWindowState.Minimized;
@@ -96,6 +117,9 @@ namespace VisualDictionary
             m_CaptureRectangle = Rectangle.Empty;
         }
 
+        /// <summary>
+        /// Handles the MouseMove event.
+        /// </summary>
         private void OverlayForm_MouseMove(object sender, MouseEventArgs e)
         {
             // This makes sure that the left mouse button is pressed.
@@ -111,6 +135,9 @@ namespace VisualDictionary
             this.Invalidate();
         }
 
+        /// <summary>
+        /// Handles the Paint event.
+        /// </summary>
         private void OverlayForm_Paint(object sender, PaintEventArgs e)
         {
             using (Pen pen = new Pen(Color.Black, 2))
@@ -123,6 +150,9 @@ namespace VisualDictionary
             }
         }
 
+        /// <summary>
+        /// Handles the MouseDown event.
+        /// </summary>
         private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -131,6 +161,9 @@ namespace VisualDictionary
             }
         }
 
+        /// <summary>
+        /// Handles the MouseUp event.
+        /// </summary>
         private void OverlayForm_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left && m_CaptureRectangle.Width > 0 && m_CaptureRectangle.Height > 0)
@@ -151,11 +184,21 @@ namespace VisualDictionary
             }
         }
 
+        /// <summary>
+        /// Handles the Deactivate event.
+        /// </summary>
         private void OverlayForm_Deactivate(object sender, EventArgs e)
         {
             this.MinimizeApplication();
         }
 
+        /// <summary>
+        /// Resizes a bitmap image to the specified size.
+        /// </summary>
+        /// <param name="sourceBMP">The source bitmap image.</param>
+        /// <param name="width">The width of the resized bitmap image.</param>
+        /// <param name="height">The height of the resized bitmap image.</param>
+        /// <returns>The resized bitmap image.</returns>
         private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
         {
             Bitmap result = new Bitmap(width, height);
@@ -166,15 +209,41 @@ namespace VisualDictionary
             return result;
         }
 
+        /// <summary>
+        /// Handles the Shown event.
+        /// </summary>
         private void OverlayForm_Shown(object sender, EventArgs e)
         {
             IntPtr hWnd = this.Handle;
-            if (!RegisterHotKey(hWnd, HotKey_ActivateWindow, (uint)MOD_WIN, (uint)'Z'))
+
+            // Cycle through each potential hotkey combinations and attempts to register until successful
+            foreach (uint hotKey in g_PotentialHotKeys)
             {
-                OverlayForm.PromptError("Couldn't register the hotkey.");
+                if (RegisterHotKey(hWnd, HotKey_ActivateWindow, (uint)MOD_WIN, hotKey))
+                {
+                    m_HotKey = hotKey;
+                    break;
+                }
             }
+            // No hotkey combination was available
+            if (m_HotKey == 0)
+            {
+                OverlayForm.PromptError(Properties.Resources.Error_RegisterHotKey);
+            }
+            else if (Properties.Settings.Default.FirstUse) // Only display tutorial the first time the application runs
+            {
+                OverlayForm.PromptInformation(
+                    String.Format(Properties.Resources.Application_WelcomeMessage, this.ProductName),
+                    String.Format(Properties.Resources.Information_Tutorial, ((Char)m_HotKey).ToString())
+                    );
+            }
+            Properties.Settings.Default.FirstUse = false;
         }
 
+        /// <summary>
+        /// Handles the WndProc procedure.
+        /// </summary>
+        /// <param name="m">The message.</param>
         [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
@@ -188,20 +257,21 @@ namespace VisualDictionary
                     uint key = (uint)(((int)m.LParam >> 16) & 0xFFFF);
                     int modifiers = ((int)m.LParam & 0xFFFF);
                     
-                    HandleHotKeys(modifiers, key);
+                    this.HandleHotKeys(modifiers, key);
 
                     break;
             }
             base.WndProc(ref m);
         }
 
+        /// <summary>
+        /// Handle hotkey activation for the application.
+        /// </summary>
+        /// <param name="modifiers">The modifier keys that were pressed.</param>
+        /// <param name="key">The actual keys that were pressed.</param>
         public void HandleHotKeys(int modifiers, uint key)
         {
-            if (key == (uint)Keys.A && modifiers == MOD_WIN)
-            {
-                //ShowApplication();
-            }
-            else if (key == (uint)Keys.Z && modifiers == MOD_WIN)
+            if (m_HotKey != 0 && key == m_HotKey && modifiers == MOD_WIN)
             {
                 SimulateKeys.Keyboard.SimulateKeyStroke('c', ctrl: true);
                 Thread.Sleep(100);
@@ -241,6 +311,9 @@ namespace VisualDictionary
             }
         }
 
+        /// <summary>
+        /// Shows the application.
+        /// </summary>
         private void ShowApplication()
         {
             this.Visible = true;
@@ -248,27 +321,54 @@ namespace VisualDictionary
             this.Activate();
         }
 
+        /// <summary>
+        /// Handles the FormClosed event.
+        /// </summary>
         private void OverlayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UnregisterHotKey(this.Handle, HotKey_ActivateWindow);
         }
 
+        /// <summary>
+        /// Handles the Exit task in the context menu for the tray icon.
+        /// </summary>
         private void TrayIcon_MenuItem_Exit_Clicked(object sender, EventArgs e)
         {
             m_TrayIcon.Visible = false;
             this.Close();
         }
 
+        /// <summary>
+        /// Display an information dialog with the specified message.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
         public static void PromptInformation(string message)
         {
-            MessageBox.Show(message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, Properties.Resources.Dialog_Information, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Display an information dialog with the specified caption and message.
+        /// </summary>
+        /// <param name="caption">The caption to display.</param>
+        /// <param name="message">The message to display.</param>
+        public static void PromptInformation(string caption, string message)
+        {
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Display an error dialog with the specified message.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
         public static void PromptError(string message)
         {
-            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, Properties.Resources.Dialog_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        /// <summary>
+        /// Handles the FormClosing event.
+        /// </summary>
         private void OverlayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.PastWords = m_PastWords;
@@ -276,6 +376,9 @@ namespace VisualDictionary
         }
     }
 
+    /// <summary>
+    /// An enumeration of available translation languages.
+    /// </summary>
     public enum TranslationLanguage
     {
         English = 0,

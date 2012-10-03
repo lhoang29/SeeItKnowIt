@@ -142,4 +142,28 @@
   <data name="ComboBoxLanguageToolTip" xml:space="preserve">
     <value>Change the translation language</value>
   </data>
+  <data name="TrayIcon_BalloonTipText" xml:space="preserve">
+    <value>{0} is running</value>
+  </data>
+  <data name="TrayIcon_MenuItem_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="TrayIcon_Text" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="Application_WelcomeMessage" xml:space="preserve">
+    <value>Welcome to {0}</value>
+  </data>
+  <data name="Dialog_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Dialog_Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Error_RegisterHotKey" xml:space="preserve">
+    <value>Couldn't register keyboard shortcut activation</value>
+  </data>
+  <data name="Information_Tutorial" xml:space="preserve">
+    <value>Highlight any word then press Windows + {0} to translate</value>
+  </data>
 </root>

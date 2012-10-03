@@ -24,5 +24,15 @@ namespace VisualDictionary
                 rkApp.SetValue(productName, "\"" + startPath + "\"");
             }
         }
+
+        public static Version GetApplicationVersion()
+        {
+            Version version = null;
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
+            }
+            return version;
+        }
     }
 }

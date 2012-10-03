@@ -23,7 +23,7 @@
     <Setting Name="PastWords" Type="System.Collections.Specialized.OrderedDictionary" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="DisplayTrayIconBalloonTip" Type="System.Boolean" Scope="User">
+    <Setting Name="FirstUse" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
