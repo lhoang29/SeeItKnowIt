@@ -243,7 +243,7 @@ namespace VisualDictionary
                 foreach (object key in Properties.Settings.Default.PastWords.Keys)
                 {
                     string pastWord = key as string;
-                    this.CreatePastWordButton(pastWord);
+                    this.CreatePastWordControl(pastWord);
                 }
             }
         }
@@ -257,36 +257,32 @@ namespace VisualDictionary
             }
         }
 
-        private void CreatePastWordButton(string word)
+        private void CreatePastWordControl(string word)
         {
-            Button pastWordButton = new Button();
-            pastWordButton.AutoSize = true;
-            pastWordButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            pastWordButton.FlatStyle = FlatStyle.Flat;
-            pastWordButton.BackColor = Color.Transparent;
-            pastWordButton.Text = word;
-            pastWordButton.FlatAppearance.BorderSize = 0;
-            ContextMenu pastWordButtonContextMenu = new System.Windows.Forms.ContextMenu();
-            pastWordButtonContextMenu.MenuItems.Add(new MenuItem("Delete", PastWordButton_ContextMenu_Delete));
-            pastWordButton.ContextMenu = pastWordButtonContextMenu;
-            pastWordButton.Click += new EventHandler(pastWordButton_Click);
-            flowLayoutPanelPastWords.Controls.Add(pastWordButton);
+            PastWordControl pastWordControl = new PastWordControl(word);
+            pastWordControl.WordChanged += new EventHandler(PastWordControl_WordChanged);
+            pastWordControl.WordDeleted += new EventHandler(PastWordControl_WordDeleted);
+
+            flowLayoutPanelPastWords.Controls.Add(pastWordControl);
         }
 
-        private void PastWordButton_ContextMenu_Delete(object sender, EventArgs e)
+        void PastWordControl_WordChanged(object sender, EventArgs e)
         {
-            if (sender is MenuItem)
+            if (sender is PastWordControl)
             {
-                ContextMenu contextMenu = ((MenuItem)sender).Parent as ContextMenu;
-                if (contextMenu != null)
-                {
-                    Button pastWordButton = contextMenu.SourceControl as Button;
-                    if (pastWordButton != null)
-                    {
-                        flowLayoutPanelPastWords.Controls.Remove(pastWordButton);
-                        Properties.Settings.Default.PastWords.Remove(pastWordButton.Text.ToUpper());
-                    }
-                }
+                PastWordControl pwc = sender as PastWordControl;
+                string word = pwc.Word;
+                this.GetTranslation(word);
+            }
+        }
+
+        void PastWordControl_WordDeleted(object sender, EventArgs e)
+        {
+            if (sender is PastWordControl)
+            {
+                PastWordControl pastWordControl = sender as PastWordControl;
+                flowLayoutPanelPastWords.Controls.Remove(pastWordControl);
+                Properties.Settings.Default.PastWords.Remove(pastWordControl.Word.ToUpper());
             }
         }
 
@@ -312,12 +308,12 @@ namespace VisualDictionary
 
         private void RedrawPastWordsButton()
         {
-            btnPastWords.BackColor = splitContainerMain.Panel2Collapsed ? Color.Transparent : Color.White;
+            btnPastWords.BackColor = splitContainerMain.Panel2Collapsed ? Color.Transparent : Color.Gainsboro;
         }
 
         private void RedrawPinButton()
         {
-            btnPin.BackColor = m_Pinned ? Color.White : Color.Transparent;
+            btnPin.BackColor = m_Pinned ? Color.Gainsboro : Color.Transparent;
         }
     }
 }

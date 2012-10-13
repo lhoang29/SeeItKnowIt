@@ -76,7 +76,7 @@
             // 
             // pnlTitleBar
             // 
-            this.pnlTitleBar.BackColor = System.Drawing.Color.Gainsboro;
+            this.pnlTitleBar.BackColor = System.Drawing.SystemColors.Window;
             this.pnlTitleBar.Controls.Add(this.btnPastWords);
             this.pnlTitleBar.Controls.Add(this.btnPin);
             this.pnlTitleBar.Controls.Add(this.cbLanguage);
@@ -169,6 +169,7 @@
             // 
             // splitContainerPastWords
             // 
+            this.splitContainerPastWords.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerPastWords.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainerPastWords.IsSplitterFixed = true;
@@ -212,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainerMain);

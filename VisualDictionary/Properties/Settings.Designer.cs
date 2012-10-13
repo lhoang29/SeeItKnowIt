@@ -97,6 +97,7 @@ namespace VisualDictionary.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SettingsSerializeAs(System.Configuration.SettingsSerializeAs.Binary)]
         public global::System.Collections.Specialized.OrderedDictionary PastWords {
             get {
                 return ((global::System.Collections.Specialized.OrderedDictionary)(this["PastWords"]));

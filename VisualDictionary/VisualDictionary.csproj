@@ -113,6 +113,12 @@
     <Compile Include="OverlayForm.Designer.cs">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PastWordControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PastWordControl.Designer.cs">
+      <DependentUpon>PastWordControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -129,6 +135,9 @@
     </Compile>
     <EmbeddedResource Include="OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PastWordControl.resx">
+      <DependentUpon>PastWordControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
