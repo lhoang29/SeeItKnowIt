@@ -40,7 +40,10 @@ namespace VisualDictionary
             btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
             comboBoxLanguageToolTip.SetToolTip(cbLanguage, Properties.Resources.ComboBoxLanguageToolTip);
 
-            cbLanguage.DataSource = Enum.GetValues(typeof(TranslationLanguage));
+            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
+            {
+                cbLanguage.Items.Add((TranslationLanguage)key);
+            }
 
             this.LoadPersonalSettings();
             this.GetTranslation(word);
@@ -55,19 +58,10 @@ namespace VisualDictionary
             else
             {
                 lblWord.Visible = false;
-                string address = "";
-                switch (m_Language)
-                {
-                    case TranslationLanguage.Chinese:
-                        address = "http://hk.dictionary.yahoo.com/dictionary?p=" + m_Word;
-                        break;
-                    case TranslationLanguage.Vietnamese:
-                        address = "http://vdict.com/" + word + ",1,0,0.html";
-                        break;
-                    case TranslationLanguage.English:
-                        address = "http://dictionary.com/browse/" + word;
-                        break;
-                }
+                string address = String.Format(
+                    (Properties.Settings.Default.TranslateSites[m_Language] as string[])[0],
+                    m_Word
+                );
 
                 try
                 {

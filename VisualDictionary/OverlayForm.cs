@@ -19,6 +19,8 @@ namespace VisualDictionary
         private Point m_MouseDownPosition;
         private Color m_TransparencyKey = Color.Gray;
         private OrderedDictionary m_PastWords = null;
+        private OrderedDictionary m_TranslateSites = null;
+
         private NotifyIcon m_TrayIcon = null;
 
         private static WordInfoForm g_WordInfoForm = null;
@@ -49,11 +51,23 @@ namespace VisualDictionary
 
             this.CreateTrayIcon();
 
+            // Load list of past words
             if (Properties.Settings.Default.PastWords == null)
             {
                 Properties.Settings.Default.PastWords = new OrderedDictionary();
             }
             m_PastWords = Properties.Settings.Default.PastWords;
+
+            // Load list of translate sites
+            if (Properties.Settings.Default.TranslateSites == null)
+            {
+                Properties.Settings.Default.TranslateSites = new OrderedDictionary();
+                foreach (KeyValuePair<TranslationLanguage, string[]> site in Common.TranslateSites)
+                {
+                    Properties.Settings.Default.TranslateSites.Add(site.Key, site.Value);
+                }
+            }
+            m_TranslateSites = Properties.Settings.Default.TranslateSites;
 
             ClickOnceHelper.AddShortcutToStartupGroup(this.CompanyName, this.ProductName);
 
@@ -374,16 +388,6 @@ namespace VisualDictionary
             Properties.Settings.Default.PastWords = m_PastWords;
             Properties.Settings.Default.Save();
         }
-    }
-
-    /// <summary>
-    /// An enumeration of available translation languages.
-    /// </summary>
-    public enum TranslationLanguage
-    {
-        English = 0,
-        Vietnamese,
-        Chinese
     }
 }
 

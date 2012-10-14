@@ -26,5 +26,8 @@
     <Setting Name="FirstUse" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="TranslateSites" Type="System.Collections.Specialized.OrderedDictionary" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
