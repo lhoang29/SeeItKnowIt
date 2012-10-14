@@ -32,6 +32,7 @@ namespace VisualDictionary
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
+            splitContainerPastWords.SplitterWidth = 1;
 
             m_Online = online;
 
@@ -308,6 +309,13 @@ namespace VisualDictionary
         private void RedrawPinButton()
         {
             btnPin.BackColor = m_Pinned ? Color.Gainsboro : Color.Transparent;
+        }
+
+        private void pnlTitleBar_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(Color.Gainsboro, 1), 
+                new Point(pnlTitleBar.Left, pnlTitleBar.Bottom - 1), 
+                new Point(pnlTitleBar.Right, pnlTitleBar.Bottom - 1));
         }
     }
 }

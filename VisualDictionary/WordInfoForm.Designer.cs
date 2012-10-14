@@ -70,7 +70,7 @@
             this.wbWordInfo.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbWordInfo.Name = "wbWordInfo";
             this.wbWordInfo.ScriptErrorsSuppressed = true;
-            this.wbWordInfo.Size = new System.Drawing.Size(94, 240);
+            this.wbWordInfo.Size = new System.Drawing.Size(97, 240);
             this.wbWordInfo.TabIndex = 1;
             this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);
             // 
@@ -86,6 +86,7 @@
             this.pnlTitleBar.Name = "pnlTitleBar";
             this.pnlTitleBar.Size = new System.Drawing.Size(284, 21);
             this.pnlTitleBar.TabIndex = 2;
+            this.pnlTitleBar.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlTitleBar_Paint);
             this.pnlTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseDown);
             this.pnlTitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseMove);
             this.pnlTitleBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseUp);
@@ -161,7 +162,8 @@
             this.splitContainerMain.Panel2.SizeChanged += new System.EventHandler(this.splitContainerMain_Panel2_SizeChanged);
             this.splitContainerMain.Panel2MinSize = 100;
             this.splitContainerMain.Size = new System.Drawing.Size(284, 240);
-            this.splitContainerMain.SplitterDistance = 94;
+            this.splitContainerMain.SplitterDistance = 97;
+            this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 3;
             this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
             this.splitContainerMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.splitContainerMain_MouseDown);
@@ -169,7 +171,7 @@
             // 
             // splitContainerPastWords
             // 
-            this.splitContainerPastWords.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerPastWords.BackColor = System.Drawing.Color.Gainsboro;
             this.splitContainerPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerPastWords.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainerPastWords.IsSplitterFixed = true;
@@ -179,24 +181,28 @@
             // 
             // splitContainerPastWords.Panel1
             // 
+            this.splitContainerPastWords.Panel1.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Panel1.Controls.Add(this.lblPastWords);
             // 
             // splitContainerPastWords.Panel2
             // 
+            this.splitContainerPastWords.Panel2.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Panel2.Controls.Add(this.flowLayoutPanelPastWords);
             this.splitContainerPastWords.Size = new System.Drawing.Size(186, 240);
-            this.splitContainerPastWords.SplitterDistance = 31;
+            this.splitContainerPastWords.SplitterDistance = 25;
+            this.splitContainerPastWords.SplitterWidth = 1;
             this.splitContainerPastWords.TabIndex = 0;
             // 
             // lblPastWords
             // 
-            this.lblPastWords.AutoSize = true;
-            this.lblPastWords.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPastWords.Location = new System.Drawing.Point(0, 5);
+            this.lblPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPastWords.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPastWords.Location = new System.Drawing.Point(0, 0);
             this.lblPastWords.Name = "lblPastWords";
-            this.lblPastWords.Size = new System.Drawing.Size(77, 17);
+            this.lblPastWords.Size = new System.Drawing.Size(186, 25);
             this.lblPastWords.TabIndex = 0;
-            this.lblPastWords.Text = "Past Words";
+            this.lblPastWords.Text = "PAST WORDS";
+            this.lblPastWords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanelPastWords
             // 
@@ -205,7 +211,7 @@
             this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
-            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(186, 205);
+            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(186, 214);
             this.flowLayoutPanelPastWords.TabIndex = 0;
             this.flowLayoutPanelPastWords.WrapContents = false;
             // 
@@ -236,7 +242,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
             this.splitContainerMain.ResumeLayout(false);
             this.splitContainerPastWords.Panel1.ResumeLayout(false);
-            this.splitContainerPastWords.Panel1.PerformLayout();
             this.splitContainerPastWords.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerPastWords)).EndInit();
             this.splitContainerPastWords.ResumeLayout(false);

@@ -24,6 +24,8 @@ namespace VisualDictionary
         private NotifyIcon m_TrayIcon = null;
 
         private static WordInfoForm g_WordInfoForm = null;
+        private static ConfigurationForm g_ConfigurationForm = null;
+
         private static uint[] g_PotentialHotKeys = { (uint)'Z', (uint)'A', (uint)'X', (uint)'C' };
 
         private uint m_HotKey = 0;
@@ -100,6 +102,7 @@ namespace VisualDictionary
             
             // Set the context menu when clicking on tray icon
             ContextMenu trayIconContextMenu = new ContextMenu();
+            trayIconContextMenu.MenuItems.Add(Properties.Resources.TrayIcon_MenuItem_Configuration, new EventHandler(this.TrayIcon_MenuItem_Configuration_Clicked));
             trayIconContextMenu.MenuItems.Add(Properties.Resources.TrayIcon_MenuItem_Exit, new EventHandler(this.TrayIcon_MenuItem_Exit_Clicked));
             m_TrayIcon.ContextMenu = trayIconContextMenu;
             
@@ -341,6 +344,22 @@ namespace VisualDictionary
         private void OverlayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             UnregisterHotKey(this.Handle, HotKey_ActivateWindow);
+        }
+
+        /// <summary>
+        /// Handles the Configuration task in the context menu for the tray icon.
+        /// </summary>
+        private void TrayIcon_MenuItem_Configuration_Clicked(object sender, EventArgs e)
+        {
+            if (g_ConfigurationForm == null || g_ConfigurationForm.IsDisposed)
+            {
+                g_ConfigurationForm = new ConfigurationForm();
+                g_ConfigurationForm.Show();
+            }
+            else
+            {
+                g_ConfigurationForm.Activate();
+            }
         }
 
         /// <summary>
