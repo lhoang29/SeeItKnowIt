@@ -107,6 +107,12 @@
   <ItemGroup>
     <Compile Include="ClickOnceHelper.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="ConfigurationAddSiteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigurationAddSiteForm.Designer.cs">
+      <DependentUpon>ConfigurationAddSiteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,12 +140,21 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="TranslationSiteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TranslationSiteControl.Designer.cs">
+      <DependentUpon>TranslationSiteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WordInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WordInfoForm.Designer.cs">
       <DependentUpon>WordInfoForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ConfigurationAddSiteForm.resx">
+      <DependentUpon>ConfigurationAddSiteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +168,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TranslationSiteControl.resx">
+      <DependentUpon>TranslationSiteControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WordInfoForm.resx">
       <DependentUpon>WordInfoForm.cs</DependentUpon>

@@ -8,8 +8,8 @@
     <Setting Name="WindowHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Language" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PastWordsPanelExpandedWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -28,6 +28,9 @@
     </Setting>
     <Setting Name="TranslateSites" Type="System.Collections.Specialized.OrderedDictionary" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ConfigurationForm_Location" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

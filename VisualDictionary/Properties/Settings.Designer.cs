@@ -49,10 +49,10 @@ namespace VisualDictionary.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Language {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Language {
             get {
-                return ((int)(this["Language"]));
+                return ((string)(this["Language"]));
             }
             set {
                 this["Language"] = value;
@@ -128,6 +128,18 @@ namespace VisualDictionary.Properties {
             }
             set {
                 this["TranslateSites"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point ConfigurationForm_Location {
+            get {
+                return ((global::System.Drawing.Point)(this["ConfigurationForm_Location"]));
+            }
+            set {
+                this["ConfigurationForm_Location"] = value;
             }
         }
     }

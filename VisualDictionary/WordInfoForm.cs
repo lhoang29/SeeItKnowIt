@@ -27,7 +27,7 @@ namespace VisualDictionary
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
 
-        private TranslationLanguage m_Language = TranslationLanguage.English;
+        private string m_Language = TranslationLanguage.English.ToString();
 
         public WordInfoForm(string word, bool online)
         {
@@ -43,7 +43,7 @@ namespace VisualDictionary
 
             foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
             {
-                cbLanguage.Items.Add((TranslationLanguage)key);
+                cbLanguage.Items.Add(key.ToString());
             }
 
             this.LoadPersonalSettings();
@@ -73,9 +73,16 @@ namespace VisualDictionary
                         wbWordInfo.DocumentStream = m_WebResponse.GetResponseStream();
                     }
                 }
-                catch (WebException ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    if (ex is UriFormatException)
+                    {
+                        wbWordInfo.DocumentText = Properties.Resources.Error_InvalidUriFormat;
+                    }
+                    else
+                    {
+                        wbWordInfo.DocumentText = ex.ToString();
+                    }
                 }
             }
         }
@@ -88,7 +95,11 @@ namespace VisualDictionary
                 this.Height = Properties.Settings.Default.WindowHeight;
             }
             m_Pinned = Properties.Settings.Default.WindowPinned;
-            m_Language = (TranslationLanguage)Properties.Settings.Default.Language;
+            if (String.IsNullOrEmpty(Properties.Settings.Default.Language))
+            {
+                Properties.Settings.Default.Language = TranslationLanguage.English.ToString();
+            }
+            m_Language = Properties.Settings.Default.Language;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
             if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)
             {
@@ -99,7 +110,7 @@ namespace VisualDictionary
             this.RedrawPinButton();
             this.UpdatePastWordsPanel();
 
-            cbLanguage.SelectedIndex = (int)m_Language;
+            cbLanguage.SelectedItem = m_Language;
         }
 
         protected override CreateParams CreateParams
@@ -183,8 +194,8 @@ namespace VisualDictionary
 
         private void cbLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            m_Language = (TranslationLanguage)cbLanguage.SelectedIndex;
-            Properties.Settings.Default.Language = (int)m_Language;
+            m_Language = cbLanguage.SelectedItem as string;
+            Properties.Settings.Default.Language = m_Language;
             this.GetTranslation(m_Word);
         }
 

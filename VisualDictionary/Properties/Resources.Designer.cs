@@ -116,6 +116,87 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter URL here ....
+        /// </summary>
+        internal static string Configuration_AddSite_EditWatermark {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_EditWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL must contain word: {0}.
+        /// </summary>
+        internal static string Configuration_AddSite_LabelError_IncompatibleURL {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_LabelError_IncompatibleURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid URL format, please check again.
+        /// </summary>
+        internal static string Configuration_AddSite_LabelError_InvalidURL {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_LabelError_InvalidURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To add a new site, follow these steps:\n- Open your site in any browser\n- Look up the meaning for: {0}\n- Copy the URL and paste it below.
+        /// </summary>
+        internal static string Configuration_AddSite_Tutorial {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_Tutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Languages.
+        /// </summary>
+        internal static string Configuration_Label_Languages {
+            get {
+                return ResourceManager.GetString("Configuration_Label_Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Sites.
+        /// </summary>
+        internal static string Configuration_Label_TranslateSites {
+            get {
+                return ResourceManager.GetString("Configuration_Label_TranslateSites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new language ....
+        /// </summary>
+        internal static string Configuration_Language_AddNew {
+            get {
+                return ResourceManager.GetString("Configuration_Language_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new site ....
+        /// </summary>
+        internal static string Configuration_TranslateSite_AddNew {
+            get {
+                return ResourceManager.GetString("Configuration_TranslateSite_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this site.
+        /// </summary>
+        internal static string Configuration_TranslateSite_MakeActive {
+            get {
+                return ResourceManager.GetString("Configuration_TranslateSite_MakeActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Dialog_Error {
@@ -130,6 +211,15 @@ namespace VisualDictionary.Properties {
         internal static string Dialog_Information {
             get {
                 return ResourceManager.GetString("Dialog_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The provided URL has an invalid format, please update from configuration settings..
+        /// </summary>
+        internal static string Error_InvalidUriFormat {
+            get {
+                return ResourceManager.GetString("Error_InvalidUriFormat", resourceCulture);
             }
         }
         

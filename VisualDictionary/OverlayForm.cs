@@ -66,7 +66,7 @@ namespace VisualDictionary
                 Properties.Settings.Default.TranslateSites = new OrderedDictionary();
                 foreach (KeyValuePair<TranslationLanguage, string[]> site in Common.TranslateSites)
                 {
-                    Properties.Settings.Default.TranslateSites.Add(site.Key, site.Value);
+                    Properties.Settings.Default.TranslateSites.Add(site.Key.ToString(), site.Value);
                 }
             }
             m_TranslateSites = Properties.Settings.Default.TranslateSites;
