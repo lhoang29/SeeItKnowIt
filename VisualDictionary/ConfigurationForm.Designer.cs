@@ -38,6 +38,9 @@
             this.lblSites = new System.Windows.Forms.Label();
             this.lblLanguage = new System.Windows.Forms.Label();
             this.cbLanguage = new System.Windows.Forms.ComboBox();
+            this.pnlDivider2 = new System.Windows.Forms.Panel();
+            this.btnRestore = new System.Windows.Forms.Button();
+            this.lblRestoreSettings = new System.Windows.Forms.Label();
             this.pnlTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -102,13 +105,16 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerMain.Panel2.Controls.Add(this.btnRestore);
+            this.splitContainerMain.Panel2.Controls.Add(this.lblRestoreSettings);
+            this.splitContainerMain.Panel2.Controls.Add(this.pnlDivider2);
             this.splitContainerMain.Panel2.Controls.Add(this.btnAddNewSite);
             this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelSites);
             this.splitContainerMain.Panel2.Controls.Add(this.pnlDivider1);
             this.splitContainerMain.Panel2.Controls.Add(this.lblSites);
             this.splitContainerMain.Panel2.Controls.Add(this.lblLanguage);
             this.splitContainerMain.Panel2.Controls.Add(this.cbLanguage);
-            this.splitContainerMain.Size = new System.Drawing.Size(416, 181);
+            this.splitContainerMain.Size = new System.Drawing.Size(416, 227);
             this.splitContainerMain.SplitterDistance = 25;
             this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 4;
@@ -117,8 +123,7 @@
             // 
             this.btnAddNewSite.AutoSize = true;
             this.btnAddNewSite.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btnAddNewSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewSite.Location = new System.Drawing.Point(156, 44);
+            this.btnAddNewSite.Location = new System.Drawing.Point(155, 90);
             this.btnAddNewSite.Name = "btnAddNewSite";
             this.btnAddNewSite.Size = new System.Drawing.Size(75, 23);
             this.btnAddNewSite.TabIndex = 8;
@@ -129,7 +134,7 @@
             // 
             this.flowLayoutPanelSites.AutoScroll = true;
             this.flowLayoutPanelSites.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelSites.Location = new System.Drawing.Point(153, 75);
+            this.flowLayoutPanelSites.Location = new System.Drawing.Point(153, 122);
             this.flowLayoutPanelSites.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanelSites.Name = "flowLayoutPanelSites";
             this.flowLayoutPanelSites.Size = new System.Drawing.Size(250, 74);
@@ -139,7 +144,7 @@
             // pnlDivider1
             // 
             this.pnlDivider1.BackColor = System.Drawing.Color.Gainsboro;
-            this.pnlDivider1.Location = new System.Drawing.Point(144, 30);
+            this.pnlDivider1.Location = new System.Drawing.Point(144, 77);
             this.pnlDivider1.Name = "pnlDivider1";
             this.pnlDivider1.Size = new System.Drawing.Size(1, 110);
             this.pnlDivider1.TabIndex = 6;
@@ -147,7 +152,7 @@
             // lblSites
             // 
             this.lblSites.AutoSize = true;
-            this.lblSites.Location = new System.Drawing.Point(153, 17);
+            this.lblSites.Location = new System.Drawing.Point(153, 64);
             this.lblSites.Name = "lblSites";
             this.lblSites.Size = new System.Drawing.Size(0, 13);
             this.lblSites.TabIndex = 3;
@@ -155,7 +160,7 @@
             // lblLanguage
             // 
             this.lblLanguage.AutoSize = true;
-            this.lblLanguage.Location = new System.Drawing.Point(12, 17);
+            this.lblLanguage.Location = new System.Drawing.Point(12, 64);
             this.lblLanguage.Name = "lblLanguage";
             this.lblLanguage.Size = new System.Drawing.Size(0, 13);
             this.lblLanguage.TabIndex = 2;
@@ -164,18 +169,43 @@
             // 
             this.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLanguage.FormattingEnabled = true;
-            this.cbLanguage.Location = new System.Drawing.Point(12, 44);
+            this.cbLanguage.Location = new System.Drawing.Point(12, 91);
             this.cbLanguage.Name = "cbLanguage";
             this.cbLanguage.Size = new System.Drawing.Size(121, 21);
             this.cbLanguage.TabIndex = 0;
             this.cbLanguage.SelectedValueChanged += new System.EventHandler(this.cbLanguage_SelectedValueChanged);
+            // 
+            // pnlDivider2
+            // 
+            this.pnlDivider2.BackColor = System.Drawing.Color.Gainsboro;
+            this.pnlDivider2.Location = new System.Drawing.Point(15, 51);
+            this.pnlDivider2.Name = "pnlDivider2";
+            this.pnlDivider2.Size = new System.Drawing.Size(200, 1);
+            this.pnlDivider2.TabIndex = 7;
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Location = new System.Drawing.Point(155, 13);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(75, 23);
+            this.btnRestore.TabIndex = 13;
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
+            // lblRestoreSettings
+            // 
+            this.lblRestoreSettings.AutoSize = true;
+            this.lblRestoreSettings.Location = new System.Drawing.Point(12, 18);
+            this.lblRestoreSettings.Name = "lblRestoreSettings";
+            this.lblRestoreSettings.Size = new System.Drawing.Size(0, 13);
+            this.lblRestoreSettings.TabIndex = 12;
             // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(416, 181);
+            this.ClientSize = new System.Drawing.Size(416, 227);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainerMain);
             this.Name = "ConfigurationForm";
@@ -206,6 +236,9 @@
         private System.Windows.Forms.Panel pnlDivider1;
         private System.Windows.Forms.Button btnAddNewSite;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelSites;
+        private System.Windows.Forms.Panel pnlDivider2;
+        private System.Windows.Forms.Button btnRestore;
+        private System.Windows.Forms.Label lblRestoreSettings;
 
     }
 }

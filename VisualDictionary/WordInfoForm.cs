@@ -95,10 +95,6 @@ namespace VisualDictionary
                 this.Height = Properties.Settings.Default.WindowHeight;
             }
             m_Pinned = Properties.Settings.Default.WindowPinned;
-            if (String.IsNullOrEmpty(Properties.Settings.Default.Language))
-            {
-                Properties.Settings.Default.Language = TranslationLanguage.English.ToString();
-            }
             m_Language = Properties.Settings.Default.Language;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
             if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)

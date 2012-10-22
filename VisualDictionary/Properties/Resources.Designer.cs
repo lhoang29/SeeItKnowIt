@@ -107,6 +107,26 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close_small {
+            get {
+                object obj = ResourceManager.GetObject("close_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap close_small_disabled {
+            get {
+                object obj = ResourceManager.GetObject("close_small_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change the translation language.
         /// </summary>
         internal static string ComboBoxLanguageToolTip {
@@ -161,6 +181,15 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore all default settings.
+        /// </summary>
+        internal static string Configuration_Label_RestoreSettings {
+            get {
+                return ResourceManager.GetString("Configuration_Label_RestoreSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Translation Sites.
         /// </summary>
         internal static string Configuration_Label_TranslateSites {
@@ -179,7 +208,25 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new site ....
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        internal static string Configuration_RestoreText {
+            get {
+                return ResourceManager.GetString("Configuration_RestoreText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully restored all settings..
+        /// </summary>
+        internal static string Configuration_SuccessfulRestore {
+            get {
+                return ResourceManager.GetString("Configuration_SuccessfulRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new site.
         /// </summary>
         internal static string Configuration_TranslateSite_AddNew {
             get {
@@ -211,6 +258,15 @@ namespace VisualDictionary.Properties {
         internal static string Dialog_Information {
             get {
                 return ResourceManager.GetString("Dialog_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string Dialog_Success {
+            get {
+                return ResourceManager.GetString("Dialog_Success", resourceCulture);
             }
         }
         

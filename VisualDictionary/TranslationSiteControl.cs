@@ -137,5 +137,17 @@ namespace VisualDictionary
                 }
             }
         }
+
+        private void btnDelete_EnabledChanged(object sender, EventArgs e)
+        {
+            if (btnDelete.Enabled)
+            {
+                btnDelete.BackgroundImage = Properties.Resources.close_small;
+            }
+            else
+            {
+                btnDelete.BackgroundImage = Properties.Resources.close_small_disabled;
+            }
+        }
     }
 }

@@ -49,7 +49,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.Transparent;
-            this.btnDelete.BackgroundImage = global::VisualDictionary.Properties.Resources.close;
+            this.btnDelete.BackgroundImage = global::VisualDictionary.Properties.Resources.close_small;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -58,6 +58,7 @@
             this.btnDelete.Size = new System.Drawing.Size(16, 16);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.EnabledChanged += new System.EventHandler(this.btnDelete_EnabledChanged);
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // translateSiteAddressToolTip

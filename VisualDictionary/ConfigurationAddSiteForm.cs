@@ -10,19 +10,6 @@ using System.Windows.Forms;
 
 namespace VisualDictionary
 {
-    public class SiteAddedEventArgs : EventArgs
-    {
-        private string m_SiteURL;
-
-        public string SiteURL
-        {
-            get { return m_SiteURL; }
-            set { m_SiteURL = value; }
-        }
-    }
-
-    public delegate void SiteAddedEventHandler(object sender, SiteAddedEventArgs e);
-
     public partial class ConfigurationAddSiteForm : Form
     {
         private string m_CalibrateWord;
@@ -89,6 +76,7 @@ namespace VisualDictionary
         private void tbCalibrateSiteAddress_TextChanged(object sender, EventArgs e)
         {
             lblError.Visible = false;
+            btnAdd.Enabled = (tbCalibrateSiteAddress.Text.Length > 0);
         }
 
         private bool ValidateURL()

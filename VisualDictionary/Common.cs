@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
@@ -72,5 +73,43 @@ namespace VisualDictionary
                 }
             )
         };
+
+        public static void InitializeDefaultSettings()
+        {
+            // Load list of past words
+            if (Properties.Settings.Default.PastWords == null)
+            {
+                Properties.Settings.Default.PastWords = new OrderedDictionary();
+            }
+
+            // Load list of translate sites
+            if (Properties.Settings.Default.TranslateSites == null)
+            {
+                Properties.Settings.Default.TranslateSites = new OrderedDictionary();
+                foreach (KeyValuePair<TranslationLanguage, string[]> site in Common.TranslateSites)
+                {
+                    Properties.Settings.Default.TranslateSites.Add(site.Key.ToString(), site.Value);
+                }
+            }
+
+            // Set default language
+            if (String.IsNullOrEmpty(Properties.Settings.Default.Language))
+            {
+                Properties.Settings.Default.Language = TranslationLanguage.English.ToString();
+            }
+        }
     }
+
+    public class SiteAddedEventArgs : EventArgs
+    {
+        private string m_SiteURL;
+
+        public string SiteURL
+        {
+            get { return m_SiteURL; }
+            set { m_SiteURL = value; }
+        }
+    }
+
+    public delegate void SiteAddedEventHandler(object sender, SiteAddedEventArgs e);
 }

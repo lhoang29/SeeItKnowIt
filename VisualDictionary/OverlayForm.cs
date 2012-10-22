@@ -18,8 +18,6 @@ namespace VisualDictionary
         private Rectangle m_CaptureRectangle;
         private Point m_MouseDownPosition;
         private Color m_TransparencyKey = Color.Gray;
-        private OrderedDictionary m_PastWords = null;
-        private OrderedDictionary m_TranslateSites = null;
 
         private NotifyIcon m_TrayIcon = null;
 
@@ -53,23 +51,7 @@ namespace VisualDictionary
 
             this.CreateTrayIcon();
 
-            // Load list of past words
-            if (Properties.Settings.Default.PastWords == null)
-            {
-                Properties.Settings.Default.PastWords = new OrderedDictionary();
-            }
-            m_PastWords = Properties.Settings.Default.PastWords;
-
-            // Load list of translate sites
-            if (Properties.Settings.Default.TranslateSites == null)
-            {
-                Properties.Settings.Default.TranslateSites = new OrderedDictionary();
-                foreach (KeyValuePair<TranslationLanguage, string[]> site in Common.TranslateSites)
-                {
-                    Properties.Settings.Default.TranslateSites.Add(site.Key.ToString(), site.Value);
-                }
-            }
-            m_TranslateSites = Properties.Settings.Default.TranslateSites;
+            Common.InitializeDefaultSettings();
 
             ClickOnceHelper.AddShortcutToStartupGroup(this.CompanyName, this.ProductName);
 
@@ -311,13 +293,13 @@ namespace VisualDictionary
                 string capitalWord = paste.ToUpper();
                 if (capitalWord.Length > 0) // Don't add empty word to history
                 {
-                    if (m_PastWords[capitalWord] != null)
+                    if (Properties.Settings.Default.PastWords[capitalWord] != null)
                     {
-                        m_PastWords[capitalWord] = (int)m_PastWords[capitalWord] + 1;
+                        Properties.Settings.Default.PastWords[capitalWord] = (int)Properties.Settings.Default.PastWords[capitalWord] + 1;
                     }
                     else
                     {
-                        m_PastWords.Add(capitalWord, 1);
+                        Properties.Settings.Default.PastWords.Add(capitalWord, 1);
                     }
                 }
 
@@ -404,7 +386,6 @@ namespace VisualDictionary
         /// </summary>
         private void OverlayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.PastWords = m_PastWords;
             Properties.Settings.Default.Save();
         }
     }

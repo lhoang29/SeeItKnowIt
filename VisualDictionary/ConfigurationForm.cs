@@ -18,6 +18,9 @@ namespace VisualDictionary
         {
             InitializeComponent();
 
+            lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
+            btnRestore.Text = Properties.Resources.Configuration_RestoreText;
+
             // Populate the languages combo box
             foreach (object translateSite in Properties.Settings.Default.TranslateSites.Keys)
             {
@@ -25,10 +28,6 @@ namespace VisualDictionary
             }
 
             // Select the default language
-            if (String.IsNullOrEmpty(Properties.Settings.Default.Language))
-            {
-                Properties.Settings.Default.Language = TranslationLanguage.English.ToString();
-            }
             cbLanguage.SelectedItem = Properties.Settings.Default.Language;
 
             // Load the personalized location of the form
@@ -164,13 +163,12 @@ namespace VisualDictionary
             Properties.Settings.Default.TranslateSites[selectedValue] = newTranslateSites;
 
             // Remove the control and mark the new top site as active
-            bool wasSiteActive = tsc.IsActive;
             flowLayoutPanelSites.Controls.Remove(tsc);
-            if (wasSiteActive && flowLayoutPanelSites.Controls.Count > 0)
+            if (flowLayoutPanelSites.Controls.Count > 0)
             {
                 TranslationSiteControl newActiveSite = flowLayoutPanelSites.Controls[0] as TranslationSiteControl;
                 newActiveSite.IsActive = true;
-                
+
                 // If only one site is present then make it required so it can't be deleted
                 if (flowLayoutPanelSites.Controls.Count == 1)
                 {
@@ -207,6 +205,16 @@ namespace VisualDictionary
         {
             Properties.Settings.Default.ConfigurationForm_Location = this.Location;
             Properties.Settings.Default.Save();
+        }
+
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            Common.InitializeDefaultSettings();
+
+            MessageBox.Show(Control.FromHandle(this.Handle), 
+                Properties.Resources.Configuration_SuccessfulRestore, 
+                Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
