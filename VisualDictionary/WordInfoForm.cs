@@ -36,6 +36,7 @@ namespace VisualDictionary
 
             m_Online = online;
 
+            btnConfigToolTip.SetToolTip(btnConfiguration, Properties.Resources.TrayIcon_MenuItem_Configuration);
             btnPastWordsToolTip.SetToolTip(btnPastWords, Properties.Resources.ButtonPastWordsToolTip);
             btnPinToolTip.SetToolTip(btnPin, Properties.Resources.ButtonPinToolTip);
             btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
@@ -161,6 +162,12 @@ namespace VisualDictionary
         {
             if (m_WebRequest != null) m_WebRequest.Abort();
             if (m_WebResponse != null) m_WebResponse.Close();
+
+            // Activate the configuration form if it's currently opened
+            if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
+            {
+                OverlayForm.g_ConfigurationForm.Focus();
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -323,6 +330,11 @@ namespace VisualDictionary
             e.Graphics.DrawLine(new Pen(Color.Gainsboro, 1), 
                 new Point(pnlTitleBar.Left, pnlTitleBar.Bottom - 1), 
                 new Point(pnlTitleBar.Right, pnlTitleBar.Bottom - 1));
+        }
+
+        private void btnConfiguration_Click(object sender, EventArgs e)
+        {
+            OverlayForm.OpenConfigurationForm();
         }
     }
 }

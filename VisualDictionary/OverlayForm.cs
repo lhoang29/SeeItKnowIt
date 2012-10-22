@@ -22,7 +22,7 @@ namespace VisualDictionary
         private NotifyIcon m_TrayIcon = null;
 
         private static WordInfoForm g_WordInfoForm = null;
-        private static ConfigurationForm g_ConfigurationForm = null;
+        public static ConfigurationForm g_ConfigurationForm = null;
 
         private static uint[] g_PotentialHotKeys = { (uint)'Z', (uint)'A', (uint)'X', (uint)'C' };
 
@@ -72,7 +72,7 @@ namespace VisualDictionary
         private void CreateTrayIcon()
         {
             m_TrayIcon = new NotifyIcon();
-            m_TrayIcon.Icon = Properties.Resources.pastwordsIcon;
+            m_TrayIcon.Icon = Icon.FromHandle(Properties.Resources.pastwords.GetHicon());
             m_TrayIcon.BalloonTipText = String.Format(Properties.Resources.TrayIcon_BalloonTipText, this.ProductName);
             m_TrayIcon.Visible = true;
             
@@ -332,6 +332,11 @@ namespace VisualDictionary
         /// Handles the Configuration task in the context menu for the tray icon.
         /// </summary>
         private void TrayIcon_MenuItem_Configuration_Clicked(object sender, EventArgs e)
+        {
+            OverlayForm.OpenConfigurationForm();
+        }
+
+        public static void OpenConfigurationForm()
         {
             if (g_ConfigurationForm == null || g_ConfigurationForm.IsDisposed)
             {

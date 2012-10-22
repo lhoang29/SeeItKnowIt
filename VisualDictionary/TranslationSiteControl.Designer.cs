@@ -49,7 +49,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.Transparent;
-            this.btnDelete.BackgroundImage = global::VisualDictionary.Properties.Resources.close_small;
+            this.btnDelete.BackgroundImage = global::VisualDictionary.Properties.Resources.delete;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

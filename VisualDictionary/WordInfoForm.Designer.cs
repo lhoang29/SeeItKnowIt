@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordInfoForm));
             this.lblWord = new System.Windows.Forms.Label();
             this.wbWordInfo = new System.Windows.Forms.WebBrowser();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
+            this.btnConfiguration = new System.Windows.Forms.Button();
             this.btnPastWords = new System.Windows.Forms.Button();
             this.btnPin = new System.Windows.Forms.Button();
             this.cbLanguage = new System.Windows.Forms.ComboBox();
@@ -44,6 +46,7 @@
             this.btnPinToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnCloseToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.comboBoxLanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnConfigToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -70,13 +73,14 @@
             this.wbWordInfo.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbWordInfo.Name = "wbWordInfo";
             this.wbWordInfo.ScriptErrorsSuppressed = true;
-            this.wbWordInfo.Size = new System.Drawing.Size(100, 240);
+            this.wbWordInfo.Size = new System.Drawing.Size(106, 240);
             this.wbWordInfo.TabIndex = 1;
             this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);
             // 
             // pnlTitleBar
             // 
             this.pnlTitleBar.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlTitleBar.Controls.Add(this.btnConfiguration);
             this.pnlTitleBar.Controls.Add(this.btnPastWords);
             this.pnlTitleBar.Controls.Add(this.btnPin);
             this.pnlTitleBar.Controls.Add(this.cbLanguage);
@@ -91,13 +95,29 @@
             this.pnlTitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseMove);
             this.pnlTitleBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlTitleBar_MouseUp);
             // 
+            // btnConfiguration
+            // 
+            this.btnConfiguration.BackColor = System.Drawing.Color.Transparent;
+            this.btnConfiguration.BackgroundImage = global::VisualDictionary.Properties.Resources.config;
+            this.btnConfiguration.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnConfiguration.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnConfiguration.FlatAppearance.BorderSize = 0;
+            this.btnConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfiguration.Location = new System.Drawing.Point(200, 0);
+            this.btnConfiguration.Name = "btnConfiguration";
+            this.btnConfiguration.Size = new System.Drawing.Size(21, 21);
+            this.btnConfiguration.TabIndex = 4;
+            this.btnConfiguration.UseVisualStyleBackColor = false;
+            this.btnConfiguration.Click += new System.EventHandler(this.btnConfiguration_Click);
+            // 
             // btnPastWords
             // 
             this.btnPastWords.BackColor = System.Drawing.Color.Transparent;
+            this.btnPastWords.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPastWords.BackgroundImage")));
+            this.btnPastWords.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnPastWords.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnPastWords.FlatAppearance.BorderSize = 0;
             this.btnPastWords.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPastWords.Image = global::VisualDictionary.Properties.Resources.pastwords;
             this.btnPastWords.Location = new System.Drawing.Point(221, 0);
             this.btnPastWords.Name = "btnPastWords";
             this.btnPastWords.Size = new System.Drawing.Size(21, 21);
@@ -108,10 +128,11 @@
             // btnPin
             // 
             this.btnPin.BackColor = System.Drawing.Color.Transparent;
+            this.btnPin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPin.BackgroundImage")));
+            this.btnPin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnPin.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnPin.FlatAppearance.BorderSize = 0;
             this.btnPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPin.Image = global::VisualDictionary.Properties.Resources.pin;
             this.btnPin.Location = new System.Drawing.Point(242, 0);
             this.btnPin.Name = "btnPin";
             this.btnPin.Size = new System.Drawing.Size(21, 21);
@@ -133,10 +154,11 @@
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnClose.BackgroundImage")));
+            this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Image = global::VisualDictionary.Properties.Resources.close;
             this.btnClose.Location = new System.Drawing.Point(263, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(21, 21);
@@ -162,7 +184,7 @@
             this.splitContainerMain.Panel2.SizeChanged += new System.EventHandler(this.splitContainerMain_Panel2_SizeChanged);
             this.splitContainerMain.Panel2MinSize = 100;
             this.splitContainerMain.Size = new System.Drawing.Size(284, 240);
-            this.splitContainerMain.SplitterDistance = 100;
+            this.splitContainerMain.SplitterDistance = 106;
             this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 3;
             this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
@@ -188,7 +210,7 @@
             // 
             this.splitContainerPastWords.Panel2.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Panel2.Controls.Add(this.flowLayoutPanelPastWords);
-            this.splitContainerPastWords.Size = new System.Drawing.Size(183, 240);
+            this.splitContainerPastWords.Size = new System.Drawing.Size(177, 240);
             this.splitContainerPastWords.SplitterDistance = 25;
             this.splitContainerPastWords.SplitterWidth = 1;
             this.splitContainerPastWords.TabIndex = 0;
@@ -199,7 +221,7 @@
             this.lblPastWords.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPastWords.Location = new System.Drawing.Point(0, 0);
             this.lblPastWords.Name = "lblPastWords";
-            this.lblPastWords.Size = new System.Drawing.Size(183, 25);
+            this.lblPastWords.Size = new System.Drawing.Size(177, 25);
             this.lblPastWords.TabIndex = 0;
             this.lblPastWords.Text = "PAST WORDS";
             this.lblPastWords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -211,9 +233,13 @@
             this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
-            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(183, 214);
+            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(177, 214);
             this.flowLayoutPanelPastWords.TabIndex = 0;
             this.flowLayoutPanelPastWords.WrapContents = false;
+            // 
+            // btnConfigToolTip
+            // 
+            this.btnConfigToolTip.BackColor = System.Drawing.SystemColors.Window;
             // 
             // WordInfoForm
             // 
@@ -267,5 +293,7 @@
         private System.Windows.Forms.ToolTip btnPinToolTip;
         private System.Windows.Forms.ToolTip btnCloseToolTip;
         private System.Windows.Forms.ToolTip comboBoxLanguageToolTip;
+        private System.Windows.Forms.Button btnConfiguration;
+        private System.Windows.Forms.ToolTip btnConfigToolTip;
     }
 }

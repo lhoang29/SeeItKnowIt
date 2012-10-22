@@ -6,6 +6,8 @@ using System.Text;
 
 namespace VisualDictionary
 {
+    /* Icons are from http://www.gentleface.com/free_icon_set.html */
+
     /// <summary>
     /// An enumeration of available translation languages.
     /// </summary>

@@ -79,7 +79,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Past Words.
+        ///   Looks up a localized string similar to Review.
         /// </summary>
         internal static string ButtonPastWordsToolTip {
             get {
@@ -88,7 +88,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin This Window.
+        ///   Looks up a localized string similar to Pin.
         /// </summary>
         internal static string ButtonPinToolTip {
             get {
@@ -107,31 +107,21 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap close_small {
-            get {
-                object obj = ResourceManager.GetObject("close_small", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap close_small_disabled {
-            get {
-                object obj = ResourceManager.GetObject("close_small_disabled", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change the translation language.
         /// </summary>
         internal static string ComboBoxLanguageToolTip {
             get {
                 return ResourceManager.GetString("ComboBoxLanguageToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap config {
+            get {
+                object obj = ResourceManager.GetObject("config", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -244,6 +234,16 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Dialog_Error {
@@ -308,16 +308,6 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon pastwordsIcon {
-            get {
-                object obj = ResourceManager.GetObject("pastwordsIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap pin {
@@ -337,7 +327,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure....
+        ///   Looks up a localized string similar to Configure.
         /// </summary>
         internal static string TrayIcon_MenuItem_Configuration {
             get {

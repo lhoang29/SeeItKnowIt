@@ -155,7 +155,6 @@
             this.Controls.Add(this.splitContainerMain);
             this.MaximizeBox = false;
             this.Name = "ConfigurationForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Configuration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigurationForm_FormClosing);

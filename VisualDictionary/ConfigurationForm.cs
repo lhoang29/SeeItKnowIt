@@ -16,6 +16,7 @@ namespace VisualDictionary
         {
             InitializeComponent();
 
+            this.Icon = Icon.FromHandle(Properties.Resources.pastwords.GetHicon());
             lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
 
