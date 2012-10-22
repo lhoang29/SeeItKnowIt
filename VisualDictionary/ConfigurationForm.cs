@@ -12,8 +12,6 @@ namespace VisualDictionary
 {
     public partial class ConfigurationForm : Form
     {   
-        private Point m_MouseDownPoint = Point.Empty;
-        
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -45,40 +43,9 @@ namespace VisualDictionary
             btnAddNewSite.Text = Properties.Resources.Configuration_TranslateSite_AddNew;
         }
 
-        protected override System.Windows.Forms.CreateParams CreateParams
-        {
-            get
-            {
-                var parms = base.CreateParams;
-                parms.Style &= ~0x00C00000; // remove WS_CAPTION
-                parms.ClassStyle |= 0x00020000; // add drop shadow;
-                return parms;
-            }
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void pnlTitleBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            m_MouseDownPoint = new Point(e.X, e.Y);
-        }
-
-        private void pnlTitleBar_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!m_MouseDownPoint.IsEmpty)
-            {
-                int x = this.Location.X + (e.X - m_MouseDownPoint.X);
-                int y = this.Location.Y + (e.Y - m_MouseDownPoint.Y);
-                this.Location = new Point(x, y);
-            }
-        }
-
-        private void pnlTitleBar_MouseUp(object sender, MouseEventArgs e)
-        {
-            m_MouseDownPoint = Point.Empty;
         }
 
         private void cbLanguage_SelectedValueChanged(object sender, EventArgs e)
