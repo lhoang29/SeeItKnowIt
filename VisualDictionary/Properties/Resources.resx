@@ -214,4 +214,7 @@
   <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WebBrowser_LoadingHTMLText" xml:space="preserve">
+    <value>&lt;font size=4&gt;Loading...&lt;/font&gt;</value>
+  </data>
 </root>

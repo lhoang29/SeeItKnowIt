@@ -65,6 +65,7 @@ namespace VisualDictionary
 
                 try
                 {
+                    wbWordInfo.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
                     wbWordInfo.Url = new Uri(address);
                 }
                 catch (Exception ex)

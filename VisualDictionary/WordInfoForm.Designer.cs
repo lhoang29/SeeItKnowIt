@@ -75,6 +75,7 @@
             this.wbWordInfo.ScriptErrorsSuppressed = true;
             this.wbWordInfo.Size = new System.Drawing.Size(112, 240);
             this.wbWordInfo.TabIndex = 1;
+            this.wbWordInfo.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);
             // 
             // pnlTitleBar
