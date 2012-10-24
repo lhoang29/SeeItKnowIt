@@ -19,8 +19,6 @@ namespace VisualDictionary
         private string m_Word;
         private bool m_Online;
         private bool m_Pinned;
-        private WebRequest m_WebRequest = null;
-        private WebResponse m_WebResponse = null;
         private Point m_MouseDownPoint = Point.Empty;
         private Control m_FocusedControl = null;
 
@@ -67,12 +65,7 @@ namespace VisualDictionary
 
                 try
                 {
-                    m_WebRequest = WebRequest.Create(address);
-                    if (m_WebRequest != null)
-                    {
-                        m_WebResponse = m_WebRequest.GetResponse();
-                        wbWordInfo.DocumentStream = m_WebResponse.GetResponseStream();
-                    }
+                    wbWordInfo.Url = new Uri(address);
                 }
                 catch (Exception ex)
                 {
@@ -160,9 +153,6 @@ namespace VisualDictionary
 
         private void WordInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (m_WebRequest != null) m_WebRequest.Abort();
-            if (m_WebResponse != null) m_WebResponse.Close();
-
             // Activate the configuration form if it's currently opened
             if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
             {

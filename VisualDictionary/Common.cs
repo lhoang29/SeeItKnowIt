@@ -48,6 +48,9 @@ namespace VisualDictionary
                 new string[] 
                 {
                     "http://dictionary.com/browse/{0}"
+#if DEBUG
+                    ,"http://www.whatismybrowser.com/"
+#endif
                 }
             ),
             new KeyValuePair<TranslationLanguage, string[]>(TranslationLanguage.Chinese, 
@@ -71,7 +74,7 @@ namespace VisualDictionary
             new KeyValuePair<TranslationLanguage, string[]>(TranslationLanguage.Vietnamese, 
                 new string[] 
                 {
-                    "http://vdict.com/{0},1,0,0.html"
+                    "http://v2.vdict.com/{0},1,0,0.html"
                 }
             )
         };
