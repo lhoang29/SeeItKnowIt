@@ -88,7 +88,10 @@ namespace VisualDictionary
                 this.Width = Properties.Settings.Default.WindowWidth;
                 this.Height = Properties.Settings.Default.WindowHeight;
             }
+            
             m_Pinned = Properties.Settings.Default.WindowPinned;
+            this.TopMost = m_Pinned;
+
             m_Language = Properties.Settings.Default.Language;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
             if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)
@@ -196,6 +199,7 @@ namespace VisualDictionary
         {
             m_Pinned = !m_Pinned;
             Properties.Settings.Default.WindowPinned = m_Pinned;
+            this.TopMost = m_Pinned;
             this.RedrawPinButton();
         }
 
@@ -325,6 +329,10 @@ namespace VisualDictionary
         private void btnConfiguration_Click(object sender, EventArgs e)
         {
             OverlayForm.OpenConfigurationForm();
+            if (m_Pinned)
+            {
+                this.Close();
+            }
         }
     }
 }
