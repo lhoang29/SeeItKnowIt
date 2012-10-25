@@ -171,7 +171,8 @@ namespace VisualDictionary
                 {
                     using (Graphics graphics = Graphics.FromImage(snapshot))
                     {
-                        graphics.CopyFromScreen(m_CaptureRectangle.Left, m_CaptureRectangle.Top, 0, 0, m_CaptureRectangle.Size);
+                        Point captureRectangleScreenCoordinates = this.PointToScreen(new Point(m_CaptureRectangle.Left, m_CaptureRectangle.Top));
+                        graphics.CopyFromScreen(captureRectangleScreenCoordinates.X, captureRectangleScreenCoordinates.Y, 0, 0, m_CaptureRectangle.Size);
 
                         using (Bitmap enlargedSnapshot = ResizeBitmap(snapshot, 3 * snapshot.Width, 3 * snapshot.Height))
                         {
