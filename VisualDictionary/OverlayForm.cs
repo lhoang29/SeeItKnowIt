@@ -274,6 +274,7 @@ namespace VisualDictionary
             {
                 SimulateKeys.Keyboard.SimulateKeyStroke('c', ctrl: true);
                 Thread.Sleep(100);
+                Application.DoEvents();
 
                 // Need to perform a loop until abling to retrieve clipboard text as 
                 // some other applications may still be using it and therefore locking it.
