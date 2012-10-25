@@ -87,13 +87,24 @@ namespace VisualDictionary
             trayIconContextMenu.MenuItems.Add(Properties.Resources.TrayIcon_MenuItem_Configuration, new EventHandler(this.TrayIcon_MenuItem_Configuration_Clicked));
             trayIconContextMenu.MenuItems.Add(Properties.Resources.TrayIcon_MenuItem_Exit, new EventHandler(this.TrayIcon_MenuItem_Exit_Clicked));
             m_TrayIcon.ContextMenu = trayIconContextMenu;
-            
+
+            m_TrayIcon.MouseUp += new MouseEventHandler(TrayIcon_MouseUp);
+
             // Only show the balloon tooltip the first time the application runs
             if (Properties.Settings.Default.FirstUse)
             {
                 m_TrayIcon.ShowBalloonTip(2000);
             }
         }
+
+        void TrayIcon_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.ShowTranslationWindow(String.Empty);
+            }
+        }
+
 
         /// <summary>
         /// Handles KeyDown event for the form
@@ -281,14 +292,17 @@ namespace VisualDictionary
                 // some other applications may still be using it and therefore locking it.
                 string paste = "";
                 bool success = false;
-                while (!success)
+                if (Clipboard.ContainsText())
                 {
-                    try
+                    while (!success)
                     {
-                        paste = Clipboard.GetText().Trim();
-                        success = true;
+                        try
+                        {
+                            paste = Clipboard.GetText().Trim();
+                            success = true;
+                        }
+                        catch (ExternalException) { }
                     }
-                    catch (ExternalException) { }
                 }
 
                 // Remember words that have been looked up
@@ -306,10 +320,22 @@ namespace VisualDictionary
                 }
 
                 // Show the translation window regardless of whether a word was highlighted to be translated.
-                g_WordInfoForm = new WordInfoForm(paste, true);
-                g_WordInfoForm.Location = Cursor.Position;
-                g_WordInfoForm.Show();
+                this.ShowTranslationWindow(paste);
             }
+        }
+
+        private void ShowTranslationWindow(string word)
+        {
+            g_WordInfoForm = new WordInfoForm(word, online: true);
+
+            Rectangle bounds = Screen.FromPoint(Cursor.Position).Bounds;
+            
+            Point formLocation = new Point(
+                Math.Min(Cursor.Position.X, bounds.Right - g_WordInfoForm.Width),
+                Math.Min(Cursor.Position.Y, bounds.Bottom - g_WordInfoForm.Height));
+
+            g_WordInfoForm.Location = formLocation;
+            g_WordInfoForm.Show();
         }
 
         /// <summary>
