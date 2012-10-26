@@ -63,10 +63,7 @@ namespace VisualDictionary
                 {
                     "http://hk.dictionary.yahoo.com/dictionary?p={0}"
                 }, 
-                new string[]
-                {
-                    ""
-                }
+                null
             ),
             // English - Hindi translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Hindi, 
@@ -74,10 +71,7 @@ namespace VisualDictionary
                 {
                     "http://www.shabdkosh.com/translate/{0}/{0}_meaning_in_Hindi_English"
                 }, 
-                new string[]
-                {
-                    ""
-                }
+                null
             ),
             // English - Spanish translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Spanish, 
@@ -85,10 +79,7 @@ namespace VisualDictionary
                 {
                     "http://www.spanishdict.com/translate/{0}"
                 }, 
-                new string[]
-                {
-                    ""
-                }
+                null
             ),
             // English - Vietnamese translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Vietnamese, 
@@ -275,6 +266,44 @@ namespace VisualDictionary
 
             destinationLanguages.Sort();
             return destinationLanguages.ToArray();
+        }
+
+        public static void InitializeLanguageComboBoxes(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
+        {
+            string[] availableSourceLanguages = Common.GetAvailableSourceLanguages();
+            cbSource.DataSource = availableSourceLanguages;
+            cbSource.SelectedItem = Properties.Settings.Default.SourceLanguage;
+
+            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(Properties.Settings.Default.SourceLanguage);
+            cbDestination.DataSource = availableDestinationLanguages;
+            cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
+        }
+
+        public static void SourceLanguageSelectionChanged(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
+        {
+            Properties.Settings.Default.SourceLanguage = cbSource.SelectedItem as string;
+
+            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(Properties.Settings.Default.SourceLanguage);
+            cbDestination.DataSource = availableDestinationLanguages;
+
+            if (availableDestinationLanguages.Length > 0)
+            {
+                if (!availableDestinationLanguages.Contains(Properties.Settings.Default.DestinationLanguage))
+                {
+                    Properties.Settings.Default.DestinationLanguage = availableDestinationLanguages[0];
+                }
+            }
+            else
+            {
+                Properties.Settings.Default.DestinationLanguage = String.Empty;
+            }
+
+            cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
+        }
+
+        public static void DestinationLanguageSelectionChanged(System.Windows.Forms.ComboBox cbDestination)
+        {
+            Properties.Settings.Default.DestinationLanguage = cbDestination.SelectedItem as string;
         }
 
         public static string[] GetLanguageCombination(string languageCombinationKey)

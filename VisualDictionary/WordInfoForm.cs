@@ -25,12 +25,10 @@ namespace VisualDictionary
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
 
-        private string m_SourceLanguage = TranslationLanguage.English.ToString();
-        private string m_DestinationLanguage = TranslationLanguage.English.ToString();
-
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
+
             splitContainerPastWords.SplitterWidth = 1;
 
             m_Online = online;
@@ -41,10 +39,10 @@ namespace VisualDictionary
             btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
             comboBoxLanguageToolTip.SetToolTip(cbSourceLanguage, Properties.Resources.ComboBoxLanguageToolTip);
 
-            string[] availableSourceLanguages = Common.GetAvailableSourceLanguages();
-            cbSourceLanguage.DataSource = availableSourceLanguages;
-
             this.LoadPersonalSettings();
+
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+
             this.GetTranslation(word);
         }
 
@@ -60,7 +58,7 @@ namespace VisualDictionary
                 
                 string address = String.Empty;
 
-                string[] translateSites = Common.GetTranslationSites(m_SourceLanguage, m_DestinationLanguage);
+                string[] translateSites = Common.GetTranslationSites(Properties.Settings.Default.SourceLanguage, Properties.Settings.Default.DestinationLanguage);
                 if (translateSites != null)
                 {
                     address = String.Format(translateSites[0], m_Word);
@@ -96,8 +94,6 @@ namespace VisualDictionary
             m_Pinned = Properties.Settings.Default.WindowPinned;
             this.TopMost = m_Pinned;
 
-            m_SourceLanguage = Properties.Settings.Default.SourceLanguage;
-            m_DestinationLanguage = Properties.Settings.Default.DestinationLanguage;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
             if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)
             {
@@ -107,9 +103,6 @@ namespace VisualDictionary
             this.RedrawPastWordsButton();
             this.RedrawPinButton();
             this.UpdatePastWordsPanel();
-
-            cbSourceLanguage.SelectedItem = m_SourceLanguage;
-            cbDestinationLanguage.SelectedItem = m_DestinationLanguage;
         }
 
         protected override CreateParams CreateParams
@@ -196,24 +189,15 @@ namespace VisualDictionary
 
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            m_SourceLanguage = cbSourceLanguage.SelectedItem as string;
-            Properties.Settings.Default.SourceLanguage = m_SourceLanguage;
-
-            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(m_SourceLanguage);
-            cbDestinationLanguage.DataSource = availableDestinationLanguages;
-
-            if (availableDestinationLanguages.Length > 0)
-            {
-                m_DestinationLanguage = availableDestinationLanguages[0];
-            }
-
+            Common.SourceLanguageSelectionChanged(cbSourceLanguage, cbDestinationLanguage);
+            
             this.GetTranslation(m_Word);
         }
 
         private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            m_DestinationLanguage = cbDestinationLanguage.SelectedItem as string;
-            Properties.Settings.Default.DestinationLanguage = m_DestinationLanguage;
+            Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+
             this.GetTranslation(m_Word);
         }
 

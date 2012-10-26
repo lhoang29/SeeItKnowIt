@@ -31,13 +31,13 @@
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.lblRestoreSettings = new System.Windows.Forms.Label();
             this.btnRestore = new System.Windows.Forms.Button();
+            this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
             this.btnAddNewSite = new System.Windows.Forms.Button();
             this.flowLayoutPanelSites = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlDivider1 = new System.Windows.Forms.Panel();
             this.lblSites = new System.Windows.Forms.Label();
             this.lblLanguage = new System.Windows.Forms.Label();
             this.cbSourceLanguage = new System.Windows.Forms.ComboBox();
-            this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -91,6 +91,16 @@
             this.btnRestore.TabIndex = 13;
             this.btnRestore.UseVisualStyleBackColor = true;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
+            // cbDestinationLanguage
+            // 
+            this.cbDestinationLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDestinationLanguage.FormattingEnabled = true;
+            this.cbDestinationLanguage.Location = new System.Drawing.Point(17, 82);
+            this.cbDestinationLanguage.Name = "cbDestinationLanguage";
+            this.cbDestinationLanguage.Size = new System.Drawing.Size(121, 21);
+            this.cbDestinationLanguage.TabIndex = 10;
+            this.cbDestinationLanguage.SelectionChangeCommitted += new System.EventHandler(this.cbDestinationLanguage_SelectionChangeCommitted);
             // 
             // btnAddNewSite
             // 
@@ -146,16 +156,7 @@
             this.cbSourceLanguage.Name = "cbSourceLanguage";
             this.cbSourceLanguage.Size = new System.Drawing.Size(121, 21);
             this.cbSourceLanguage.TabIndex = 0;
-            this.cbSourceLanguage.SelectedValueChanged += new System.EventHandler(this.cbLanguage_SelectedValueChanged);
-            // 
-            // cbDestinationLanguage
-            // 
-            this.cbDestinationLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDestinationLanguage.FormattingEnabled = true;
-            this.cbDestinationLanguage.Location = new System.Drawing.Point(17, 82);
-            this.cbDestinationLanguage.Name = "cbDestinationLanguage";
-            this.cbDestinationLanguage.Size = new System.Drawing.Size(121, 21);
-            this.cbDestinationLanguage.TabIndex = 10;
+            this.cbSourceLanguage.SelectionChangeCommitted += new System.EventHandler(this.cbSourceLanguage_SelectionChangeCommitted);
             // 
             // ConfigurationForm
             // 

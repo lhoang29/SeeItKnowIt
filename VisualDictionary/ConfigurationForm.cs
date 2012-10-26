@@ -21,18 +21,8 @@ namespace VisualDictionary
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
 
             // Populate the languages combo box
-            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
-            {
-                string[] languageCombination = Common.GetLanguageCombination(key.ToString());
-                string sourceLanguage = languageCombination[0];
-                string destinationLanguage = languageCombination[1];
-                cbSourceLanguage.Items.Add(sourceLanguage);
-                cbDestinationLanguage.Items.Add(destinationLanguage);
-            }
-
-            // Select the default language
-            cbSourceLanguage.SelectedItem = Properties.Settings.Default.SourceLanguage;
-            cbDestinationLanguage.SelectedItem = Properties.Settings.Default.DestinationLanguage;
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+            this.PopulateSiteControls();
 
             // Load the personalized location of the form
             if (Properties.Settings.Default.ConfigurationForm_Location != Point.Empty)
@@ -52,11 +42,6 @@ namespace VisualDictionary
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void cbLanguage_SelectedValueChanged(object sender, EventArgs e)
-        {
-            this.PopulateSiteControls();
         }
 
         private void PopulateSiteControls()
@@ -199,6 +184,18 @@ namespace VisualDictionary
             MessageBox.Show(Control.FromHandle(this.Handle), 
                 Properties.Resources.Configuration_SuccessfulRestore, 
                 Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Common.SourceLanguageSelectionChanged(cbSourceLanguage, cbDestinationLanguage);
+            this.PopulateSiteControls();
+        }
+
+        private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+            this.PopulateSiteControls();
         }
     }
 }
