@@ -36,7 +36,8 @@
             this.pnlDivider1 = new System.Windows.Forms.Panel();
             this.lblSites = new System.Windows.Forms.Label();
             this.lblLanguage = new System.Windows.Forms.Label();
-            this.cbLanguage = new System.Windows.Forms.ComboBox();
+            this.cbSourceLanguage = new System.Windows.Forms.ComboBox();
+            this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -63,12 +64,13 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerMain.Panel2.Controls.Add(this.cbDestinationLanguage);
             this.splitContainerMain.Panel2.Controls.Add(this.btnAddNewSite);
             this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelSites);
             this.splitContainerMain.Panel2.Controls.Add(this.pnlDivider1);
             this.splitContainerMain.Panel2.Controls.Add(this.lblSites);
             this.splitContainerMain.Panel2.Controls.Add(this.lblLanguage);
-            this.splitContainerMain.Panel2.Controls.Add(this.cbLanguage);
+            this.splitContainerMain.Panel2.Controls.Add(this.cbSourceLanguage);
             this.splitContainerMain.Size = new System.Drawing.Size(416, 214);
             this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 4;
@@ -136,15 +138,24 @@
             this.lblLanguage.Size = new System.Drawing.Size(0, 13);
             this.lblLanguage.TabIndex = 2;
             // 
-            // cbLanguage
+            // cbSourceLanguage
             // 
-            this.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLanguage.FormattingEnabled = true;
-            this.cbLanguage.Location = new System.Drawing.Point(17, 51);
-            this.cbLanguage.Name = "cbLanguage";
-            this.cbLanguage.Size = new System.Drawing.Size(121, 21);
-            this.cbLanguage.TabIndex = 0;
-            this.cbLanguage.SelectedValueChanged += new System.EventHandler(this.cbLanguage_SelectedValueChanged);
+            this.cbSourceLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSourceLanguage.FormattingEnabled = true;
+            this.cbSourceLanguage.Location = new System.Drawing.Point(17, 51);
+            this.cbSourceLanguage.Name = "cbSourceLanguage";
+            this.cbSourceLanguage.Size = new System.Drawing.Size(121, 21);
+            this.cbSourceLanguage.TabIndex = 0;
+            this.cbSourceLanguage.SelectedValueChanged += new System.EventHandler(this.cbLanguage_SelectedValueChanged);
+            // 
+            // cbDestinationLanguage
+            // 
+            this.cbDestinationLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDestinationLanguage.FormattingEnabled = true;
+            this.cbDestinationLanguage.Location = new System.Drawing.Point(17, 82);
+            this.cbDestinationLanguage.Name = "cbDestinationLanguage";
+            this.cbDestinationLanguage.Size = new System.Drawing.Size(121, 21);
+            this.cbDestinationLanguage.TabIndex = 10;
             // 
             // ConfigurationForm
             // 
@@ -171,7 +182,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        private System.Windows.Forms.ComboBox cbLanguage;
+        private System.Windows.Forms.ComboBox cbSourceLanguage;
         private System.Windows.Forms.Label lblSites;
         private System.Windows.Forms.Label lblLanguage;
         private System.Windows.Forms.Panel pnlDivider1;
@@ -179,6 +190,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelSites;
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.Label lblRestoreSettings;
+        private System.Windows.Forms.ComboBox cbDestinationLanguage;
 
     }
 }

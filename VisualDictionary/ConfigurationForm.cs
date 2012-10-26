@@ -21,13 +21,18 @@ namespace VisualDictionary
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
 
             // Populate the languages combo box
-            foreach (object translateSite in Properties.Settings.Default.TranslateSites.Keys)
+            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
             {
-                cbLanguage.Items.Add(translateSite.ToString());
+                string[] languageCombination = Common.GetLanguageCombination(key.ToString());
+                string sourceLanguage = languageCombination[0];
+                string destinationLanguage = languageCombination[1];
+                cbSourceLanguage.Items.Add(sourceLanguage);
+                cbDestinationLanguage.Items.Add(destinationLanguage);
             }
 
             // Select the default language
-            cbLanguage.SelectedItem = Properties.Settings.Default.Language;
+            cbSourceLanguage.SelectedItem = Properties.Settings.Default.SourceLanguage;
+            cbDestinationLanguage.SelectedItem = Properties.Settings.Default.DestinationLanguage;
 
             // Load the personalized location of the form
             if (Properties.Settings.Default.ConfigurationForm_Location != Point.Empty)
@@ -57,31 +62,30 @@ namespace VisualDictionary
         private void PopulateSiteControls()
         {
             flowLayoutPanelSites.Controls.Clear();
-            string selectedValue = cbLanguage.SelectedItem as string;
-            if (Properties.Settings.Default.TranslateSites.Contains(selectedValue))
+            string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+            string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
+            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
+
+            if (translateSites != null)
             {
-                string[] translateSites = Properties.Settings.Default.TranslateSites[selectedValue] as string[];
-                if (translateSites != null)
+                foreach (string site in translateSites)
                 {
-                    foreach (string site in translateSites)
-                    {
-                        TranslationSiteControl translationSiteControl = new TranslationSiteControl(site);
-                        translationSiteControl.SiteDeleted += new EventHandler(TranslationSiteControl_SiteDeleted);
-                        translationSiteControl.SiteActive += new EventHandler(TranslationSiteControl_SiteActive);
-                        flowLayoutPanelSites.Controls.Add(translationSiteControl);
-                    }
+                    TranslationSiteControl translationSiteControl = new TranslationSiteControl(site);
+                    translationSiteControl.SiteDeleted += new EventHandler(TranslationSiteControl_SiteDeleted);
+                    translationSiteControl.SiteActive += new EventHandler(TranslationSiteControl_SiteActive);
+                    flowLayoutPanelSites.Controls.Add(translationSiteControl);
+                }
 
-                    // Mark the first site as the currently active site
-                    if (flowLayoutPanelSites.Controls.Count > 0)
-                    {
-                        TranslationSiteControl firstSite = (TranslationSiteControl)flowLayoutPanelSites.Controls[0];
-                        firstSite.IsActive = true;
+                // Mark the first site as the currently active site
+                if (flowLayoutPanelSites.Controls.Count > 0)
+                {
+                    TranslationSiteControl firstSite = (TranslationSiteControl)flowLayoutPanelSites.Controls[0];
+                    firstSite.IsActive = true;
 
-                        // If only one site is present then make it required so it can't be deleted
-                        if (flowLayoutPanelSites.Controls.Count == 1)
-                        {
-                            firstSite.IsRequired = true;
-                        }
+                    // If only one site is present then make it required so it can't be deleted
+                    if (flowLayoutPanelSites.Controls.Count == 1)
+                    {
+                        firstSite.IsRequired = true;
                     }
                 }
             }
@@ -105,16 +109,21 @@ namespace VisualDictionary
             oldActiveSiteControl.IsActive = false;
 
             // Now store the new active site address by swapping it with the first entry in the saved list
-            string selectedValue = cbLanguage.SelectedItem as string;
-            string[] translateSites = Properties.Settings.Default.TranslateSites[selectedValue] as string[];
-            for (int iSite = 0; iSite < translateSites.Length; iSite++)
+            string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+            string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
+
+            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
+            if (translateSites != null)
             {
-                if (translateSites[iSite] == newActiveSiteControl.TranslateSiteAddress)
+                for (int iSite = 0; iSite < translateSites.Length; iSite++)
                 {
-                    string oldActiveSiteAddress = translateSites[0];
-                    translateSites[0] = newActiveSiteControl.TranslateSiteAddress;
-                    translateSites[iSite] = oldActiveSiteAddress;
-                    break;
+                    if (translateSites[iSite] == newActiveSiteControl.TranslateSiteAddress)
+                    {
+                        string oldActiveSiteAddress = translateSites[0];
+                        translateSites[0] = newActiveSiteControl.TranslateSiteAddress;
+                        translateSites[iSite] = oldActiveSiteAddress;
+                        break;
+                    }
                 }
             }
         }
@@ -125,10 +134,15 @@ namespace VisualDictionary
 
             // Delete the site from saved list
             string deletedSiteAddress = tsc.TranslateSiteAddress;
-            string selectedValue = cbLanguage.SelectedItem as string;
-            string[] translateSites = Properties.Settings.Default.TranslateSites[selectedValue] as string[];
-            string[] newTranslateSites = translateSites.Where(siteAddress => siteAddress != deletedSiteAddress).ToArray();
-            Properties.Settings.Default.TranslateSites[selectedValue] = newTranslateSites;
+            string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+            string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
+
+            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
+            if (translateSites != null)
+            {
+                string[] newTranslateSites = translateSites.Where(siteAddress => siteAddress != deletedSiteAddress).ToArray();
+                Common.UpdateTranslationSites(sourceLanguage, destinationLanguage, newTranslateSites);
+            }
 
             // Remove the control and mark the new top site as active
             flowLayoutPanelSites.Controls.Remove(tsc);
@@ -158,12 +172,14 @@ namespace VisualDictionary
             if (e != null)
             {
                 string newSiteURL = e.SiteURL;
-                string selectedValue = cbLanguage.SelectedItem as string;
-                string[] translateSites = Properties.Settings.Default.TranslateSites[selectedValue] as string[];
-                if (!translateSites.Contains(newSiteURL))
+                string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+                string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
+
+                string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
+                if (translateSites != null && !translateSites.Contains(newSiteURL))
                 {
                     string[] newTranslateSites = translateSites.Union(new string[] { newSiteURL }).ToArray();
-                    Properties.Settings.Default.TranslateSites[selectedValue] = newTranslateSites;
+                    Common.UpdateTranslationSites(sourceLanguage, destinationLanguage, newTranslateSites);
                     this.PopulateSiteControls();
                 }
             }

@@ -25,7 +25,8 @@ namespace VisualDictionary
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
 
-        private string m_Language = TranslationLanguage.English.ToString();
+        private string m_SourceLanguage = TranslationLanguage.English.ToString();
+        private string m_DestinationLanguage = TranslationLanguage.English.ToString();
 
         public WordInfoForm(string word, bool online)
         {
@@ -38,12 +39,10 @@ namespace VisualDictionary
             btnPastWordsToolTip.SetToolTip(btnPastWords, Properties.Resources.ButtonPastWordsToolTip);
             btnPinToolTip.SetToolTip(btnPin, Properties.Resources.ButtonPinToolTip);
             btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
-            comboBoxLanguageToolTip.SetToolTip(cbLanguage, Properties.Resources.ComboBoxLanguageToolTip);
+            comboBoxLanguageToolTip.SetToolTip(cbSourceLanguage, Properties.Resources.ComboBoxLanguageToolTip);
 
-            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
-            {
-                cbLanguage.Items.Add(key.ToString());
-            }
+            string[] availableSourceLanguages = Common.GetAvailableSourceLanguages();
+            cbSourceLanguage.DataSource = availableSourceLanguages;
 
             this.LoadPersonalSettings();
             this.GetTranslation(word);
@@ -58,10 +57,14 @@ namespace VisualDictionary
             else
             {
                 lblWord.Visible = false;
-                string address = String.Format(
-                    (Properties.Settings.Default.TranslateSites[m_Language] as string[])[0],
-                    m_Word
-                );
+                
+                string address = String.Empty;
+
+                string[] translateSites = Common.GetTranslationSites(m_SourceLanguage, m_DestinationLanguage);
+                if (translateSites != null)
+                {
+                    address = String.Format(translateSites[0], m_Word);
+                }
 
                 try
                 {
@@ -93,7 +96,8 @@ namespace VisualDictionary
             m_Pinned = Properties.Settings.Default.WindowPinned;
             this.TopMost = m_Pinned;
 
-            m_Language = Properties.Settings.Default.Language;
+            m_SourceLanguage = Properties.Settings.Default.SourceLanguage;
+            m_DestinationLanguage = Properties.Settings.Default.DestinationLanguage;
             splitContainerMain.Panel2Collapsed = !Properties.Settings.Default.PastWordsPanelExpanded;
             if (Properties.Settings.Default.PastWordsPanelExpandedWidth != 0)
             {
@@ -104,7 +108,8 @@ namespace VisualDictionary
             this.RedrawPinButton();
             this.UpdatePastWordsPanel();
 
-            cbLanguage.SelectedItem = m_Language;
+            cbSourceLanguage.SelectedItem = m_SourceLanguage;
+            cbDestinationLanguage.SelectedItem = m_DestinationLanguage;
         }
 
         protected override CreateParams CreateParams
@@ -189,10 +194,26 @@ namespace VisualDictionary
             m_MouseDownPoint = Point.Empty;
         }
 
-        private void cbLanguage_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            m_Language = cbLanguage.SelectedItem as string;
-            Properties.Settings.Default.Language = m_Language;
+            m_SourceLanguage = cbSourceLanguage.SelectedItem as string;
+            Properties.Settings.Default.SourceLanguage = m_SourceLanguage;
+
+            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(m_SourceLanguage);
+            cbDestinationLanguage.DataSource = availableDestinationLanguages;
+
+            if (availableDestinationLanguages.Length > 0)
+            {
+                m_DestinationLanguage = availableDestinationLanguages[0];
+            }
+
+            this.GetTranslation(m_Word);
+        }
+
+        private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            m_DestinationLanguage = cbDestinationLanguage.SelectedItem as string;
+            Properties.Settings.Default.DestinationLanguage = m_DestinationLanguage;
             this.GetTranslation(m_Word);
         }
 

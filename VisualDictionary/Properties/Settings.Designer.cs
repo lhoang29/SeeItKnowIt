@@ -50,12 +50,12 @@ namespace VisualDictionary.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Language {
+        public string SourceLanguage {
             get {
-                return ((string)(this["Language"]));
+                return ((string)(this["SourceLanguage"]));
             }
             set {
-                this["Language"] = value;
+                this["SourceLanguage"] = value;
             }
         }
         
@@ -140,6 +140,18 @@ namespace VisualDictionary.Properties {
             }
             set {
                 this["ConfigurationForm_Location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DestinationLanguage {
+            get {
+                return ((string)(this["DestinationLanguage"]));
+            }
+            set {
+                this["DestinationLanguage"] = value;
             }
         }
     }
