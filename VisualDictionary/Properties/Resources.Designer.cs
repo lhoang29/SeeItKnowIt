@@ -162,6 +162,15 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this site?.
+        /// </summary>
+        internal static string Configuration_DeleteSite_Confirmation {
+            get {
+                return ResourceManager.GetString("Configuration_DeleteSite_Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
         internal static string Configuration_Label_Languages {
@@ -194,6 +203,15 @@ namespace VisualDictionary.Properties {
         internal static string Configuration_Language_AddNew {
             get {
                 return ResourceManager.GetString("Configuration_Language_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore all settings to default?.
+        /// </summary>
+        internal static string Configuration_RestoreSettings_Confirmation {
+            get {
+                return ResourceManager.GetString("Configuration_RestoreSettings_Confirmation", resourceCulture);
             }
         }
         
@@ -240,6 +258,25 @@ namespace VisualDictionary.Properties {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete_disabled {
+            get {
+                object obj = ResourceManager.GetObject("delete_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        internal static string Dialog_Confirmation {
+            get {
+                return ResourceManager.GetString("Dialog_Confirmation", resourceCulture);
             }
         }
         

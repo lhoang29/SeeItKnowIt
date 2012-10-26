@@ -73,7 +73,16 @@ namespace VisualDictionary
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            this.SiteDeleted(this, e);
+            DialogResult result = MessageBox.Show(Control.FromHandle(this.Handle),
+                Properties.Resources.Configuration_DeleteSite_Confirmation,
+                Properties.Resources.Dialog_Confirmation,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                this.SiteDeleted(this, e);                
+            }
         }
 
         private void UpdateContent()
@@ -140,6 +149,14 @@ namespace VisualDictionary
 
         private void btnDelete_EnabledChanged(object sender, EventArgs e)
         {
+            if (btnDelete.Enabled)
+            {
+                btnDelete.BackgroundImage = Properties.Resources.delete;
+            }
+            else
+            {
+                btnDelete.BackgroundImage = Properties.Resources.delete_disabled;
+            }
         }
     }
 }

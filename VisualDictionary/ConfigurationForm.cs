@@ -178,12 +178,21 @@ namespace VisualDictionary
 
         private void btnRestore_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Reset();
-            Common.InitializeDefaultSettings();
+            DialogResult result = MessageBox.Show(Control.FromHandle(this.Handle),
+                Properties.Resources.Configuration_RestoreSettings_Confirmation,
+                Properties.Resources.Dialog_Confirmation,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            MessageBox.Show(Control.FromHandle(this.Handle), 
-                Properties.Resources.Configuration_SuccessfulRestore, 
-                Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                Properties.Settings.Default.Reset();
+                Common.InitializeDefaultSettings();
+
+                MessageBox.Show(Control.FromHandle(this.Handle),
+                    Properties.Resources.Configuration_SuccessfulRestore,
+                    Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
