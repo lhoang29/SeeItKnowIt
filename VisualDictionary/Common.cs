@@ -21,6 +21,41 @@ namespace VisualDictionary
         Vietnamese
     }
 
+    [Serializable]
+    [System.Configuration.SettingsSerializeAs(System.Configuration.SettingsSerializeAs.Binary)]
+    public class TranslateSitesInfo
+    {
+        private List<string> m_ForwardSites;
+        private List<bool> m_ForwardSitesOptional;
+
+        private List<string> m_BackwardSites;
+        private List<bool> m_BackwardSitesOptional;
+
+        public List<string> ForwardSites
+        {
+            get { return m_ForwardSites; }
+            set { m_ForwardSites = value; }
+        }
+
+        public List<bool> ForwardSitesOptional
+        {
+            get { return m_ForwardSitesOptional; }
+            set { m_ForwardSitesOptional = value; }
+        }
+
+        public List<string> BackwardSites
+        {
+            get { return m_BackwardSites; }
+            set { m_BackwardSites = value; }
+        }
+
+        public List<bool> BackwardSitesOptional
+        {
+            get { return m_BackwardSitesOptional; }
+            set { m_BackwardSitesOptional = value; }
+        }
+    }
+
     public class Common
     {
         /// <summary>
@@ -136,8 +171,20 @@ namespace VisualDictionary
                 foreach (Tuple<TranslationLanguage, TranslationLanguage, string[], string[]> site in Common.DefaultTranslationSites)
                 {
                     string key = Common.MakeLanguageCombinationKey(site.Item1.ToString(), site.Item2.ToString());
-                    KeyValuePair<string[], string[]> value = new KeyValuePair<string[], string[]>(site.Item3, site.Item4);
-                    Properties.Settings.Default.TranslateSites.Add(key, value);
+
+                    TranslateSitesInfo info = new TranslateSitesInfo();
+                    info.ForwardSites = (site.Item3 != null) ? new List<string>(site.Item3) : new List<string>();
+                    info.BackwardSites = (site.Item4 != null) ? new List<string>(site.Item4) : new List<string>();
+                    if (info.ForwardSites.Count > 0)
+                    {
+                        info.ForwardSitesOptional = new List<bool>(new bool[info.ForwardSites.Count]);
+                    }
+                    if (info.BackwardSites.Count > 0)
+                    {
+                        info.BackwardSitesOptional = new List<bool>(new bool[info.BackwardSites.Count]);
+                    }
+
+                    Properties.Settings.Default.TranslateSites.Add(key, info);
                 }
             }
 
@@ -152,46 +199,119 @@ namespace VisualDictionary
             }
         }
 
-        public static string[] GetTranslationSites(string sourceLanguage, string destinationLanguage)
+        public static TranslateSitesInfo GetTranslationSitesInfo(string sourceLanguage, string destinationLanguage, ref bool forward)
         {
-            string[] translationSites = null;
+            TranslateSitesInfo info = null;
 
             string forwardKey = Common.MakeLanguageCombinationKey(sourceLanguage, destinationLanguage);
             if (Properties.Settings.Default.TranslateSites.Contains(forwardKey))
             {
-                KeyValuePair<string[], string[]> biDirectionalSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[forwardKey];
-                translationSites = biDirectionalSites.Key;
+                info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[forwardKey];
+                forward = true;
             }
             else
             {
                 string backwardKey = Common.MakeLanguageCombinationKey(destinationLanguage, sourceLanguage);
                 if (Properties.Settings.Default.TranslateSites.Contains(backwardKey))
                 {
-                    KeyValuePair<string[], string[]> biDirectionalSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[backwardKey];
-                    translationSites = biDirectionalSites.Value;
+                    info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[backwardKey];
+                    forward = false;
                 }
             }
 
-            return translationSites;
+            return info;
         }
 
-        public static void UpdateTranslationSites(string sourceLanguage, string destinationLanguage, string[] newSites)
+        public static bool DeleteTranslationSite(string sourceLanguage, string destinationLanguage, string site)
         {
+            bool deleted = false;
+
             string forwardKey = Common.MakeLanguageCombinationKey(sourceLanguage, destinationLanguage);
             if (Properties.Settings.Default.TranslateSites.Contains(forwardKey))
             {
-                KeyValuePair<string[], string[]> biDirectionalSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[forwardKey];
-                Properties.Settings.Default.TranslateSites[forwardKey] = new KeyValuePair<string[], string[]>(newSites, biDirectionalSites.Value);
+                TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[forwardKey];
+                int indexToDelete = -1;
+                for (int iSite = 0; iSite < info.ForwardSites.Count; iSite++)
+                {
+                    if (info.ForwardSites[iSite] == site)
+                    {
+                        indexToDelete = iSite;
+                        break;
+                    }
+                }
+                if (indexToDelete >= 0)
+                {
+                    info.ForwardSites.RemoveAt(indexToDelete);
+                    info.ForwardSitesOptional.RemoveAt(indexToDelete);
+                    deleted = true;
+                }
+                Properties.Settings.Default.TranslateSites[forwardKey] = info;
             }
             else
             {
                 string backwardKey = Common.MakeLanguageCombinationKey(destinationLanguage, sourceLanguage);
                 if (Properties.Settings.Default.TranslateSites.Contains(backwardKey))
                 {
-                    KeyValuePair<string[], string[]> biDirectionalSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[backwardKey];
-                    Properties.Settings.Default.TranslateSites[backwardKey] = new KeyValuePair<string[], string[]>(biDirectionalSites.Key, newSites);
+                    TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[backwardKey];
+                    int indexToDelete = -1;
+                    for (int iSite = 0; iSite < info.BackwardSites.Count; iSite++)
+                    {
+                        if (info.BackwardSites[iSite] == site)
+                        {
+                            indexToDelete = iSite;
+                            break;
+                        }
+                    }
+                    if (indexToDelete >= 0)
+                    {
+                        info.BackwardSites.RemoveAt(indexToDelete);
+                        info.BackwardSitesOptional.RemoveAt(indexToDelete);
+                        deleted = true;
+                    }
+                    Properties.Settings.Default.TranslateSites[backwardKey] = info;
                 }
             }
+
+            return deleted;
+        }
+
+        public static bool AddTranslationSite(string sourceLanguage, string destinationLanguage, string site)
+        {
+            bool added = false;
+
+            string forwardKey = Common.MakeLanguageCombinationKey(sourceLanguage, destinationLanguage);
+            if (Properties.Settings.Default.TranslateSites.Contains(forwardKey))
+            {
+                TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[forwardKey];
+
+                if (!info.ForwardSites.Contains(site))
+                {
+                    info.ForwardSites.Add(site);
+                    info.ForwardSitesOptional.Add(true);
+                    added = true;
+                }
+
+                Properties.Settings.Default.TranslateSites[forwardKey] = info;
+            }
+            else
+            {
+                string backwardKey = Common.MakeLanguageCombinationKey(destinationLanguage, sourceLanguage);
+                if (Properties.Settings.Default.TranslateSites.Contains(backwardKey))
+                {
+                    TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[backwardKey];
+
+                    if (!info.BackwardSites.Contains(site))
+                    {
+                        info.BackwardSites.Add(site);
+                        info.BackwardSitesOptional.Add(true);
+                        added = true;
+                    }
+
+                    Properties.Settings.Default.TranslateSites[backwardKey] = info;
+                }
+            }
+
+            return added;
         }
 
         public static string[] GetAvailableSourceLanguages()
@@ -204,15 +324,15 @@ namespace VisualDictionary
                 string sourceLanguage = languageCombination[0];
                 string destinationLanguage = languageCombination[1];
 
-                KeyValuePair<string[], string[]> biDirectionalSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[key];
-                if (biDirectionalSites.Key != null && biDirectionalSites.Key.Length > 0)
+                TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[key];
+                if (info.ForwardSites.Count > 0)
                 {
                     if (!sourceLanguages.Contains(sourceLanguage))
                     {
                         sourceLanguages.Add(sourceLanguage);
                     }
                 }
-                if (biDirectionalSites.Value != null && biDirectionalSites.Value.Length > 0)
+                if (info.BackwardSites.Count > 0)
                 {
                     if (!sourceLanguages.Contains(destinationLanguage))
                     {
@@ -237,12 +357,12 @@ namespace VisualDictionary
                     string[] languageCombination = Common.GetLanguageCombination(key.ToString());
                     string currentSourceLanguage = languageCombination[0];
                     string destinationLanguage = languageCombination[1];
-                    KeyValuePair<string[], string[]> translateSites = (KeyValuePair<string[], string[]>)Properties.Settings.Default.TranslateSites[key];
+                    TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[key];
 
                     // If forward direction and there exists some translate site then add the destination language
                     if (currentSourceLanguage == sourceLanguage)
                     {
-                        if (translateSites.Key != null && translateSites.Key.Length > 0)
+                        if (info.ForwardSites.Count > 0)
                         {
                             if (!destinationLanguages.Contains(destinationLanguage))
                             {
@@ -253,7 +373,7 @@ namespace VisualDictionary
                     // If backward direction and there exists some translate site then add the source language
                     else if (destinationLanguage == sourceLanguage)
                     {
-                        if (translateSites.Value != null && translateSites.Value.Length > 0)
+                        if (info.BackwardSites.Count > 0)
                         {
                             if (!destinationLanguages.Contains(currentSourceLanguage))
                             {

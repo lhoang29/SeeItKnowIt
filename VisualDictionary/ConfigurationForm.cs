@@ -49,30 +49,30 @@ namespace VisualDictionary
             flowLayoutPanelSites.Controls.Clear();
             string sourceLanguage = cbSourceLanguage.SelectedItem as string;
             string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
-            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
 
-            if (translateSites != null)
+            bool forward = false;
+            TranslateSitesInfo info = Common.GetTranslationSitesInfo(sourceLanguage, destinationLanguage, ref forward);
+
+            List<string> translateSites = forward ? info.ForwardSites : info.BackwardSites;
+            List<bool> optionalSites = forward ? info.ForwardSitesOptional : info.BackwardSitesOptional;
+
+            if (translateSites != null && optionalSites != null)
             {
-                foreach (string site in translateSites)
+                for (int iSite = 0; iSite < translateSites.Count; iSite++)
                 {
-                    TranslationSiteControl translationSiteControl = new TranslationSiteControl(site);
+                    TranslationSiteControl translationSiteControl = new TranslationSiteControl(translateSites[iSite]);
+                    translationSiteControl.IsRequired = !optionalSites[iSite];
                     translationSiteControl.SiteDeleted += new EventHandler(TranslationSiteControl_SiteDeleted);
                     translationSiteControl.SiteActive += new EventHandler(TranslationSiteControl_SiteActive);
                     flowLayoutPanelSites.Controls.Add(translationSiteControl);
                 }
+            }
 
-                // Mark the first site as the currently active site
-                if (flowLayoutPanelSites.Controls.Count > 0)
-                {
-                    TranslationSiteControl firstSite = (TranslationSiteControl)flowLayoutPanelSites.Controls[0];
-                    firstSite.IsActive = true;
-
-                    // If only one site is present then make it required so it can't be deleted
-                    if (flowLayoutPanelSites.Controls.Count == 1)
-                    {
-                        firstSite.IsRequired = true;
-                    }
-                }
+            // Mark the first site as the currently active site
+            if (flowLayoutPanelSites.Controls.Count > 0)
+            {
+                TranslationSiteControl firstSite = (TranslationSiteControl)flowLayoutPanelSites.Controls[0];
+                firstSite.IsActive = true;
             }
         }
 
@@ -97,18 +97,25 @@ namespace VisualDictionary
             string sourceLanguage = cbSourceLanguage.SelectedItem as string;
             string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
 
-            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
-            if (translateSites != null)
+            bool forward = false;
+            TranslateSitesInfo info = Common.GetTranslationSitesInfo(sourceLanguage, destinationLanguage, ref forward);
+
+            List<string> translateSites = forward ? info.ForwardSites : info.BackwardSites;
+            List<bool> optionalSites = forward ? info.ForwardSitesOptional : info.BackwardSitesOptional;
+
+            for (int iSite = 0; iSite < translateSites.Count; iSite++)
             {
-                for (int iSite = 0; iSite < translateSites.Length; iSite++)
+                if (translateSites[iSite] == newActiveSiteControl.TranslateSiteAddress)
                 {
-                    if (translateSites[iSite] == newActiveSiteControl.TranslateSiteAddress)
-                    {
-                        string oldActiveSiteAddress = translateSites[0];
-                        translateSites[0] = newActiveSiteControl.TranslateSiteAddress;
-                        translateSites[iSite] = oldActiveSiteAddress;
-                        break;
-                    }
+                    string oldActiveSiteAddress = translateSites[0];
+                    translateSites[0] = translateSites[iSite];
+                    translateSites[iSite] = oldActiveSiteAddress;
+
+                    bool oldOptionalSite = optionalSites[0];
+                    optionalSites[0] = optionalSites[iSite];
+                    optionalSites[iSite] = oldOptionalSite;
+
+                    break;
                 }
             }
         }
@@ -122,24 +129,16 @@ namespace VisualDictionary
             string sourceLanguage = cbSourceLanguage.SelectedItem as string;
             string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
 
-            string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
-            if (translateSites != null)
-            {
-                string[] newTranslateSites = translateSites.Where(siteAddress => siteAddress != deletedSiteAddress).ToArray();
-                Common.UpdateTranslationSites(sourceLanguage, destinationLanguage, newTranslateSites);
-            }
+            bool deleted = Common.DeleteTranslationSite(sourceLanguage, destinationLanguage, deletedSiteAddress);
 
-            // Remove the control and mark the new top site as active
-            flowLayoutPanelSites.Controls.Remove(tsc);
-            if (flowLayoutPanelSites.Controls.Count > 0)
+            if (deleted)
             {
-                TranslationSiteControl newActiveSite = flowLayoutPanelSites.Controls[0] as TranslationSiteControl;
-                newActiveSite.IsActive = true;
-
-                // If only one site is present then make it required so it can't be deleted
-                if (flowLayoutPanelSites.Controls.Count == 1)
+                // Remove the control and mark the new top site as active
+                flowLayoutPanelSites.Controls.Remove(tsc);
+                if (flowLayoutPanelSites.Controls.Count > 0)
                 {
-                    newActiveSite.IsRequired = true;
+                    TranslationSiteControl newActiveSite = flowLayoutPanelSites.Controls[0] as TranslationSiteControl;
+                    newActiveSite.IsActive = true;
                 }
             }
         }
@@ -160,11 +159,9 @@ namespace VisualDictionary
                 string sourceLanguage = cbSourceLanguage.SelectedItem as string;
                 string destinationLanguage = cbDestinationLanguage.SelectedItem as string;
 
-                string[] translateSites = Common.GetTranslationSites(sourceLanguage, destinationLanguage);
-                if (translateSites != null && !translateSites.Contains(newSiteURL))
+                bool added = Common.AddTranslationSite(sourceLanguage, destinationLanguage, newSiteURL);
+                if (added)
                 {
-                    string[] newTranslateSites = translateSites.Union(new string[] { newSiteURL }).ToArray();
-                    Common.UpdateTranslationSites(sourceLanguage, destinationLanguage, newTranslateSites);
                     this.PopulateSiteControls();
                 }
             }

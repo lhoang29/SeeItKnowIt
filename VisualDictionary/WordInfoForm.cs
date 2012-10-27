@@ -58,8 +58,14 @@ namespace VisualDictionary
                 
                 string address = String.Empty;
 
-                string[] translateSites = Common.GetTranslationSites(Properties.Settings.Default.SourceLanguage, Properties.Settings.Default.DestinationLanguage);
-                if (translateSites != null)
+                bool forward = false;
+                TranslateSitesInfo info = Common.GetTranslationSitesInfo(
+                    Properties.Settings.Default.SourceLanguage, 
+                    Properties.Settings.Default.DestinationLanguage, 
+                    ref forward);
+
+                List<string> translateSites = forward ? info.ForwardSites : info.BackwardSites;
+                if (translateSites.Count > 0)
                 {
                     address = String.Format(translateSites[0], m_Word);
                 }
