@@ -36,7 +36,6 @@ namespace VisualDictionary
 
             lblLanguage.Text = Properties.Resources.Configuration_Label_Languages;
             lblSites.Text = Properties.Resources.Configuration_Label_TranslateSites;
-            btnAddNewSite.Text = Properties.Resources.Configuration_TranslateSite_AddNew;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -143,12 +142,25 @@ namespace VisualDictionary
             }
         }
 
-        private void btnAddNewSite_Click(object sender, EventArgs e)
+        private void pbAddNewSite_MouseClick(object sender, MouseEventArgs e)
         {
-            ConfigurationAddSiteForm addSiteForm = new ConfigurationAddSiteForm();
-            addSiteForm.StartPosition = FormStartPosition.CenterParent;
-            addSiteForm.SiteAdded += new SiteAddedEventHandler(ConfigurationAddSiteForm_SiteAdded);
-            addSiteForm.ShowDialog(Control.FromHandle(this.Handle));
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                ConfigurationAddSiteForm addSiteForm = new ConfigurationAddSiteForm();
+                addSiteForm.StartPosition = FormStartPosition.CenterParent;
+                addSiteForm.SiteAdded += new SiteAddedEventHandler(ConfigurationAddSiteForm_SiteAdded);
+                addSiteForm.ShowDialog(Control.FromHandle(this.Handle));
+            }
+        }
+
+        private void pbAddNewSite_MouseEnter(object sender, EventArgs e)
+        {
+            pbAddNewSite.Image = Properties.Resources.plus;
+        }
+
+        private void pbAddNewSite_MouseLeave(object sender, EventArgs e)
+        {
+            pbAddNewSite.Image = Properties.Resources.plus_disabled;
         }
 
         private void ConfigurationAddSiteForm_SiteAdded(object sender, SiteAddedEventArgs e)

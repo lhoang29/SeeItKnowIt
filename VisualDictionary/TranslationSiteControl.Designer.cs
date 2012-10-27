@@ -73,6 +73,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblTranslateSiteAddress);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DoubleBuffered = true;
             this.Name = "TranslationSiteControl";
             this.Size = new System.Drawing.Size(220, 22);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TranslationSiteControl_MouseDown);

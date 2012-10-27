@@ -171,7 +171,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Languages.
+        ///   Looks up a localized string similar to Default language selection:.
         /// </summary>
         internal static string Configuration_Label_Languages {
             get {
@@ -180,7 +180,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restore all default settings.
+        ///   Looks up a localized string similar to Restore all default settings:.
         /// </summary>
         internal static string Configuration_Label_RestoreSettings {
             get {
@@ -189,7 +189,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translation Sites.
+        ///   Looks up a localized string similar to Current sites for your language selection: (Add new?       ).
         /// </summary>
         internal static string Configuration_Label_TranslateSites {
             get {
@@ -350,6 +350,26 @@ namespace VisualDictionary.Properties {
         internal static System.Drawing.Bitmap pin {
             get {
                 object obj = ResourceManager.GetObject("pin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plus {
+            get {
+                object obj = ResourceManager.GetObject("plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plus_disabled {
+            get {
+                object obj = ResourceManager.GetObject("plus_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
