@@ -107,29 +107,29 @@
   <ItemGroup>
     <Compile Include="ClickOnceHelper.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="ConfigurationAddSiteForm.cs">
+    <Compile Include="Forms\ConfigurationAddSiteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigurationAddSiteForm.Designer.cs">
+    <Compile Include="Forms\ConfigurationAddSiteForm.Designer.cs">
       <DependentUpon>ConfigurationAddSiteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConfigurationForm.cs">
+    <Compile Include="Forms\ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigurationForm.Designer.cs">
+    <Compile Include="Forms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Keyboard.cs" />
-    <Compile Include="OverlayForm.cs">
+    <Compile Include="Forms\OverlayForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OverlayForm.Designer.cs">
+    <Compile Include="Forms\OverlayForm.Designer.cs">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PastWordControl.cs">
+    <Compile Include="Controls\PastWordControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PastWordControl.Designer.cs">
+    <Compile Include="Controls\PastWordControl.Designer.cs">
       <DependentUpon>PastWordControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -140,28 +140,28 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="TranslationSiteControl.cs">
+    <Compile Include="Controls\TranslationSiteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TranslationSiteControl.Designer.cs">
+    <Compile Include="Controls\TranslationSiteControl.Designer.cs">
       <DependentUpon>TranslationSiteControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WordInfoForm.cs">
+    <Compile Include="Forms\WordInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WordInfoForm.Designer.cs">
+    <Compile Include="Forms\WordInfoForm.Designer.cs">
       <DependentUpon>WordInfoForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ConfigurationAddSiteForm.resx">
+    <EmbeddedResource Include="Forms\ConfigurationAddSiteForm.resx">
       <DependentUpon>ConfigurationAddSiteForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfigurationForm.resx">
+    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OverlayForm.resx">
+    <EmbeddedResource Include="Forms\OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PastWordControl.resx">
+    <EmbeddedResource Include="Controls\PastWordControl.resx">
       <DependentUpon>PastWordControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -169,10 +169,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="TranslationSiteControl.resx">
+    <EmbeddedResource Include="Controls\TranslationSiteControl.resx">
       <DependentUpon>TranslationSiteControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WordInfoForm.resx">
+    <EmbeddedResource Include="Forms\WordInfoForm.resx">
       <DependentUpon>WordInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
