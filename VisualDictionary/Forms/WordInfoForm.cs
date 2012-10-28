@@ -99,6 +99,9 @@ namespace VisualDictionary
                 string address = String.Empty;
 
                 bool forward = false;
+
+                wbWordInfo.Document.OpenNew(true);
+
                 TranslateSitesInfo info = Common.GetTranslationSitesInfo(
                     Properties.Settings.Default.SourceLanguage, 
                     Properties.Settings.Default.DestinationLanguage, 
@@ -128,11 +131,11 @@ namespace VisualDictionary
                 }
                 else
                 {
-                    wbWordInfo.Document.Write("There's no corresponding sites for lookup from: " 
-                        + Properties.Settings.Default.SourceLanguage 
-                        + " to: " 
-                        + Properties.Settings.Default.DestinationLanguage
-                    );
+                    string siteMissingText = String.Format(Properties.Resources.WebBrowser_SiteURLMissingText,
+                        Properties.Settings.Default.SourceLanguage,
+                        Properties.Settings.Default.DestinationLanguage);
+
+                    wbWordInfo.Document.Write(siteMissingText);
                 }
             }
         }
