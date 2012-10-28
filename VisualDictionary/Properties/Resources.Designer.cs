@@ -70,6 +70,16 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap both {
+            get {
+                object obj = ResourceManager.GetObject("both", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string ButtonCloseToolTip {
@@ -189,7 +199,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current sites for your language selection: (Add new?       ).
+        ///   Looks up a localized string similar to Current lookup sites: (Add new?       ).
         /// </summary>
         internal static string Configuration_Label_TranslateSites {
             get {
@@ -337,6 +347,16 @@ namespace VisualDictionary.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap left {
+            get {
+                object obj = ResourceManager.GetObject("left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pastwords {
             get {
                 object obj = ResourceManager.GetObject("pastwords", resourceCulture);
@@ -370,6 +390,16 @@ namespace VisualDictionary.Properties {
         internal static System.Drawing.Bitmap plus_disabled {
             get {
                 object obj = ResourceManager.GetObject("plus_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap right {
+            get {
+                object obj = ResourceManager.GetObject("right", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

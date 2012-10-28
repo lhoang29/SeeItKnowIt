@@ -107,6 +107,12 @@
   <ItemGroup>
     <Compile Include="ClickOnceHelper.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Controls\ViewFlyoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ViewFlyoutControl.Designer.cs">
+      <DependentUpon>ViewFlyoutControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConfigurationAddSiteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     <Compile Include="Forms\WordInfoForm.Designer.cs">
       <DependentUpon>WordInfoForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ViewFlyoutControl.resx">
+      <DependentUpon>ViewFlyoutControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigurationAddSiteForm.resx">
       <DependentUpon>ConfigurationAddSiteForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -228,6 +237,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\both.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,6 +34,7 @@
             this.wbWordInfo = new System.Windows.Forms.WebBrowser();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
             this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
+            this.pbDirection = new System.Windows.Forms.PictureBox();
             this.btnConfiguration = new System.Windows.Forms.Button();
             this.btnPastWords = new System.Windows.Forms.Button();
             this.btnPin = new System.Windows.Forms.Button();
@@ -49,6 +50,7 @@
             this.comboBoxLanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnConfigToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.pnlTitleBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -74,7 +76,7 @@
             this.wbWordInfo.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbWordInfo.Name = "wbWordInfo";
             this.wbWordInfo.ScriptErrorsSuppressed = true;
-            this.wbWordInfo.Size = new System.Drawing.Size(390, 305);
+            this.wbWordInfo.Size = new System.Drawing.Size(405, 305);
             this.wbWordInfo.TabIndex = 1;
             this.wbWordInfo.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);
@@ -83,6 +85,7 @@
             // 
             this.pnlTitleBar.BackColor = System.Drawing.SystemColors.Window;
             this.pnlTitleBar.Controls.Add(this.cbDestinationLanguage);
+            this.pnlTitleBar.Controls.Add(this.pbDirection);
             this.pnlTitleBar.Controls.Add(this.btnConfiguration);
             this.pnlTitleBar.Controls.Add(this.btnPastWords);
             this.pnlTitleBar.Controls.Add(this.btnPin);
@@ -100,14 +103,25 @@
             // 
             // cbDestinationLanguage
             // 
-            this.cbDestinationLanguage.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbDestinationLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDestinationLanguage.FormattingEnabled = true;
-            this.cbDestinationLanguage.Location = new System.Drawing.Point(121, 0);
+            this.cbDestinationLanguage.Location = new System.Drawing.Point(145, 0);
             this.cbDestinationLanguage.Name = "cbDestinationLanguage";
             this.cbDestinationLanguage.Size = new System.Drawing.Size(121, 21);
-            this.cbDestinationLanguage.TabIndex = 1;
+            this.cbDestinationLanguage.TabIndex = 2;
             this.cbDestinationLanguage.SelectionChangeCommitted += new System.EventHandler(this.cbDestinationLanguage_SelectionChangeCommitted);
+            // 
+            // pbDirection
+            // 
+            this.pbDirection.BackgroundImage = global::VisualDictionary.Properties.Resources.right;
+            this.pbDirection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbDirection.Location = new System.Drawing.Point(123, 0);
+            this.pbDirection.Margin = new System.Windows.Forms.Padding(0);
+            this.pbDirection.Name = "pbDirection";
+            this.pbDirection.Size = new System.Drawing.Size(20, 20);
+            this.pbDirection.TabIndex = 25;
+            this.pbDirection.TabStop = false;
+            this.pbDirection.MouseEnter += new System.EventHandler(this.pbRight_MouseEnter);
             // 
             // btnConfiguration
             // 
@@ -156,7 +170,6 @@
             // 
             // cbSourceLanguage
             // 
-            this.cbSourceLanguage.Dock = System.Windows.Forms.DockStyle.Left;
             this.cbSourceLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSourceLanguage.FormattingEnabled = true;
             this.cbSourceLanguage.Location = new System.Drawing.Point(0, 0);
@@ -198,7 +211,7 @@
             this.splitContainerMain.Panel2.SizeChanged += new System.EventHandler(this.splitContainerMain_Panel2_SizeChanged);
             this.splitContainerMain.Panel2MinSize = 100;
             this.splitContainerMain.Size = new System.Drawing.Size(550, 305);
-            this.splitContainerMain.SplitterDistance = 390;
+            this.splitContainerMain.SplitterDistance = 405;
             this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 5;
             this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
@@ -224,7 +237,7 @@
             // 
             this.splitContainerPastWords.Panel2.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Panel2.Controls.Add(this.flowLayoutPanelPastWords);
-            this.splitContainerPastWords.Size = new System.Drawing.Size(159, 305);
+            this.splitContainerPastWords.Size = new System.Drawing.Size(144, 305);
             this.splitContainerPastWords.SplitterDistance = 25;
             this.splitContainerPastWords.SplitterWidth = 1;
             this.splitContainerPastWords.TabIndex = 0;
@@ -235,7 +248,7 @@
             this.lblPastWords.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPastWords.Location = new System.Drawing.Point(0, 0);
             this.lblPastWords.Name = "lblPastWords";
-            this.lblPastWords.Size = new System.Drawing.Size(159, 25);
+            this.lblPastWords.Size = new System.Drawing.Size(144, 25);
             this.lblPastWords.TabIndex = 0;
             this.lblPastWords.Text = "PAST WORDS";
             this.lblPastWords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -247,7 +260,7 @@
             this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
-            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(159, 279);
+            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(144, 279);
             this.flowLayoutPanelPastWords.TabIndex = 0;
             this.flowLayoutPanelPastWords.WrapContents = false;
             // 
@@ -277,6 +290,7 @@
             this.SizeChanged += new System.EventHandler(this.WordInfoForm_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordInfoForm_KeyDown);
             this.pnlTitleBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDirection)).EndInit();
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
@@ -309,6 +323,7 @@
         private System.Windows.Forms.ToolTip comboBoxLanguageToolTip;
         private System.Windows.Forms.Button btnConfiguration;
         private System.Windows.Forms.ToolTip btnConfigToolTip;
+        private System.Windows.Forms.PictureBox pbDirection;
         private System.Windows.Forms.ComboBox cbDestinationLanguage;
     }
 }

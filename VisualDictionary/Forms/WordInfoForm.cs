@@ -21,6 +21,9 @@ namespace VisualDictionary
         private bool m_Pinned;
         private Point m_MouseDownPoint = Point.Empty;
         private Control m_FocusedControl = null;
+        private TranslateDirection m_TranslateDirection;
+
+        private ViewFlyoutControl m_ViewFlyoutControl = null;
 
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
@@ -28,6 +31,14 @@ namespace VisualDictionary
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
+
+            m_TranslateDirection = TranslateDirection.Right;
+
+            m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location, m_TranslateDirection);
+            m_ViewFlyoutControl.Visible = false;
+            m_ViewFlyoutControl.HideRequest += new EventHandler(ViewFlyoutControl_HideRequest);
+            m_ViewFlyoutControl.TranslateDirectionChanged += new TranslateDirectionChangedEventHandler(ViewFlyoutControl_TranslateDirectionChanged);
+            this.Controls.Add(m_ViewFlyoutControl);
 
             splitContainerPastWords.SplitterWidth = 1;
 
@@ -44,6 +55,35 @@ namespace VisualDictionary
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
 
             this.GetTranslation(word);
+        }
+
+        void ViewFlyoutControl_TranslateDirectionChanged(object sender, TranslateDirectionChangedEventArgs e)
+        {
+            if (e != null)
+            {
+                switch (e.TranslateDirection)
+                {
+                    case TranslateDirection.Left:
+                        m_TranslateDirection = TranslateDirection.Left;
+                        pbDirection.BackgroundImage = Properties.Resources.left;
+                        break;
+                    case TranslateDirection.Right:
+                        m_TranslateDirection = TranslateDirection.Right;
+                        pbDirection.BackgroundImage = Properties.Resources.right;
+                        break;
+                    case TranslateDirection.Both:
+                        m_TranslateDirection = TranslateDirection.Both;
+                        pbDirection.BackgroundImage = Properties.Resources.both;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        void ViewFlyoutControl_HideRequest(object sender, EventArgs e)
+        {
+            m_ViewFlyoutControl.Visible = false;
         }
 
         private void GetTranslation(string word)
@@ -68,23 +108,31 @@ namespace VisualDictionary
                 if (translateSites.Count > 0)
                 {
                     address = String.Format(translateSites[0], m_Word);
-                }
 
-                try
-                {
-                    wbWordInfo.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
-                    wbWordInfo.Url = new Uri(address);
+                    try
+                    {
+                        wbWordInfo.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
+                        wbWordInfo.Url = new Uri(address);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex is UriFormatException)
+                        {
+                            wbWordInfo.Document.Write(Properties.Resources.Error_InvalidUriFormat);
+                        }
+                        else
+                        {
+                            wbWordInfo.Document.Write(ex.ToString());
+                        }
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (ex is UriFormatException)
-                    {
-                        wbWordInfo.DocumentText = Properties.Resources.Error_InvalidUriFormat;
-                    }
-                    else
-                    {
-                        wbWordInfo.DocumentText = ex.ToString();
-                    }
+                    wbWordInfo.Document.Write("There's no corresponding sites for lookup from: " 
+                        + Properties.Settings.Default.SourceLanguage 
+                        + " to: " 
+                        + Properties.Settings.Default.DestinationLanguage
+                    );
                 }
             }
         }
@@ -345,6 +393,13 @@ namespace VisualDictionary
             {
                 this.Close();
             }
+        }
+
+        private void pbRight_MouseEnter(object sender, EventArgs e)
+        {
+            m_ViewFlyoutControl.ActiveDirection = m_TranslateDirection;
+            m_ViewFlyoutControl.Visible = true;
+            m_ViewFlyoutControl.BringToFront();
         }
     }
 }

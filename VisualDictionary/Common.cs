@@ -21,6 +21,13 @@ namespace VisualDictionary
         Vietnamese
     }
 
+    public enum TranslateDirection
+    { 
+        Left = 0,
+        Right,
+        Both
+    }
+
     [Serializable]
     [System.Configuration.SettingsSerializeAs(System.Configuration.SettingsSerializeAs.Binary)]
     public class TranslateSitesInfo
@@ -53,6 +60,14 @@ namespace VisualDictionary
         {
             get { return m_BackwardSitesOptional; }
             set { m_BackwardSitesOptional = value; }
+        }
+
+        public TranslateSitesInfo()
+        {
+            m_ForwardSites = new List<string>();
+            m_ForwardSitesOptional = new List<bool>();
+            m_BackwardSites = new List<string>();
+            m_BackwardSitesOptional = new List<bool>();
         }
     }
 
@@ -173,8 +188,8 @@ namespace VisualDictionary
                     string key = Common.MakeLanguageCombinationKey(site.Item1.ToString(), site.Item2.ToString());
 
                     TranslateSitesInfo info = new TranslateSitesInfo();
-                    info.ForwardSites = (site.Item3 != null) ? new List<string>(site.Item3) : new List<string>();
-                    info.BackwardSites = (site.Item4 != null) ? new List<string>(site.Item4) : new List<string>();
+                    info.ForwardSites = (site.Item3 != null) ? new List<string>(site.Item3) : info.ForwardSites;
+                    info.BackwardSites = (site.Item4 != null) ? new List<string>(site.Item4) : info.BackwardSites;
                     if (info.ForwardSites.Count > 0)
                     {
                         info.ForwardSitesOptional = new List<bool>(new bool[info.ForwardSites.Count]);
@@ -216,6 +231,12 @@ namespace VisualDictionary
                 {
                     info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[backwardKey];
                     forward = false;
+                }
+                else // Create new structure for new language
+                {
+                    info = new TranslateSitesInfo();
+                    string key = Common.MakeLanguageCombinationKey(sourceLanguage, destinationLanguage);
+                    Properties.Settings.Default.TranslateSites.Add(key, info);
                 }
             }
 
@@ -314,111 +335,25 @@ namespace VisualDictionary
             return added;
         }
 
-        public static string[] GetAvailableSourceLanguages()
+        public static string[] GetAvailableLanguages()
         {
-            List<string> sourceLanguages = new List<string>();
-
-            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
-            {
-                string[] languageCombination = Common.GetLanguageCombination(key.ToString());
-                string sourceLanguage = languageCombination[0];
-                string destinationLanguage = languageCombination[1];
-
-                TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[key];
-                if (info.ForwardSites.Count > 0)
-                {
-                    if (!sourceLanguages.Contains(sourceLanguage))
-                    {
-                        sourceLanguages.Add(sourceLanguage);
-                    }
-                }
-                if (info.BackwardSites.Count > 0)
-                {
-                    if (!sourceLanguages.Contains(destinationLanguage))
-                    {
-                        sourceLanguages.Add(destinationLanguage);
-                    }
-                }
-            }
-            sourceLanguages.Sort();
-
-            return sourceLanguages.ToArray();
-        }
-
-        public static string[] GetAvailableDestinationLanguages(string sourceLanguage)
-        {
-            List<string> destinationLanguages = new List<string>();
-
-            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
-            {
-                string keyString = key.ToString();
-                if (keyString.Contains(sourceLanguage))
-                {
-                    string[] languageCombination = Common.GetLanguageCombination(key.ToString());
-                    string currentSourceLanguage = languageCombination[0];
-                    string destinationLanguage = languageCombination[1];
-                    TranslateSitesInfo info = (TranslateSitesInfo)Properties.Settings.Default.TranslateSites[key];
-
-                    // If forward direction and there exists some translate site then add the destination language
-                    if (currentSourceLanguage == sourceLanguage)
-                    {
-                        if (info.ForwardSites.Count > 0)
-                        {
-                            if (!destinationLanguages.Contains(destinationLanguage))
-                            {
-                                destinationLanguages.Add(destinationLanguage);
-                            }
-                        }
-                    }
-                    // If backward direction and there exists some translate site then add the source language
-                    else if (destinationLanguage == sourceLanguage)
-                    {
-                        if (info.BackwardSites.Count > 0)
-                        {
-                            if (!destinationLanguages.Contains(currentSourceLanguage))
-                            {
-                                destinationLanguages.Add(currentSourceLanguage);
-                            }
-                        }
-                    }
-                }
-            }
-
-            destinationLanguages.Sort();
-            return destinationLanguages.ToArray();
+            return Enum.GetNames(typeof(TranslationLanguage));
         }
 
         public static void InitializeLanguageComboBoxes(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
         {
-            string[] availableSourceLanguages = Common.GetAvailableSourceLanguages();
-            cbSource.DataSource = availableSourceLanguages;
+            string[] availableLanguages = Common.GetAvailableLanguages();
+
+            cbSource.DataSource = availableLanguages;
             cbSource.SelectedItem = Properties.Settings.Default.SourceLanguage;
 
-            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(Properties.Settings.Default.SourceLanguage);
-            cbDestination.DataSource = availableDestinationLanguages;
+            cbDestination.DataSource = availableLanguages;
             cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
         }
 
         public static void SourceLanguageSelectionChanged(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
         {
             Properties.Settings.Default.SourceLanguage = cbSource.SelectedItem as string;
-
-            string[] availableDestinationLanguages = Common.GetAvailableDestinationLanguages(Properties.Settings.Default.SourceLanguage);
-            cbDestination.DataSource = availableDestinationLanguages;
-
-            if (availableDestinationLanguages.Length > 0)
-            {
-                if (!availableDestinationLanguages.Contains(Properties.Settings.Default.DestinationLanguage))
-                {
-                    Properties.Settings.Default.DestinationLanguage = availableDestinationLanguages[0];
-                }
-            }
-            else
-            {
-                Properties.Settings.Default.DestinationLanguage = String.Empty;
-            }
-
-            cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
         }
 
         public static void DestinationLanguageSelectionChanged(System.Windows.Forms.ComboBox cbDestination)
@@ -449,4 +384,17 @@ namespace VisualDictionary
     }
 
     public delegate void SiteAddedEventHandler(object sender, SiteAddedEventArgs e);
+
+    public class TranslateDirectionChangedEventArgs : EventArgs
+    {
+        private TranslateDirection m_TranslateDirection;
+
+        public TranslateDirection TranslateDirection
+        {
+            get { return m_TranslateDirection; }
+            set { m_TranslateDirection = value; }
+        }
+    }
+
+    public delegate void TranslateDirectionChangedEventHandler(object sender, TranslateDirectionChangedEventArgs e);
 }

@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pastwords" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pastwords.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Error_InvalidUriFormat" xml:space="preserve">
     <value>The provided URL has an invalid format, please update from configuration settings.</value>
   </data>
@@ -142,11 +138,18 @@
   <data name="TrayIcon_MenuItem_Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="plus_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Configuration_DeleteSite_Confirmation" xml:space="preserve">
-    <value>Are you sure you want to delete this site?</value>
+  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrayIcon_MenuItem_Configuration" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Configuration_RestoreSettings_Confirmation" xml:space="preserve">
     <value>Are you sure you want to restore all settings to default?</value>
@@ -154,14 +157,14 @@
   <data name="ButtonCloseToolTip" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Configuration_DeleteSite_Confirmation" xml:space="preserve">
+    <value>Are you sure you want to delete this site?</value>
+  </data>
   <data name="Configuration_Label_TranslateSites" xml:space="preserve">
-    <value>Current sites for your language selection: (Add new?       )</value>
+    <value>Current lookup sites: (Add new?       )</value>
   </data>
   <data name="ButtonPastWordsToolTip" xml:space="preserve">
     <value>Review</value>
-  </data>
-  <data name="pin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Configuration_AddSite_Tutorial" xml:space="preserve">
     <value>To add a new site, follow these steps:\n- Open your site in any browser\n- Look up the meaning for: {0}\n- Copy the URL and paste it below</value>
@@ -171,6 +174,9 @@
   </data>
   <data name="Configuration_TranslateSite_AddNew" xml:space="preserve">
     <value>Add new site</value>
+  </data>
+  <data name="ComboBoxLanguageToolTip" xml:space="preserve">
+    <value>Change the translation language</value>
   </data>
   <data name="Configuration_TranslateSite_MakeActive" xml:space="preserve">
     <value>Use this site</value>
@@ -193,17 +199,14 @@
   <data name="Configuration_Language_AddNew" xml:space="preserve">
     <value>Add new language ...</value>
   </data>
-  <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="TrayIcon_Text" xml:space="preserve">
     <value>Version: {0}</value>
   </data>
   <data name="Configuration_Label_RestoreSettings" xml:space="preserve">
     <value>Restore all default settings:</value>
   </data>
-  <data name="TrayIcon_MenuItem_Configuration" xml:space="preserve">
-    <value>Configure</value>
+  <data name="pin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,19 +223,25 @@
   <data name="Dialog_Confirmation" xml:space="preserve">
     <value>Confirmation</value>
   </data>
+  <data name="Information_Tutorial" xml:space="preserve">
+    <value>Highlight any word then press Windows + {0} to translate</value>
+  </data>
   <data name="Application_WelcomeMessage" xml:space="preserve">
     <value>Welcome to {0}</value>
+  </data>
+  <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Information_Tutorial" xml:space="preserve">
-    <value>Highlight any word then press Windows + {0} to translate</value>
+  <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ComboBoxLanguageToolTip" xml:space="preserve">
-    <value>Change the translation language</value>
+  <data name="pastwords" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pastwords.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="both" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\both.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

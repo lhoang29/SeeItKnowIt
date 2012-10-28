@@ -98,7 +98,7 @@
             this.pbAddNewSite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbAddNewSite.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbAddNewSite.Image = global::VisualDictionary.Properties.Resources.plus_disabled;
-            this.pbAddNewSite.Location = new System.Drawing.Point(268, 85);
+            this.pbAddNewSite.Location = new System.Drawing.Point(175, 85);
             this.pbAddNewSite.Name = "pbAddNewSite";
             this.pbAddNewSite.Size = new System.Drawing.Size(16, 16);
             this.pbAddNewSite.TabIndex = 24;
