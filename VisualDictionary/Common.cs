@@ -111,7 +111,8 @@ namespace VisualDictionary
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Chinese, 
                 new string[]
                 {
-                    "http://hk.dictionary.yahoo.com/dictionary?p={0}"
+                    "http://hk.dictionary.yahoo.com/dictionary?p={0}",
+                    "http://www.chinesedic.com/en/{0}"
                 }, 
                 null
             ),
@@ -168,6 +169,14 @@ namespace VisualDictionary
                 {
                     "http://v2.vdict.com/{0},8,0,0.html"
                 }
+            ),
+            // French - Chinese translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.French, TranslationLanguage.Chinese, 
+                new string[]
+                {
+                    "http://www.chinesedic.com/fr/{0}"
+                },
+                null
             )
         };
 
@@ -344,10 +353,16 @@ namespace VisualDictionary
         {
             string[] availableLanguages = Common.GetAvailableLanguages();
 
-            cbSource.DataSource = availableLanguages;
-            cbSource.SelectedItem = Properties.Settings.Default.SourceLanguage;
+            cbSource.Items.Clear();
+            cbDestination.Items.Clear();
 
-            cbDestination.DataSource = availableLanguages;
+            foreach (string language in availableLanguages)
+            {
+                cbSource.Items.Add(language);
+                cbDestination.Items.Add(language);
+            }
+            
+            cbSource.SelectedItem = Properties.Settings.Default.SourceLanguage;
             cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
         }
 
