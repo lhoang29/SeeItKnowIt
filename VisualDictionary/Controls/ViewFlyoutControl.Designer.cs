@@ -40,7 +40,7 @@
             // 
             this.pbBoth.BackgroundImage = global::VisualDictionary.Properties.Resources.both;
             this.pbBoth.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbBoth.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbBoth.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbBoth.Location = new System.Drawing.Point(1, 51);
             this.pbBoth.Margin = new System.Windows.Forms.Padding(0);
             this.pbBoth.Name = "pbBoth";
@@ -48,12 +48,14 @@
             this.pbBoth.TabIndex = 5;
             this.pbBoth.TabStop = false;
             this.pbBoth.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbBoth_MouseClick);
+            this.pbBoth.MouseEnter += new System.EventHandler(this.pbBoth_MouseEnter);
+            this.pbBoth.MouseLeave += new System.EventHandler(this.pbBoth_MouseLeave);
             // 
             // pbLeft
             // 
             this.pbLeft.BackgroundImage = global::VisualDictionary.Properties.Resources.left;
             this.pbLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbLeft.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbLeft.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbLeft.Location = new System.Drawing.Point(1, 26);
             this.pbLeft.Margin = new System.Windows.Forms.Padding(0);
             this.pbLeft.Name = "pbLeft";
@@ -61,12 +63,14 @@
             this.pbLeft.TabIndex = 4;
             this.pbLeft.TabStop = false;
             this.pbLeft.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbLeft_MouseClick);
+            this.pbLeft.MouseEnter += new System.EventHandler(this.pbLeft_MouseEnter);
+            this.pbLeft.MouseLeave += new System.EventHandler(this.pbLeft_MouseLeave);
             // 
             // pbRight
             // 
             this.pbRight.BackgroundImage = global::VisualDictionary.Properties.Resources.right;
             this.pbRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbRight.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbRight.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbRight.Location = new System.Drawing.Point(1, 1);
             this.pbRight.Margin = new System.Windows.Forms.Padding(0);
             this.pbRight.Name = "pbRight";
@@ -74,6 +78,8 @@
             this.pbRight.TabIndex = 3;
             this.pbRight.TabStop = false;
             this.pbRight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbRight_MouseClick);
+            this.pbRight.MouseEnter += new System.EventHandler(this.pbRight_MouseEnter);
+            this.pbRight.MouseLeave += new System.EventHandler(this.pbRight_MouseLeave);
             // 
             // ViewFlyoutControl
             // 

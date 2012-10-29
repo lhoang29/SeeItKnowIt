@@ -164,5 +164,35 @@ namespace VisualDictionary
                 this.Rearrange(m_ActiveDirection);
             }
         }
+
+        private void pbRight_MouseEnter(object sender, EventArgs e)
+        {
+            pbRight.BackColor = Color.Gainsboro;
+        }
+
+        private void pbRight_MouseLeave(object sender, EventArgs e)
+        {
+            pbRight.BackColor = Color.Transparent;
+        }
+
+        private void pbLeft_MouseEnter(object sender, EventArgs e)
+        {
+            pbLeft.BackColor = Color.Gainsboro;
+        }
+
+        private void pbLeft_MouseLeave(object sender, EventArgs e)
+        {
+            pbLeft.BackColor = Color.Transparent;
+        }
+
+        private void pbBoth_MouseEnter(object sender, EventArgs e)
+        {
+            pbBoth.BackColor = Color.Gainsboro;
+        }
+
+        private void pbBoth_MouseLeave(object sender, EventArgs e)
+        {
+            pbBoth.BackColor = Color.Transparent;
+        }
     }
 }
