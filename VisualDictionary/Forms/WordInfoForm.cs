@@ -21,20 +21,43 @@ namespace VisualDictionary
         private bool m_Pinned;
         private Point m_MouseDownPoint = Point.Empty;
         private Control m_FocusedControl = null;
-        private TranslateDirection m_TranslateDirection;
+        private TranslateDirection m_ActiveTranslateDirection;
 
         private ViewFlyoutControl m_ViewFlyoutControl = null;
 
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
 
+        public TranslateDirection ActiveTranslateDirection
+        {
+            get { return m_ActiveTranslateDirection; }
+            set 
+            { 
+                m_ActiveTranslateDirection = value;
+                switch (m_ActiveTranslateDirection)
+                {
+                    case TranslateDirection.Left:
+                        pbDirection.BackgroundImage = Properties.Resources.left;
+                        break;
+                    case TranslateDirection.Right:
+                        pbDirection.BackgroundImage = Properties.Resources.right;
+                        break;
+                    case TranslateDirection.Both:
+                        pbDirection.BackgroundImage = Properties.Resources.both;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
 
-            m_TranslateDirection = TranslateDirection.Right;
+            ActiveTranslateDirection = TranslateDirection.Right;
 
-            m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location, m_TranslateDirection);
+            m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location, ActiveTranslateDirection);
             m_ViewFlyoutControl.Visible = false;
             m_ViewFlyoutControl.HideRequest += new EventHandler(ViewFlyoutControl_HideRequest);
             m_ViewFlyoutControl.TranslateDirectionChanged += new TranslateDirectionChangedEventHandler(ViewFlyoutControl_TranslateDirectionChanged);
@@ -62,6 +85,7 @@ namespace VisualDictionary
         {
             if (e != null)
             {
+                ActiveTranslateDirection = e.TranslateDirection;
                 switch (e.TranslateDirection)
                 {
                     case TranslateDirection.Left:
@@ -70,10 +94,7 @@ namespace VisualDictionary
                         splitContainerWebBrowser.Panel1Collapsed = true;
                         this.ResumeLayout();
 
-                        m_TranslateDirection = TranslateDirection.Left;
-                        pbDirection.BackgroundImage = Properties.Resources.left;
-
-                        TranslateDirection currentDirection = (cbSourceLanguage.Location.X < cbDestinationLanguage.Location.X) ? TranslateDirection.Right : TranslateDirection.Left;
+                        TranslateDirection currentDirection = this.GetActualTranslateDirection();
                         if (currentDirection != TranslateDirection.Left)
                         {
                             this.GetReverseTranslation();
@@ -87,10 +108,7 @@ namespace VisualDictionary
                         splitContainerWebBrowser.Panel1Collapsed = true;
                         this.ResumeLayout();
 
-                        m_TranslateDirection = TranslateDirection.Right;
-                        pbDirection.BackgroundImage = Properties.Resources.right;
-
-                        TranslateDirection currentDirection = (cbSourceLanguage.Location.X < cbDestinationLanguage.Location.X) ? TranslateDirection.Right : TranslateDirection.Left;
+                        TranslateDirection currentDirection = this.GetActualTranslateDirection();
                         if (currentDirection != TranslateDirection.Right)
                         {
                             this.GetReverseTranslation();
@@ -104,9 +122,6 @@ namespace VisualDictionary
                         splitContainerWebBrowser.Panel1Collapsed = false;
                         this.ResumeLayout();
 
-                        m_TranslateDirection = TranslateDirection.Both;
-                        pbDirection.BackgroundImage = Properties.Resources.both;
-                        
                         this.GetSideBySideTranslation();
 
                         break;
@@ -114,6 +129,12 @@ namespace VisualDictionary
                         break;
                 }
             }
+        }
+
+        private TranslateDirection GetActualTranslateDirection()
+        {
+            TranslateDirection currentDirection = (cbSourceLanguage.Location.X < cbDestinationLanguage.Location.X) ? TranslateDirection.Right : TranslateDirection.Left;
+            return currentDirection;
         }
 
         void ViewFlyoutControl_HideRequest(object sender, EventArgs e)
@@ -308,9 +329,20 @@ namespace VisualDictionary
         {
             Common.SourceLanguageSelectionChanged(cbSourceLanguage);
 
-            if (m_TranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
+            // If already showing side-by-side translation
+            if (m_ActiveTranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
             {
-                this.GetTranslation(m_Word, useDestinationLanguage: false);
+                // If changed to same language translation in side-by-side mode then turn off side-by-side and 
+                // view in normal mode.
+                if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+                {
+                    splitContainerWebBrowser.Panel1Collapsed = true;
+                    ActiveTranslateDirection = this.GetActualTranslateDirection();
+                }
+                else
+                {
+                    this.GetTranslation(m_Word, useDestinationLanguage: false);
+                }
             }
             this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
@@ -318,6 +350,18 @@ namespace VisualDictionary
         private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+
+            // If already showing side-by-side translation
+            if (m_ActiveTranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
+            {
+                // If changed to same language translation in side-by-side mode then turn off side-by-side and 
+                // view in normal mode.
+                if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+                {
+                    splitContainerWebBrowser.Panel1Collapsed = true;
+                    ActiveTranslateDirection = this.GetActualTranslateDirection();
+                }
+            }
 
             this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
@@ -455,7 +499,7 @@ namespace VisualDictionary
 
         private void pbRight_MouseEnter(object sender, EventArgs e)
         {
-            m_ViewFlyoutControl.ActiveDirection = m_TranslateDirection;
+            m_ViewFlyoutControl.ActiveDirection = m_ActiveTranslateDirection;
             m_ViewFlyoutControl.SideBySideEnabled = (cbSourceLanguage.SelectedItem != cbDestinationLanguage.SelectedItem);
             m_ViewFlyoutControl.Visible = true;
             m_ViewFlyoutControl.BringToFront();
