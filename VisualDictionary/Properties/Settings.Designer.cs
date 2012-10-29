@@ -154,5 +154,17 @@ namespace VisualDictionary.Properties {
                 this["DestinationLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int TranslateDirection {
+            get {
+                return ((int)(this["TranslateDirection"]));
+            }
+            set {
+                this["TranslateDirection"] = value;
+            }
+        }
     }
 }

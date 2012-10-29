@@ -34,6 +34,7 @@ namespace VisualDictionary
             set 
             { 
                 m_ActiveTranslateDirection = value;
+                Properties.Settings.Default.TranslateDirection = (int)value;
                 switch (m_ActiveTranslateDirection)
                 {
                     case TranslateDirection.Left:
@@ -57,8 +58,7 @@ namespace VisualDictionary
         public WordInfoForm(string word, bool online)
         {
             InitializeComponent();
-
-            ActiveTranslateDirection = TranslateDirection.Right;
+            InitializeToolTip();
 
             m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location);
             m_ViewFlyoutControl.Visible = false;
@@ -71,17 +71,40 @@ namespace VisualDictionary
 
             m_Online = online;
 
+            this.LoadPersonalSettings();
+
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+
+            switch (ActiveTranslateDirection)
+            {
+                case TranslateDirection.Left:
+                    this.SwapLanguageSelectionComboBoxes();
+                    break;
+                case TranslateDirection.Right:
+                    break;
+                case TranslateDirection.Both_Left:
+                    this.SwapLanguageSelectionComboBoxes();
+                    this.ShowSourceTranslation();
+                    this.SwapWebBrowserIfNeeded(TranslateDirection.Left);
+                    this.GetTranslation(word, useDestinationLanguage: false);
+                    break;
+                case TranslateDirection.Both_Right:
+                    this.ShowSourceTranslation();
+                    this.GetTranslation(word, useDestinationLanguage: false);
+                    break;
+                default:
+                    break;
+            }
+            this.GetTranslation(word, useDestinationLanguage: true);
+        }
+
+        private void InitializeToolTip()
+        {
             btnConfigToolTip.SetToolTip(btnConfiguration, Properties.Resources.TrayIcon_MenuItem_Configuration);
             btnPastWordsToolTip.SetToolTip(btnPastWords, Properties.Resources.ButtonPastWordsToolTip);
             btnPinToolTip.SetToolTip(btnPin, Properties.Resources.ButtonPinToolTip);
             btnCloseToolTip.SetToolTip(btnClose, Properties.Resources.ButtonCloseToolTip);
             comboBoxLanguageToolTip.SetToolTip(cbSourceLanguage, Properties.Resources.ComboBoxLanguageToolTip);
-
-            this.LoadPersonalSettings();
-
-            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
-
-            this.GetTranslation(word, useDestinationLanguage: true);
         }
 
         void ViewFlyoutControl_TranslateDirectionChanged(object sender, TranslateDirectionChangedEventArgs e)
@@ -206,9 +229,7 @@ namespace VisualDictionary
         {
             this.SuspendLayout();
 
-            Point cbSourceLocation = cbSourceLanguage.Location;
-            cbSourceLanguage.Location = cbDestinationLanguage.Location;
-            cbDestinationLanguage.Location = cbSourceLocation;
+            this.SwapLanguageSelectionComboBoxes();
 
             if (cbSourceLanguage.SelectedItem != cbDestinationLanguage.SelectedItem)
             {
@@ -222,6 +243,13 @@ namespace VisualDictionary
             }
 
             this.ResumeLayout();
+        }
+
+        private void SwapLanguageSelectionComboBoxes()
+        {
+            Point cbSourceLocation = cbSourceLanguage.Location;
+            cbSourceLanguage.Location = cbDestinationLanguage.Location;
+            cbDestinationLanguage.Location = cbSourceLocation;
         }
 
         private void GetTranslation(string word, bool useDestinationLanguage)
@@ -291,7 +319,9 @@ namespace VisualDictionary
             {
                 splitContainerMain.SplitterDistance = splitContainerMain.Width - Properties.Settings.Default.PastWordsPanelExpandedWidth;
             }
-            
+
+            this.ActiveTranslateDirection = (TranslateDirection)Properties.Settings.Default.TranslateDirection;
+
             this.RedrawPastWordsButton();
             this.RedrawPinButton();
             this.UpdatePastWordsPanel();
