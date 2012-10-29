@@ -85,16 +85,16 @@ namespace VisualDictionary
         {
             if (e != null)
             {
+                TranslateDirection currentDirection = this.GetActualTranslateDirection();
                 ActiveTranslateDirection = e.TranslateDirection;
                 switch (e.TranslateDirection)
                 {
                     case TranslateDirection.Left:
                     {
                         this.SuspendLayout();
-                        splitContainerWebBrowser.Panel1Collapsed = true;
+                        this.HideSourceTranslation();
                         this.ResumeLayout();
 
-                        TranslateDirection currentDirection = this.GetActualTranslateDirection();
                         if (currentDirection != TranslateDirection.Left)
                         {
                             this.GetReverseTranslation();
@@ -105,10 +105,9 @@ namespace VisualDictionary
                     case TranslateDirection.Right:
                     {
                         this.SuspendLayout();
-                        splitContainerWebBrowser.Panel1Collapsed = true;
+                        this.HideSourceTranslation();
                         this.ResumeLayout();
 
-                        TranslateDirection currentDirection = this.GetActualTranslateDirection();
                         if (currentDirection != TranslateDirection.Right)
                         {
                             this.GetReverseTranslation();
@@ -117,17 +116,68 @@ namespace VisualDictionary
                         break;
                     }
                     case TranslateDirection.Both:
-                        
+                    {
                         this.SuspendLayout();
-                        splitContainerWebBrowser.Panel1Collapsed = false;
+                        this.ShowSourceTranslation();
+                        this.SwapWebBrowserIfNeeded(currentDirection);
                         this.ResumeLayout();
 
                         this.GetSideBySideTranslation();
 
                         break;
+                    }
                     default:
                         break;
                 }
+            }
+        }
+
+        private void SwapWebBrowserIfNeeded(TranslateDirection currentDirection)
+        {
+            if (currentDirection == TranslateDirection.Right)
+            {
+                if (splitContainerWebBrowser.Panel2.Contains(wbSourceTranslation))
+                {
+                    wbSourceTranslation.Parent = splitContainerWebBrowser.Panel1;
+                    wbDestinationTranslation.Parent = splitContainerWebBrowser.Panel2;
+                }
+            }
+            else if (currentDirection == TranslateDirection.Left)
+            {
+                if (splitContainerWebBrowser.Panel1.Contains(wbSourceTranslation))
+                {
+                    wbSourceTranslation.Parent = splitContainerWebBrowser.Panel2;
+                    wbDestinationTranslation.Parent = splitContainerWebBrowser.Panel1;
+                }
+            }
+        }
+
+        private bool IsSourceTranslationVisible()
+        {
+            return wbSourceTranslation.Visible;
+        }
+
+        private void ShowSourceTranslation()
+        {
+            if (splitContainerWebBrowser.Panel1.Contains(wbSourceTranslation))
+            {
+                splitContainerWebBrowser.Panel1Collapsed = false;
+            }
+            else
+            {
+                splitContainerWebBrowser.Panel2Collapsed = false;
+            }
+        }
+
+        private void HideSourceTranslation()
+        {
+            if (splitContainerWebBrowser.Panel1.Contains(wbSourceTranslation))
+            {
+                splitContainerWebBrowser.Panel1Collapsed = true;
+            }
+            else
+            {
+                splitContainerWebBrowser.Panel2Collapsed = true;
             }
         }
 
@@ -330,13 +380,13 @@ namespace VisualDictionary
             Common.SourceLanguageSelectionChanged(cbSourceLanguage);
 
             // If already showing side-by-side translation
-            if (m_ActiveTranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
+            if (m_ActiveTranslateDirection == TranslateDirection.Both && this.IsSourceTranslationVisible())
             {
                 // If changed to same language translation in side-by-side mode then turn off side-by-side and 
                 // view in normal mode.
                 if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
                 {
-                    splitContainerWebBrowser.Panel1Collapsed = true;
+                    this.HideSourceTranslation();
                     ActiveTranslateDirection = this.GetActualTranslateDirection();
                 }
                 else
@@ -352,13 +402,13 @@ namespace VisualDictionary
             Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
 
             // If already showing side-by-side translation
-            if (m_ActiveTranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
+            if (m_ActiveTranslateDirection == TranslateDirection.Both && this.IsSourceTranslationVisible())
             {
                 // If changed to same language translation in side-by-side mode then turn off side-by-side and 
                 // view in normal mode.
                 if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
                 {
-                    splitContainerWebBrowser.Panel1Collapsed = true;
+                    this.HideSourceTranslation();
                     ActiveTranslateDirection = this.GetActualTranslateDirection();
                 }
             }
