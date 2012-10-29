@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordInfoForm));
             this.lblWord = new System.Windows.Forms.Label();
-            this.wbWordInfo = new System.Windows.Forms.WebBrowser();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
             this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
             this.pbDirection = new System.Windows.Forms.PictureBox();
@@ -49,6 +48,9 @@
             this.btnCloseToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.comboBoxLanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnConfigToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.splitContainerWebBrowser = new System.Windows.Forms.SplitContainer();
+            this.wbSourceTranslation = new System.Windows.Forms.WebBrowser();
+            this.wbDestinationTranslation = new System.Windows.Forms.WebBrowser();
             this.pnlTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -59,6 +61,10 @@
             this.splitContainerPastWords.Panel1.SuspendLayout();
             this.splitContainerPastWords.Panel2.SuspendLayout();
             this.splitContainerPastWords.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerWebBrowser)).BeginInit();
+            this.splitContainerWebBrowser.Panel1.SuspendLayout();
+            this.splitContainerWebBrowser.Panel2.SuspendLayout();
+            this.splitContainerWebBrowser.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblWord
@@ -68,18 +74,6 @@
             this.lblWord.Name = "lblWord";
             this.lblWord.Size = new System.Drawing.Size(0, 13);
             this.lblWord.TabIndex = 0;
-            // 
-            // wbWordInfo
-            // 
-            this.wbWordInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbWordInfo.Location = new System.Drawing.Point(0, 0);
-            this.wbWordInfo.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbWordInfo.Name = "wbWordInfo";
-            this.wbWordInfo.ScriptErrorsSuppressed = true;
-            this.wbWordInfo.Size = new System.Drawing.Size(405, 305);
-            this.wbWordInfo.TabIndex = 1;
-            this.wbWordInfo.Url = new System.Uri("about:blank", System.UriKind.Absolute);
-            this.wbWordInfo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.wbWordInfo_PreviewKeyDown);
             // 
             // pnlTitleBar
             // 
@@ -203,7 +197,7 @@
             // 
             // splitContainerMain.Panel1
             // 
-            this.splitContainerMain.Panel1.Controls.Add(this.wbWordInfo);
+            this.splitContainerMain.Panel1.Controls.Add(this.splitContainerWebBrowser);
             // 
             // splitContainerMain.Panel2
             // 
@@ -211,7 +205,7 @@
             this.splitContainerMain.Panel2.SizeChanged += new System.EventHandler(this.splitContainerMain_Panel2_SizeChanged);
             this.splitContainerMain.Panel2MinSize = 100;
             this.splitContainerMain.Size = new System.Drawing.Size(550, 305);
-            this.splitContainerMain.SplitterDistance = 405;
+            this.splitContainerMain.SplitterDistance = 408;
             this.splitContainerMain.SplitterWidth = 1;
             this.splitContainerMain.TabIndex = 5;
             this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
@@ -237,7 +231,7 @@
             // 
             this.splitContainerPastWords.Panel2.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainerPastWords.Panel2.Controls.Add(this.flowLayoutPanelPastWords);
-            this.splitContainerPastWords.Size = new System.Drawing.Size(144, 305);
+            this.splitContainerPastWords.Size = new System.Drawing.Size(141, 305);
             this.splitContainerPastWords.SplitterDistance = 25;
             this.splitContainerPastWords.SplitterWidth = 1;
             this.splitContainerPastWords.TabIndex = 0;
@@ -248,7 +242,7 @@
             this.lblPastWords.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPastWords.Location = new System.Drawing.Point(0, 0);
             this.lblPastWords.Name = "lblPastWords";
-            this.lblPastWords.Size = new System.Drawing.Size(144, 25);
+            this.lblPastWords.Size = new System.Drawing.Size(141, 25);
             this.lblPastWords.TabIndex = 0;
             this.lblPastWords.Text = "PAST WORDS";
             this.lblPastWords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -260,13 +254,56 @@
             this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
-            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(144, 279);
+            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(141, 279);
             this.flowLayoutPanelPastWords.TabIndex = 0;
             this.flowLayoutPanelPastWords.WrapContents = false;
             // 
             // btnConfigToolTip
             // 
             this.btnConfigToolTip.BackColor = System.Drawing.SystemColors.Window;
+            // 
+            // splitContainerWebBrowser
+            // 
+            this.splitContainerWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerWebBrowser.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerWebBrowser.Name = "splitContainerWebBrowser";
+            // 
+            // splitContainerWebBrowser.Panel1
+            // 
+            this.splitContainerWebBrowser.Panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerWebBrowser.Panel1.Controls.Add(this.wbSourceTranslation);
+            this.splitContainerWebBrowser.Panel1Collapsed = true;
+            // 
+            // splitContainerWebBrowser.Panel2
+            // 
+            this.splitContainerWebBrowser.Panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerWebBrowser.Panel2.Controls.Add(this.wbDestinationTranslation);
+            this.splitContainerWebBrowser.Size = new System.Drawing.Size(408, 305);
+            this.splitContainerWebBrowser.SplitterDistance = 204;
+            this.splitContainerWebBrowser.SplitterWidth = 1;
+            this.splitContainerWebBrowser.TabIndex = 0;
+            // 
+            // wbSourceTranslation
+            // 
+            this.wbSourceTranslation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbSourceTranslation.Location = new System.Drawing.Point(0, 0);
+            this.wbSourceTranslation.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbSourceTranslation.Name = "wbSourceTranslation";
+            this.wbSourceTranslation.ScriptErrorsSuppressed = true;
+            this.wbSourceTranslation.Size = new System.Drawing.Size(204, 305);
+            this.wbSourceTranslation.TabIndex = 2;
+            this.wbSourceTranslation.Url = new System.Uri("", System.UriKind.Relative);
+            // 
+            // wbDestinationTranslation
+            // 
+            this.wbDestinationTranslation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbDestinationTranslation.Location = new System.Drawing.Point(0, 0);
+            this.wbDestinationTranslation.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbDestinationTranslation.Name = "wbDestinationTranslation";
+            this.wbDestinationTranslation.ScriptErrorsSuppressed = true;
+            this.wbDestinationTranslation.Size = new System.Drawing.Size(408, 305);
+            this.wbDestinationTranslation.TabIndex = 3;
+            this.wbDestinationTranslation.Url = new System.Uri("about:blank", System.UriKind.Absolute);
             // 
             // WordInfoForm
             // 
@@ -299,6 +336,10 @@
             this.splitContainerPastWords.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerPastWords)).EndInit();
             this.splitContainerPastWords.ResumeLayout(false);
+            this.splitContainerWebBrowser.Panel1.ResumeLayout(false);
+            this.splitContainerWebBrowser.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerWebBrowser)).EndInit();
+            this.splitContainerWebBrowser.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,7 +348,6 @@
         #endregion
 
         private System.Windows.Forms.Label lblWord;
-        private System.Windows.Forms.WebBrowser wbWordInfo;
         private System.Windows.Forms.Panel pnlTitleBar;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ComboBox cbSourceLanguage;
@@ -325,5 +365,8 @@
         private System.Windows.Forms.ToolTip btnConfigToolTip;
         private System.Windows.Forms.PictureBox pbDirection;
         private System.Windows.Forms.ComboBox cbDestinationLanguage;
+        private System.Windows.Forms.SplitContainer splitContainerWebBrowser;
+        private System.Windows.Forms.WebBrowser wbSourceTranslation;
+        private System.Windows.Forms.WebBrowser wbDestinationTranslation;
     }
 }

@@ -41,6 +41,7 @@ namespace VisualDictionary
             this.Controls.Add(m_ViewFlyoutControl);
 
             splitContainerPastWords.SplitterWidth = 1;
+            splitContainerWebBrowser.SplitterWidth = 1;
 
             m_Online = online;
 
@@ -54,7 +55,7 @@ namespace VisualDictionary
 
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
 
-            this.GetTranslation(word);
+            this.GetTranslation(word, useDestinationLanguage: true);
         }
 
         void ViewFlyoutControl_TranslateDirectionChanged(object sender, TranslateDirectionChangedEventArgs e)
@@ -64,18 +65,50 @@ namespace VisualDictionary
                 switch (e.TranslateDirection)
                 {
                     case TranslateDirection.Left:
+                    {
+                        this.SuspendLayout();
+                        splitContainerWebBrowser.Panel1Collapsed = true;
+                        this.ResumeLayout();
+
                         m_TranslateDirection = TranslateDirection.Left;
                         pbDirection.BackgroundImage = Properties.Resources.left;
-                        this.SwapLanguageSelection();
+
+                        TranslateDirection currentDirection = (cbSourceLanguage.Location.X < cbDestinationLanguage.Location.X) ? TranslateDirection.Right : TranslateDirection.Left;
+                        if (currentDirection != TranslateDirection.Left)
+                        {
+                            this.GetReverseTranslation();
+                        }
+
                         break;
+                    }
                     case TranslateDirection.Right:
+                    {
+                        this.SuspendLayout();
+                        splitContainerWebBrowser.Panel1Collapsed = true;
+                        this.ResumeLayout();
+
                         m_TranslateDirection = TranslateDirection.Right;
                         pbDirection.BackgroundImage = Properties.Resources.right;
-                        this.SwapLanguageSelection();
+
+                        TranslateDirection currentDirection = (cbSourceLanguage.Location.X < cbDestinationLanguage.Location.X) ? TranslateDirection.Right : TranslateDirection.Left;
+                        if (currentDirection != TranslateDirection.Right)
+                        {
+                            this.GetReverseTranslation();
+                        }
+
                         break;
+                    }
                     case TranslateDirection.Both:
+                        
+                        this.SuspendLayout();
+                        splitContainerWebBrowser.Panel1Collapsed = false;
+                        this.ResumeLayout();
+
                         m_TranslateDirection = TranslateDirection.Both;
                         pbDirection.BackgroundImage = Properties.Resources.both;
+                        
+                        this.GetSideBySideTranslation();
+
                         break;
                     default:
                         break;
@@ -88,7 +121,13 @@ namespace VisualDictionary
             m_ViewFlyoutControl.Visible = false;
         }
 
-        private void SwapLanguageSelection()
+        private void GetSideBySideTranslation()
+        {
+            this.GetTranslation(m_Word, useDestinationLanguage: false);
+            this.GetTranslation(m_Word, useDestinationLanguage: true);
+        }
+
+        private void GetReverseTranslation()
         {
             this.SuspendLayout();
 
@@ -96,19 +135,21 @@ namespace VisualDictionary
             cbSourceLanguage.Location = cbDestinationLanguage.Location;
             cbDestinationLanguage.Location = cbSourceLocation;
 
-            string sourceLanguage = cbSourceLanguage.SelectedItem as string;
-            cbSourceLanguage.SelectedItem = cbDestinationLanguage.SelectedItem;
-            cbDestinationLanguage.SelectedItem = sourceLanguage;
+            if (cbSourceLanguage.SelectedItem != cbDestinationLanguage.SelectedItem)
+            {
+                string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+                cbSourceLanguage.SelectedItem = cbDestinationLanguage.SelectedItem;
+                cbDestinationLanguage.SelectedItem = sourceLanguage;
 
-            Common.SourceLanguageSelectionChanged(cbSourceLanguage);
-            Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+                Common.SourceLanguageSelectionChanged(cbSourceLanguage);
+                Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+                this.GetTranslation(m_Word, useDestinationLanguage: true);
+            }
 
             this.ResumeLayout();
-
-            this.GetTranslation(m_Word);
         }
 
-        private void GetTranslation(string word)
+        private void GetTranslation(string word, bool useDestinationLanguage)
         {
             m_Word = word;
             if (!m_Online)
@@ -118,46 +159,43 @@ namespace VisualDictionary
             {
                 lblWord.Visible = false;
                 
-                string address = String.Empty;
+                string sourceLanguage = Properties.Settings.Default.SourceLanguage;
+                string destinationLanguage = useDestinationLanguage ? Properties.Settings.Default.DestinationLanguage : sourceLanguage;
+
+                WebBrowser wbControl = useDestinationLanguage ? wbDestinationTranslation : wbSourceTranslation;
+                wbControl.Document.OpenNew(false);
 
                 bool forward = false;
-
-                wbWordInfo.Document.OpenNew(true);
-
-                TranslateSitesInfo info = Common.GetTranslationSitesInfo(
-                    Properties.Settings.Default.SourceLanguage, 
-                    Properties.Settings.Default.DestinationLanguage, 
-                    ref forward);
+                TranslateSitesInfo info = Common.GetTranslationSitesInfo(sourceLanguage, destinationLanguage, ref forward);
 
                 List<string> translateSites = forward ? info.ForwardSites : info.BackwardSites;
                 if (translateSites.Count > 0)
                 {
-                    address = String.Format(translateSites[0], m_Word);
+                    string address = String.Format(translateSites[0], m_Word);
 
                     try
                     {
-                        wbWordInfo.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
-                        wbWordInfo.Url = new Uri(address);
+                        wbControl.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
+                        wbControl.Url = new Uri(address);
                     }
                     catch (Exception ex)
                     {
                         if (ex is UriFormatException)
                         {
-                            wbWordInfo.Document.Write(Properties.Resources.Error_InvalidUriFormat);
+                            wbControl.Document.Write(Properties.Resources.Error_InvalidUriFormat);
                         }
                         else
                         {
-                            wbWordInfo.Document.Write(ex.ToString());
+                            wbControl.Document.Write(ex.ToString());
                         }
                     }
                 }
                 else
                 {
                     string siteMissingText = String.Format(Properties.Resources.WebBrowser_SiteURLMissingText,
-                        Properties.Settings.Default.SourceLanguage,
-                        Properties.Settings.Default.DestinationLanguage);
+                        sourceLanguage, destinationLanguage);
 
-                    wbWordInfo.Document.Write(siteMissingText);
+                    wbControl.Document.Write(siteMissingText);
                 }
             }
         }
@@ -269,15 +307,19 @@ namespace VisualDictionary
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Common.SourceLanguageSelectionChanged(cbSourceLanguage);
-            
-            this.GetTranslation(m_Word);
+
+            if (m_TranslateDirection == TranslateDirection.Both && splitContainerWebBrowser.Panel1Collapsed == false)
+            {
+                this.GetTranslation(m_Word, useDestinationLanguage: false);
+            }
+            this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
 
         private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
 
-            this.GetTranslation(m_Word);
+            this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
 
         private void btnPin_Click(object sender, EventArgs e)
@@ -336,15 +378,6 @@ namespace VisualDictionary
             }
         }
 
-        void pastWordButton_Click(object sender, EventArgs e)
-        {
-            if (sender is Button)
-            {
-                Button pastWordButton = sender as Button;
-                this.GetTranslation(pastWordButton.Text);
-            }
-        }
-
         private void CreatePastWordControl(string word)
         {
             PastWordControl pastWordControl = new PastWordControl(word);
@@ -360,7 +393,7 @@ namespace VisualDictionary
             {
                 PastWordControl pwc = sender as PastWordControl;
                 string word = pwc.Word;
-                this.GetTranslation(word);
+                this.GetTranslation(word, useDestinationLanguage: true);
             }
         }
 
@@ -423,6 +456,7 @@ namespace VisualDictionary
         private void pbRight_MouseEnter(object sender, EventArgs e)
         {
             m_ViewFlyoutControl.ActiveDirection = m_TranslateDirection;
+            m_ViewFlyoutControl.SideBySideEnabled = (cbSourceLanguage.SelectedItem != cbDestinationLanguage.SelectedItem);
             m_ViewFlyoutControl.Visible = true;
             m_ViewFlyoutControl.BringToFront();
         }

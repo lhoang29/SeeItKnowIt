@@ -12,7 +12,17 @@ namespace VisualDictionary
 {
     public partial class ViewFlyoutControl : UserControl
     {
+        private bool m_SideBySideEnabled;
         private TranslateDirection m_ActiveDirection;
+
+        public bool SideBySideEnabled
+        {
+            get { return m_SideBySideEnabled; }
+            set 
+            {
+                pbBoth.Enabled = m_SideBySideEnabled = value;
+            }
+        }
 
         public TranslateDirection ActiveDirection
         {
@@ -193,6 +203,18 @@ namespace VisualDictionary
         private void pbBoth_MouseLeave(object sender, EventArgs e)
         {
             pbBoth.BackColor = Color.Transparent;
+        }
+
+        private void pbBoth_EnabledChanged(object sender, EventArgs e)
+        {
+            if (pbBoth.Enabled)
+            {
+                pbBoth.BackgroundImage = Properties.Resources.both;
+            }
+            else
+            {
+                pbBoth.BackgroundImage = Properties.Resources.both_disabled;
+            }
         }
     }
 }

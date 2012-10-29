@@ -80,6 +80,16 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap both_disabled {
+            get {
+                object obj = ResourceManager.GetObject("both_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string ButtonCloseToolTip {
@@ -450,7 +460,7 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There&apos;s no corresponding sites for lookup from {0} to {1}. Please visit Configuration and add a site..
+        ///   Looks up a localized string similar to &lt;font size=4&gt;There&apos;s no corresponding sites for lookup from {0} to {1}. Please visit Configuration and add a site.&lt;/font&gt;.
         /// </summary>
         internal static string WebBrowser_SiteURLMissingText {
             get {
