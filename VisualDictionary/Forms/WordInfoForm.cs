@@ -66,10 +66,12 @@ namespace VisualDictionary
                     case TranslateDirection.Left:
                         m_TranslateDirection = TranslateDirection.Left;
                         pbDirection.BackgroundImage = Properties.Resources.left;
+                        this.SwapLanguageSelection();
                         break;
                     case TranslateDirection.Right:
                         m_TranslateDirection = TranslateDirection.Right;
                         pbDirection.BackgroundImage = Properties.Resources.right;
+                        this.SwapLanguageSelection();
                         break;
                     case TranslateDirection.Both:
                         m_TranslateDirection = TranslateDirection.Both;
@@ -84,6 +86,26 @@ namespace VisualDictionary
         void ViewFlyoutControl_HideRequest(object sender, EventArgs e)
         {
             m_ViewFlyoutControl.Visible = false;
+        }
+
+        private void SwapLanguageSelection()
+        {
+            this.SuspendLayout();
+
+            Point cbSourceLocation = cbSourceLanguage.Location;
+            cbSourceLanguage.Location = cbDestinationLanguage.Location;
+            cbDestinationLanguage.Location = cbSourceLocation;
+
+            string sourceLanguage = cbSourceLanguage.SelectedItem as string;
+            cbSourceLanguage.SelectedItem = cbDestinationLanguage.SelectedItem;
+            cbDestinationLanguage.SelectedItem = sourceLanguage;
+
+            Common.SourceLanguageSelectionChanged(cbSourceLanguage);
+            Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+
+            this.ResumeLayout();
+
+            this.GetTranslation(m_Word);
         }
 
         private void GetTranslation(string word)
@@ -246,7 +268,7 @@ namespace VisualDictionary
 
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Common.SourceLanguageSelectionChanged(cbSourceLanguage, cbDestinationLanguage);
+            Common.SourceLanguageSelectionChanged(cbSourceLanguage);
             
             this.GetTranslation(m_Word);
         }

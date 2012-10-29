@@ -206,7 +206,7 @@ namespace VisualDictionary
 
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Common.SourceLanguageSelectionChanged(cbSourceLanguage, cbDestinationLanguage);
+            Common.SourceLanguageSelectionChanged(cbSourceLanguage);
             this.PopulateSiteControls();
         }
 

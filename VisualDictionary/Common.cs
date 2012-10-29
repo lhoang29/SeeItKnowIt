@@ -366,7 +366,7 @@ namespace VisualDictionary
             cbDestination.SelectedItem = Properties.Settings.Default.DestinationLanguage;
         }
 
-        public static void SourceLanguageSelectionChanged(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
+        public static void SourceLanguageSelectionChanged(System.Windows.Forms.ComboBox cbSource)
         {
             Properties.Settings.Default.SourceLanguage = cbSource.SelectedItem as string;
         }
