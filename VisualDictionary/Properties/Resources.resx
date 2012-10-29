@@ -130,17 +130,14 @@
   <data name="Configuration_AddSite_LabelError_IncompatibleURL" xml:space="preserve">
     <value>URL must contain word: {0}</value>
   </data>
-  <data name="Configuration_TranslateSite_AddNew" xml:space="preserve">
-    <value>Add new site</value>
-  </data>
   <data name="WebBrowser_LoadingHTMLText" xml:space="preserve">
     <value>&lt;font size=4&gt;Loading...&lt;/font&gt;</value>
   </data>
+  <data name="Error_RegisterHotKey" xml:space="preserve">
+    <value>Couldn't register keyboard shortcut activation</value>
+  </data>
   <data name="Configuration_Label_Languages" xml:space="preserve">
     <value>Default language selection:</value>
-  </data>
-  <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Configuration_AddSite_LabelError_InvalidURL" xml:space="preserve">
     <value>Invalid URL format, please check again</value>
@@ -154,8 +151,14 @@
   <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TrayIcon_BalloonTipText" xml:space="preserve">
+    <value>{0} is running</value>
+  </data>
   <data name="Configuration_RestoreSettings_Confirmation" xml:space="preserve">
     <value>Are you sure you want to restore all settings to default?</value>
+  </data>
+  <data name="both_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\both_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ButtonCloseToolTip" xml:space="preserve">
     <value>Close</value>
@@ -172,11 +175,11 @@
   <data name="WebBrowser_SiteURLMissingText" xml:space="preserve">
     <value>&lt;font size=4&gt;There's no corresponding sites for lookup from {0} to {1}. Please visit Configuration and add a site.&lt;/font&gt;</value>
   </data>
+  <data name="both_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\both_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="both" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\both.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Configuration_AddSite_Tutorial" xml:space="preserve">
     <value>To add a new site, follow these steps:\n- Open your site in any browser\n- Look up the meaning for: {0}\n- Copy the URL and paste it below</value>
@@ -184,29 +187,26 @@
   <data name="Dialog_Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="Configuration_AddSite_EditWatermark" xml:space="preserve">
-    <value>Enter URL here ...</value>
+  <data name="Configuration_TranslateSite_AddNew" xml:space="preserve">
+    <value>Add new site</value>
   </data>
   <data name="Configuration_TranslateSite_MakeActive" xml:space="preserve">
     <value>Use this site</value>
   </data>
+  <data name="Configuration_AddSite_EditWatermark" xml:space="preserve">
+    <value>Enter URL here ...</value>
+  </data>
+  <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Configuration_RestoreText" xml:space="preserve">
     <value>Restore</value>
-  </data>
-  <data name="Error_RegisterHotKey" xml:space="preserve">
-    <value>Couldn't register keyboard shortcut activation</value>
-  </data>
-  <data name="TrayIcon_BalloonTipText" xml:space="preserve">
-    <value>{0} is running</value>
   </data>
   <data name="ButtonPinToolTip" xml:space="preserve">
     <value>Pin</value>
   </data>
   <data name="Configuration_Language_AddNew" xml:space="preserve">
     <value>Add new language ...</value>
-  </data>
-  <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TrayIcon_Text" xml:space="preserve">
     <value>Version: {0}</value>
@@ -232,6 +232,9 @@
   <data name="Dialog_Confirmation" xml:space="preserve">
     <value>Confirmation</value>
   </data>
+  <data name="Information_Tutorial" xml:space="preserve">
+    <value>Highlight any word then press Windows + {0} to translate</value>
+  </data>
   <data name="Application_WelcomeMessage" xml:space="preserve">
     <value>Welcome to {0}</value>
   </data>
@@ -241,13 +244,16 @@
   <data name="delete_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Information_Tutorial" xml:space="preserve">
-    <value>Highlight any word then press Windows + {0} to translate</value>
+  <data name="config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ComboBoxLanguageToolTip" xml:space="preserve">
     <value>Change the translation language</value>
   </data>
-  <data name="both_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\both_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="both_left_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\both_left_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="both_right_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\both_right_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

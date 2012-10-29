@@ -42,8 +42,11 @@ namespace VisualDictionary
                     case TranslateDirection.Right:
                         pbDirection.BackgroundImage = Properties.Resources.right;
                         break;
-                    case TranslateDirection.Both:
-                        pbDirection.BackgroundImage = Properties.Resources.both;
+                    case TranslateDirection.Both_Left:
+                        pbDirection.BackgroundImage = Properties.Resources.both_left;
+                        break;
+                    case TranslateDirection.Both_Right:
+                        pbDirection.BackgroundImage = Properties.Resources.both_right;
                         break;
                     default:
                         break;
@@ -57,7 +60,7 @@ namespace VisualDictionary
 
             ActiveTranslateDirection = TranslateDirection.Right;
 
-            m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location, ActiveTranslateDirection);
+            m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location);
             m_ViewFlyoutControl.Visible = false;
             m_ViewFlyoutControl.HideRequest += new EventHandler(ViewFlyoutControl_HideRequest);
             m_ViewFlyoutControl.TranslateDirectionChanged += new TranslateDirectionChangedEventHandler(ViewFlyoutControl_TranslateDirectionChanged);
@@ -115,7 +118,8 @@ namespace VisualDictionary
 
                         break;
                     }
-                    case TranslateDirection.Both:
+                    case TranslateDirection.Both_Left:
+                    case TranslateDirection.Both_Right:
                     {
                         this.SuspendLayout();
                         this.ShowSourceTranslation();
@@ -380,7 +384,7 @@ namespace VisualDictionary
             Common.SourceLanguageSelectionChanged(cbSourceLanguage);
 
             // If already showing side-by-side translation
-            if (m_ActiveTranslateDirection == TranslateDirection.Both && this.IsSourceTranslationVisible())
+            if (this.IsInSideBySideMode())
             {
                 // If changed to same language translation in side-by-side mode then turn off side-by-side and 
                 // view in normal mode.
@@ -397,12 +401,17 @@ namespace VisualDictionary
             this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
 
+        private bool IsInSideBySideMode()
+        {
+            return this.IsSourceTranslationVisible();
+        }
+
         private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
 
             // If already showing side-by-side translation
-            if (m_ActiveTranslateDirection == TranslateDirection.Both && this.IsSourceTranslationVisible())
+            if (this.IsInSideBySideMode())
             {
                 // If changed to same language translation in side-by-side mode then turn off side-by-side and 
                 // view in normal mode.

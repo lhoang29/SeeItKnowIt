@@ -27,13 +27,17 @@ namespace VisualDictionary
         public TranslateDirection ActiveDirection
         {
             get { return m_ActiveDirection; }
-            set { m_ActiveDirection = value; }
+            set 
+            { 
+                m_ActiveDirection = value;
+                this.UpdateImageBoth();
+            }
         }
 
         public event EventHandler HideRequest;
         public event TranslateDirectionChangedEventHandler TranslateDirectionChanged;
 
-        public ViewFlyoutControl(Point overlayedButtonLocation, TranslateDirection direction)
+        public ViewFlyoutControl(Point overlayedButtonLocation)
         {
             InitializeComponent();
 
@@ -100,10 +104,10 @@ namespace VisualDictionary
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                if (m_ActiveDirection != TranslateDirection.Both)
+                if (m_ActiveDirection == TranslateDirection.Left || m_ActiveDirection == TranslateDirection.Right)
                 {
                     TranslateDirectionChangedEventArgs tde = new TranslateDirectionChangedEventArgs();
-                    tde.TranslateDirection = TranslateDirection.Both;
+                    tde.TranslateDirection = (m_ActiveDirection == TranslateDirection.Left) ? TranslateDirection.Both_Left : TranslateDirection.Both_Right;
                     this.TranslateDirectionChanged(this, tde);
                 }
                 this.HideRequest(this, e);
@@ -124,10 +128,11 @@ namespace VisualDictionary
                     this.MoveMiddle(pbLeft);
                     this.MoveBottom(pbBoth);
                     break;
-                case TranslateDirection.Both:
+                case TranslateDirection.Both_Left:
+                case TranslateDirection.Both_Right:
                     this.MoveTop(pbBoth);
-                    this.MoveMiddle(pbLeft);
-                    this.MoveBottom(pbRight);
+                    this.MoveMiddle(pbRight);
+                    this.MoveBottom(pbLeft);
                     break;
                 default:
                     break;
@@ -165,7 +170,8 @@ namespace VisualDictionary
                     case TranslateDirection.Right:
                         pbRight.BackColor = Color.Gainsboro;
                         break;
-                    case TranslateDirection.Both:
+                    case TranslateDirection.Both_Left:
+                    case TranslateDirection.Both_Right:
                         pbBoth.BackColor = Color.Gainsboro;
                         break;
                     default:
@@ -207,13 +213,42 @@ namespace VisualDictionary
 
         private void pbBoth_EnabledChanged(object sender, EventArgs e)
         {
+            UpdateImageBoth();
+        }
+
+        private void UpdateImageBoth()
+        {
             if (pbBoth.Enabled)
             {
-                pbBoth.BackgroundImage = Properties.Resources.both;
+                switch (m_ActiveDirection)
+                {
+                    case TranslateDirection.Left:
+                    case TranslateDirection.Both_Left:
+                        pbBoth.BackgroundImage = Properties.Resources.both_left;
+                        break;
+                    case TranslateDirection.Right:
+                    case TranslateDirection.Both_Right:
+                        pbBoth.BackgroundImage = Properties.Resources.both_right;
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
-                pbBoth.BackgroundImage = Properties.Resources.both_disabled;
+                switch (m_ActiveDirection)
+                {
+                    case TranslateDirection.Left:
+                    case TranslateDirection.Both_Left:
+                        pbBoth.BackgroundImage = Properties.Resources.both_left_disabled;
+                        break;
+                    case TranslateDirection.Right:
+                    case TranslateDirection.Both_Right:
+                        pbBoth.BackgroundImage = Properties.Resources.both_right_disabled;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

@@ -38,7 +38,7 @@
             // 
             // pbBoth
             // 
-            this.pbBoth.BackgroundImage = global::VisualDictionary.Properties.Resources.both;
+            this.pbBoth.BackgroundImage = global::VisualDictionary.Properties.Resources.both_right;
             this.pbBoth.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbBoth.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbBoth.Location = new System.Drawing.Point(1, 51);

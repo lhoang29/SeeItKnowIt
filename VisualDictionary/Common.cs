@@ -25,7 +25,8 @@ namespace VisualDictionary
     { 
         Left = 0,
         Right,
-        Both
+        Both_Left,
+        Both_Right
     }
 
     [Serializable]

@@ -72,9 +72,9 @@ namespace VisualDictionary.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap both {
+        internal static System.Drawing.Bitmap both_left {
             get {
-                object obj = ResourceManager.GetObject("both", resourceCulture);
+                object obj = ResourceManager.GetObject("both_left", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -82,9 +82,29 @@ namespace VisualDictionary.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap both_disabled {
+        internal static System.Drawing.Bitmap both_left_disabled {
             get {
-                object obj = ResourceManager.GetObject("both_disabled", resourceCulture);
+                object obj = ResourceManager.GetObject("both_left_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap both_right {
+            get {
+                object obj = ResourceManager.GetObject("both_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap both_right_disabled {
+            get {
+                object obj = ResourceManager.GetObject("both_right_disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
