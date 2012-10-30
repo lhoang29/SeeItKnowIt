@@ -166,7 +166,7 @@ namespace VisualDictionary
                         this.SwapWebBrowserIfNeeded(currentDirection);
                         this.ResumeLayout();
 
-                        this.GetSideBySideTranslation();
+                        this.GetTranslation(m_Word, useDestinationLanguage: false);
 
                         break;
                     }
@@ -234,12 +234,6 @@ namespace VisualDictionary
         void ViewFlyoutControl_HideRequest(object sender, EventArgs e)
         {
             m_ViewFlyoutControl.Visible = false;
-        }
-
-        private void GetSideBySideTranslation()
-        {
-            this.GetTranslation(m_Word, useDestinationLanguage: false);
-            this.GetTranslation(m_Word, useDestinationLanguage: true);
         }
 
         private void GetReverseTranslation()
@@ -544,6 +538,10 @@ namespace VisualDictionary
                 PastWordControl pwc = sender as PastWordControl;
                 string word = pwc.Word;
                 this.GetTranslation(word, useDestinationLanguage: true);
+                if (this.IsInSideBySideMode())
+                {
+                    this.GetTranslation(word, useDestinationLanguage: false);
+                }
             }
         }
 
