@@ -193,7 +193,25 @@ namespace VisualDictionary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To add a new site, follow these steps:\n- Open your site in any browser\n- Look up the meaning for: {0}\n- Copy the URL and paste it below.
+        ///   Looks up a localized string similar to Please enter chosen word above.
+        /// </summary>
+        internal static string Configuration_AddSite_LabelError_MissingWord {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_LabelError_MissingWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter chosen word here ....
+        /// </summary>
+        internal static string Configuration_AddSite_LookupWordWatermark {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_LookupWordWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To add a new site, follow these steps:\n- Open your site in a web browser\n- Look up any {0} word on this site\n- Copy the final URL and paste it below.
         /// </summary>
         internal static string Configuration_AddSite_Tutorial {
             get {

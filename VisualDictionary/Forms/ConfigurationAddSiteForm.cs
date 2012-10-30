@@ -12,8 +12,6 @@ namespace VisualDictionary
 {
     public partial class ConfigurationAddSiteForm : Form
     {
-        private string m_CalibrateWord;
-
         public event SiteAddedEventHandler SiteAdded;
 
         [DllImport("User32.dll", EntryPoint = "GetDCEx")]
@@ -22,8 +20,7 @@ namespace VisualDictionary
         public ConfigurationAddSiteForm()
         {
             InitializeComponent();
-            m_CalibrateWord = Common.CalibrateWords[(new Random()).Next(Common.CalibrateWords.Length)];
-            string tutorial = String.Format(Properties.Resources.Configuration_AddSite_Tutorial, m_CalibrateWord);
+            string tutorial = String.Format(Properties.Resources.Configuration_AddSite_Tutorial, Properties.Settings.Default.DestinationLanguage);
             string[] tutorialSplits = tutorial.Split(new string[] { "\\n" }, StringSplitOptions.RemoveEmptyEntries);
             if (tutorialSplits.Length >= 4)
             {
@@ -33,6 +30,7 @@ namespace VisualDictionary
                 textBox4.Text = tutorialSplits[3];
             }
             this.SetWatermark(tbCalibrateSiteAddress, Properties.Resources.Configuration_AddSite_EditWatermark);
+            this.SetWatermark(tbLookupWord, Properties.Resources.Configuration_AddSite_LookupWordWatermark);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -53,11 +51,11 @@ namespace VisualDictionary
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (this.ValidateURL())
+            if (this.ValidateValues())
             {
                 // Modifies the URL to have the proper formatting syntax
                 string newSiteURL = tbCalibrateSiteAddress.Text;
-                newSiteURL = newSiteURL.Replace(m_CalibrateWord, "{0}");
+                newSiteURL = newSiteURL.Replace(tbLookupWord.Text.Trim(), "{0}");
 
                 // Raise the SiteAdded event to let the parent form know the new URL
                 SiteAddedEventArgs args = new SiteAddedEventArgs();
@@ -75,8 +73,27 @@ namespace VisualDictionary
 
         private void tbCalibrateSiteAddress_TextChanged(object sender, EventArgs e)
         {
-            lblError.Visible = false;
-            btnAdd.Enabled = (tbCalibrateSiteAddress.Text.Length > 0);
+            this.UpdateValidState();
+        }
+
+        private void tbLookupWord_TextChanged(object sender, EventArgs e)
+        {
+            this.UpdateValidState();
+        }
+
+        private bool ValidateValues()
+        {
+            bool valid = (tbLookupWord.Text.Trim().Length > 0);
+            if (valid)
+            {
+                valid = this.ValidateURL();
+            }
+            else
+            {
+                lblError.Text = Properties.Resources.Configuration_AddSite_LabelError_MissingWord;
+                lblError.Visible = true;
+            }
+            return valid;
         }
 
         private bool ValidateURL()
@@ -90,10 +107,11 @@ namespace VisualDictionary
                 isValid = Uri.IsWellFormedUriString(newURL, UriKind.Absolute);
                 if (isValid)
                 {
-                    isValid = newURL.Contains(m_CalibrateWord);
+                    string lookupWord = tbLookupWord.Text.Trim();
+                    isValid = newURL.Contains(lookupWord);
                     if (!isValid)
                     {
-                        errorMessage = String.Format(Properties.Resources.Configuration_AddSite_LabelError_IncompatibleURL, m_CalibrateWord);
+                        errorMessage = String.Format(Properties.Resources.Configuration_AddSite_LabelError_IncompatibleURL, lookupWord);
                     }
                 }
                 else
@@ -108,6 +126,12 @@ namespace VisualDictionary
                 lblError.Visible = true;
             }
             return isValid;
+        }
+
+        private void UpdateValidState()
+        {
+            lblError.Visible = false;
+            btnAdd.Enabled = (tbCalibrateSiteAddress.Text.Trim().Length > 0) && (tbLookupWord.Text.Trim().Length > 0);
         }
 
         private const uint ECM_FIRST = 0x1500;

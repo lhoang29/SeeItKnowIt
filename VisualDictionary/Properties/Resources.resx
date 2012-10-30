@@ -182,7 +182,7 @@
     <value>..\Resources\pin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Configuration_AddSite_Tutorial" xml:space="preserve">
-    <value>To add a new site, follow these steps:\n- Open your site in any browser\n- Look up the meaning for: {0}\n- Copy the URL and paste it below</value>
+    <value>To add a new site, follow these steps:\n- Open your site in a web browser\n- Look up any {0} word on this site\n- Copy the final URL and paste it below</value>
   </data>
   <data name="Dialog_Error" xml:space="preserve">
     <value>Error</value>
@@ -255,5 +255,11 @@
   </data>
   <data name="both_right_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\both_right_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Configuration_AddSite_LookupWordWatermark" xml:space="preserve">
+    <value>Enter chosen word here ...</value>
+  </data>
+  <data name="Configuration_AddSite_LabelError_MissingWord" xml:space="preserve">
+    <value>Please enter chosen word above</value>
   </data>
 </root>

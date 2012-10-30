@@ -36,13 +36,15 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbLookupWord = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tbCalibrateSiteAddress
             // 
-            this.tbCalibrateSiteAddress.Location = new System.Drawing.Point(15, 101);
+            this.tbCalibrateSiteAddress.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCalibrateSiteAddress.Location = new System.Drawing.Point(15, 121);
             this.tbCalibrateSiteAddress.Name = "tbCalibrateSiteAddress";
-            this.tbCalibrateSiteAddress.Size = new System.Drawing.Size(250, 20);
+            this.tbCalibrateSiteAddress.Size = new System.Drawing.Size(250, 24);
             this.tbCalibrateSiteAddress.TabIndex = 1;
             this.tbCalibrateSiteAddress.TextChanged += new System.EventHandler(this.tbCalibrateSiteAddress_TextChanged);
             // 
@@ -53,7 +55,7 @@
             this.btnAdd.Enabled = false;
             this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Location = new System.Drawing.Point(227, 149);
+            this.btnAdd.Location = new System.Drawing.Point(227, 169);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(38, 25);
             this.btnAdd.TabIndex = 4;
@@ -64,10 +66,11 @@
             // lblError
             // 
             this.lblError.AutoSize = true;
+            this.lblError.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(15, 129);
+            this.lblError.Location = new System.Drawing.Point(15, 149);
             this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(0, 13);
+            this.lblError.Size = new System.Drawing.Size(0, 16);
             this.lblError.TabIndex = 9;
             // 
             // btnCancel
@@ -76,7 +79,7 @@
             this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(169, 149);
+            this.btnCancel.Location = new System.Drawing.Point(169, 169);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(52, 25);
             this.btnCancel.TabIndex = 0;
@@ -128,12 +131,22 @@
             this.textBox1.TabIndex = 10;
             this.textBox1.TabStop = false;
             // 
+            // tbLookupWord
+            // 
+            this.tbLookupWord.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbLookupWord.Location = new System.Drawing.Point(15, 94);
+            this.tbLookupWord.Name = "tbLookupWord";
+            this.tbLookupWord.Size = new System.Drawing.Size(206, 24);
+            this.tbLookupWord.TabIndex = 14;
+            this.tbLookupWord.TextChanged += new System.EventHandler(this.tbLookupWord_TextChanged);
+            // 
             // ConfigurationAddSiteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(275, 185);
+            this.ClientSize = new System.Drawing.Size(275, 208);
+            this.Controls.Add(this.tbLookupWord);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
@@ -162,5 +175,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbLookupWord;
     }
 }
