@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace VisualDictionary
 {
@@ -413,4 +414,19 @@ namespace VisualDictionary
     }
 
     public delegate void TranslateDirectionChangedEventHandler(object sender, TranslateDirectionChangedEventArgs e);
+
+    public class GlobalMouseHandler : IMessageFilter
+    {
+        private const int WM_MOUSEMOVE = 0x200;
+        public event MouseEventHandler GlobalMouseMove;
+
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == WM_MOUSEMOVE)
+            {
+                this.GlobalMouseMove(this, null);
+            }
+            return false;
+        }
+    }
 }

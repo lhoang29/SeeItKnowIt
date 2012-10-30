@@ -97,7 +97,6 @@
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Size = new System.Drawing.Size(22, 72);
             this.VisibleChanged += new System.EventHandler(this.ViewFlyoutControl_VisibleChanged);
-            this.MouseLeave += new System.EventHandler(this.ViewFlyoutControl_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.pbBoth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRight)).EndInit();

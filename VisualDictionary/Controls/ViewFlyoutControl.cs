@@ -64,14 +64,6 @@ namespace VisualDictionary
             }
         }
 
-        private void ViewFlyoutControl_MouseLeave(object sender, EventArgs e)
-        {
-            if (!this.ClientRectangle.Contains(this.PointToClient(Cursor.Position)))
-            {
-                this.HideRequest(this, e);
-            }
-        }
-
         private void pbRight_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)

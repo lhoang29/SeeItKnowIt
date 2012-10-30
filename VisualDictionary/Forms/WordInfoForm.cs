@@ -22,6 +22,7 @@ namespace VisualDictionary
         private Point m_MouseDownPoint = Point.Empty;
         private Control m_FocusedControl = null;
         private TranslateDirection m_ActiveTranslateDirection;
+        private GlobalMouseHandler m_GlobalMouseHandler;
 
         private ViewFlyoutControl m_ViewFlyoutControl = null;
 
@@ -60,6 +61,10 @@ namespace VisualDictionary
             InitializeComponent();
             InitializeToolTip();
 
+            m_GlobalMouseHandler = new GlobalMouseHandler();
+            m_GlobalMouseHandler.GlobalMouseMove += new MouseEventHandler(GlobalMouseHandler_GlobalMouseMove);
+            Application.AddMessageFilter(m_GlobalMouseHandler);
+
             m_ViewFlyoutControl = new ViewFlyoutControl(pbDirection.Location);
             m_ViewFlyoutControl.Visible = false;
             m_ViewFlyoutControl.HideRequest += new EventHandler(ViewFlyoutControl_HideRequest);
@@ -96,6 +101,18 @@ namespace VisualDictionary
                     break;
             }
             this.GetTranslation(word, useDestinationLanguage: true);
+        }
+
+        void GlobalMouseHandler_GlobalMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!this.IsDisposed)
+            {
+                Point cursor = m_ViewFlyoutControl.PointToClient(Cursor.Position);
+                if (m_ViewFlyoutControl.Visible && !m_ViewFlyoutControl.DisplayRectangle.Contains(cursor))
+                {
+                    m_ViewFlyoutControl.Visible = false;
+                }
+            }
         }
 
         private void InitializeToolTip()
