@@ -28,19 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblPastWord = new System.Windows.Forms.Label();
+            this.btnWord = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lblPastWord
+            // btnWord
             // 
-            this.lblPastWord.AutoEllipsis = true;
-            this.lblPastWord.AutoSize = true;
-            this.lblPastWord.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPastWord.Location = new System.Drawing.Point(5, 5);
-            this.lblPastWord.Name = "lblPastWord";
-            this.lblPastWord.Size = new System.Drawing.Size(0, 17);
-            this.lblPastWord.TabIndex = 0;
-            this.lblPastWord.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lblPastWord_MouseClick);
+            this.btnWord.AutoSize = true;
+            this.btnWord.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnWord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnWord.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.btnWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWord.Location = new System.Drawing.Point(0, 0);
+            this.btnWord.Name = "btnWord";
+            this.btnWord.Size = new System.Drawing.Size(10, 10);
+            this.btnWord.TabIndex = 0;
+            this.btnWord.UseVisualStyleBackColor = true;
+            this.btnWord.Click += new System.EventHandler(this.btnWord_Click);
+            this.btnWord.MouseEnter += new System.EventHandler(this.btnWord_MouseEnter);
+            this.btnWord.MouseLeave += new System.EventHandler(this.btnWord_MouseLeave);
             // 
             // PastWordControl
             // 
@@ -48,12 +53,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.lblPastWord);
+            this.Controls.Add(this.btnWord);
             this.Name = "PastWordControl";
-            this.Padding = new System.Windows.Forms.Padding(5);
-            this.Size = new System.Drawing.Size(100, 27);
-            this.MouseEnter += new System.EventHandler(this.PastWordControl_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.PastWordControl_MouseLeave);
+            this.Size = new System.Drawing.Size(10, 10);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -61,6 +63,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblPastWord;
+        private System.Windows.Forms.Button btnWord;
+
     }
 }
