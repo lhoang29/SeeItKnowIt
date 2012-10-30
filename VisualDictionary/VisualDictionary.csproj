@@ -245,12 +245,6 @@
     <None Include="Resources\left.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\both.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\both_disabled.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\both_right.png" />
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +255,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\both_right_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tip_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

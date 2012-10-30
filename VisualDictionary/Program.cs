@@ -17,7 +17,7 @@ namespace VisualDictionary
         {
             if (System.Diagnostics.Process.GetProcessesByName("VisualDictionary").Length > 1)
             {
-                OverlayForm.PromptInformation("Dictionary is already running");
+                Common.PromptInformation("Dictionary is already running");
                 return;
             }
 

@@ -13,6 +13,7 @@ namespace VisualDictionary
     public partial class ConfigurationAddSiteForm : Form
     {
         public event SiteAddedEventHandler SiteAdded;
+        private string m_Tutorial;
 
         [DllImport("User32.dll", EntryPoint = "GetDCEx")]
         internal static extern IntPtr GetDCEx(IntPtr hWnd, IntPtr hRgn, int flags);
@@ -20,17 +21,7 @@ namespace VisualDictionary
         public ConfigurationAddSiteForm()
         {
             InitializeComponent();
-            string tutorial = String.Format(Properties.Resources.Configuration_AddSite_Tutorial, Properties.Settings.Default.DestinationLanguage);
-            string[] tutorialSplits = tutorial.Split(new string[] { "\\n" }, StringSplitOptions.RemoveEmptyEntries);
-            if (tutorialSplits.Length >= 4)
-            {
-                textBox1.Text = tutorialSplits[0];
-                textBox2.Text = tutorialSplits[1];
-                textBox3.Text = tutorialSplits[2];
-                textBox4.Text = tutorialSplits[3];
-            }
             this.SetWatermark(tbCalibrateSiteAddress, Properties.Resources.Configuration_AddSite_EditWatermark);
-            this.SetWatermark(tbLookupWord, Properties.Resources.Configuration_AddSite_LookupWordWatermark);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -53,9 +44,7 @@ namespace VisualDictionary
         {
             if (this.ValidateValues())
             {
-                // Modifies the URL to have the proper formatting syntax
                 string newSiteURL = tbCalibrateSiteAddress.Text;
-                newSiteURL = newSiteURL.Replace(tbLookupWord.Text.Trim(), "{0}");
 
                 // Raise the SiteAdded event to let the parent form know the new URL
                 SiteAddedEventArgs args = new SiteAddedEventArgs();
@@ -64,6 +53,29 @@ namespace VisualDictionary
 
                 this.Close();
             }
+        }
+
+        private void btnHelp_MouseLeave(object sender, EventArgs e)
+        {
+            btnHelp.BackgroundImage = Properties.Resources.tip_disabled;
+        }
+
+        private void btnHelp_MouseEnter(object sender, EventArgs e)
+        {
+            btnHelp.BackgroundImage = Properties.Resources.tip;
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(m_Tutorial))
+            {
+                m_Tutorial = String.Format(Properties.Resources.Configuration_AddSite_Tutorial,
+                    Properties.Settings.Default.SourceLanguage,
+                    Properties.Settings.Default.DestinationLanguage);
+                m_Tutorial = m_Tutorial.Replace("\\n", Environment.NewLine);
+            }
+
+            Common.PromptInformation(m_Tutorial);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -75,25 +87,18 @@ namespace VisualDictionary
         {
             this.UpdateValidState();
         }
-
-        private void tbLookupWord_TextChanged(object sender, EventArgs e)
+        
+        private void tbCalibrateSiteAddress_KeyDown(object sender, KeyEventArgs e)
         {
-            this.UpdateValidState();
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAdd_Click(sender, e);
+            }
         }
 
         private bool ValidateValues()
         {
-            bool valid = (tbLookupWord.Text.Trim().Length > 0);
-            if (valid)
-            {
-                valid = this.ValidateURL();
-            }
-            else
-            {
-                lblError.Text = Properties.Resources.Configuration_AddSite_LabelError_MissingWord;
-                lblError.Visible = true;
-            }
-            return valid;
+            return this.ValidateURL();
         }
 
         private bool ValidateURL()
@@ -104,14 +109,14 @@ namespace VisualDictionary
             string errorMessage = String.Empty;
             if (newURL.Length > 0)
             {
-                isValid = Uri.IsWellFormedUriString(newURL, UriKind.Absolute);
+                string testUrl = newURL.Replace("{0}", "word");
+                isValid = Uri.IsWellFormedUriString(testUrl, UriKind.Absolute);
                 if (isValid)
                 {
-                    string lookupWord = tbLookupWord.Text.Trim();
-                    isValid = newURL.Contains(lookupWord);
-                    if (!isValid)
+                    if (!newURL.Contains("{0}"))
                     {
-                        errorMessage = String.Format(Properties.Resources.Configuration_AddSite_LabelError_IncompatibleURL, lookupWord);
+                        errorMessage = String.Format(Properties.Resources.Configuration_AddSite_LabelError_IncompatibleURL);
+                        isValid = false;
                     }
                 }
                 else
@@ -131,7 +136,7 @@ namespace VisualDictionary
         private void UpdateValidState()
         {
             lblError.Visible = false;
-            btnAdd.Enabled = (tbCalibrateSiteAddress.Text.Trim().Length > 0) && (tbLookupWord.Text.Trim().Length > 0);
+            btnAdd.Enabled = (tbCalibrateSiteAddress.Text.Trim().Length > 0);
         }
 
         private const uint ECM_FIRST = 0x1500;

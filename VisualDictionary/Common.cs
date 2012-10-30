@@ -387,6 +387,34 @@ namespace VisualDictionary
         {
             return (sourceLanguage + "-" + destinationLanguage);
         }
+
+        /// <summary>
+        /// Display an information dialog with the specified message.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        public static void PromptInformation(string message)
+        {
+            MessageBox.Show(message, Properties.Resources.Dialog_Information, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Display an information dialog with the specified caption and message.
+        /// </summary>
+        /// <param name="caption">The caption to display.</param>
+        /// <param name="message">The message to display.</param>
+        public static void PromptInformation(string caption, string message)
+        {
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Display an error dialog with the specified message.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        public static void PromptError(string message)
+        {
+            MessageBox.Show(message, Properties.Resources.Dialog_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     public class SiteAddedEventArgs : EventArgs
