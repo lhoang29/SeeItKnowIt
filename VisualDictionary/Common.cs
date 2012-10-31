@@ -116,7 +116,10 @@ namespace VisualDictionary
                     "http://hk.dictionary.yahoo.com/dictionary?p={0}",
                     "http://www.chinesedic.com/en/{0}"
                 }, 
-                null
+                new string[]
+                {
+                    "http://hk.dictionary.yahoo.com/dictionary?p={0}"
+                }
             ),
             // English - Hindi translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Hindi, 
