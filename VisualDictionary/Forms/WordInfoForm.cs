@@ -388,6 +388,9 @@ namespace VisualDictionary
 
         private void WordInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            wbSourceTranslation.Dispose();
+            wbDestinationTranslation.Dispose();
+
             // Activate the configuration form if it's currently opened
             if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
             {
