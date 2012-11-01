@@ -185,7 +185,6 @@ namespace SeeItKnowIt
         private void ConfigurationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.ConfigurationForm_Location = this.Location;
-            Properties.Settings.Default.Save();
         }
 
         private void btnRestore_Click(object sender, EventArgs e)

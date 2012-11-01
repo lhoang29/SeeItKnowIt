@@ -17,6 +17,9 @@ namespace SeeItKnowIt
     public partial class WordInfoForm : Form
     {
         private string m_Word;
+
+        private bool m_AllowClose;
+
         private bool m_Online;
         private bool m_Pinned;
         private Point m_MouseDownPoint = Point.Empty;
@@ -29,6 +32,12 @@ namespace SeeItKnowIt
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
         private const int WS_CAPTION = 0x00C00000;
+
+        public bool AllowClose
+        {
+            get { return m_AllowClose; }
+            set { m_AllowClose = value; }
+        }
 
         public TranslateDirection ActiveTranslateDirection
         {
@@ -61,6 +70,8 @@ namespace SeeItKnowIt
         {
             InitializeComponent();
             InitializeToolTip();
+
+            m_AllowClose = false;
 
             this.Text = word;
 
@@ -356,7 +367,7 @@ namespace SeeItKnowIt
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                this.Hide();
             }
         }
 
@@ -364,7 +375,7 @@ namespace SeeItKnowIt
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                this.Hide();
             }
         }
 
@@ -384,19 +395,27 @@ namespace SeeItKnowIt
 
         private void WordInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            wbSourceTranslation.Dispose();
-            wbDestinationTranslation.Dispose();
-
-            // Activate the configuration form if it's currently opened
-            if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
+            if (this.AllowClose)
             {
-                OverlayForm.g_ConfigurationForm.Focus();
+                wbSourceTranslation.Dispose();
+                wbDestinationTranslation.Dispose();
+
+                // Activate the configuration form if it's currently opened
+                if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
+                {
+                    OverlayForm.g_ConfigurationForm.Focus();
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+                this.Hide();
             }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void pnlTitleBar_MouseDown(object sender, MouseEventArgs e)
@@ -536,11 +555,18 @@ namespace SeeItKnowIt
             {
                 PastWordControl pwc = sender as PastWordControl;
                 string word = pwc.Word;
-                this.GetTranslation(word, useDestinationLanguage: true);
-                if (this.IsInSideBySideMode())
-                {
-                    this.GetTranslation(word, useDestinationLanguage: false);
-                }
+                this.Reload(word);
+            }
+        }
+
+        public void Reload(string word)
+        {
+            this.Text = word;
+
+            this.GetTranslation(word, useDestinationLanguage: true);
+            if (this.IsInSideBySideMode())
+            {
+                this.GetTranslation(word, useDestinationLanguage: false);
             }
         }
 
@@ -594,7 +620,7 @@ namespace SeeItKnowIt
         private void btnConfiguration_Click(object sender, EventArgs e)
         {
             OverlayForm.OpenConfigurationForm();
-            this.Close();
+            this.Hide();
         }
 
         private void pbRight_MouseEnter(object sender, EventArgs e)

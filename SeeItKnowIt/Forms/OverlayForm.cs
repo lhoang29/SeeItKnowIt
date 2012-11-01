@@ -326,16 +326,28 @@ namespace SeeItKnowIt
 
         private void ShowTranslationWindow(string word)
         {
-            g_WordInfoForm = new WordInfoForm(word, online: true);
+            if (g_WordInfoForm == null || g_WordInfoForm.IsDisposed)
+            {
+                g_WordInfoForm = new WordInfoForm(word, online: true);
 
-            Rectangle bounds = Screen.FromPoint(Cursor.Position).Bounds;
-            
-            Point formLocation = new Point(
-                Math.Min(Cursor.Position.X, bounds.Right - g_WordInfoForm.Width),
-                Math.Min(Cursor.Position.Y, bounds.Bottom - g_WordInfoForm.Height));
+                Rectangle bounds = Screen.FromPoint(Cursor.Position).Bounds;
 
-            g_WordInfoForm.Location = formLocation;
-            g_WordInfoForm.Show();
+                Point formLocation = new Point(
+                    Math.Min(Cursor.Position.X, bounds.Right - g_WordInfoForm.Width),
+                    Math.Min(Cursor.Position.Y, bounds.Bottom - g_WordInfoForm.Height));
+
+                g_WordInfoForm.Location = formLocation;
+                g_WordInfoForm.Show();
+            }
+            else
+            {
+                if (!g_WordInfoForm.ContainsFocus)
+                {
+                    g_WordInfoForm.Activate();
+                }
+                g_WordInfoForm.Show();
+                g_WordInfoForm.Reload(word);
+            }
         }
 
         /// <summary>
@@ -391,6 +403,11 @@ namespace SeeItKnowIt
         /// </summary>
         private void OverlayForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (g_WordInfoForm != null && !g_WordInfoForm.IsDisposed)
+            {
+                g_WordInfoForm.AllowClose = true;
+                g_WordInfoForm.Close();
+            }
             Properties.Settings.Default.Save();
         }
     }
