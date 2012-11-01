@@ -166,6 +166,16 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap config_taskbar {
+            get {
+                object obj = ResourceManager.GetObject("config_taskbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter URL here ....
         /// </summary>
         internal static string Configuration_AddSite_EditWatermark {

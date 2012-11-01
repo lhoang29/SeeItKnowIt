@@ -28,6 +28,7 @@ namespace SeeItKnowIt
 
         // Define the CS_DROPSHADOW constant
         private const int CS_DROPSHADOW = 0x00020000;
+        private const int WS_CAPTION = 0x00C00000;
 
         public TranslateDirection ActiveTranslateDirection
         {
@@ -60,6 +61,8 @@ namespace SeeItKnowIt
         {
             InitializeComponent();
             InitializeToolTip();
+
+            this.Text = word;
 
             m_GlobalMouseHandler = new GlobalMouseHandler();
             m_GlobalMouseHandler.GlobalMouseMove += new MouseEventHandler(GlobalMouseHandler_GlobalMouseMove);
@@ -344,6 +347,7 @@ namespace SeeItKnowIt
             {
                 CreateParams cp = base.CreateParams;
                 cp.ClassStyle |= CS_DROPSHADOW;
+                cp.Style &= ~WS_CAPTION; 
                 return cp;
             }
         }
@@ -367,14 +371,6 @@ namespace SeeItKnowIt
         private void WordInfoForm_Shown(object sender, EventArgs e)
         {
             this.Activate();
-        }
-
-        private void WordInfoForm_Deactivate(object sender, EventArgs e)
-        {
-            if (!m_Pinned)
-            {
-                this.Close();
-            }
         }
         
         private void WordInfoForm_SizeChanged(object sender, EventArgs e)
@@ -598,10 +594,7 @@ namespace SeeItKnowIt
         private void btnConfiguration_Click(object sender, EventArgs e)
         {
             OverlayForm.OpenConfigurationForm();
-            if (m_Pinned)
-            {
-                this.Close();
-            }
+            this.Close();
         }
 
         private void pbRight_MouseEnter(object sender, EventArgs e)

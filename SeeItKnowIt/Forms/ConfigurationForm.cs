@@ -18,7 +18,7 @@ namespace SeeItKnowIt
 
             this.MinimumSize = this.MaximumSize = this.Size;
 
-            this.Icon = Icon.FromHandle(Properties.Resources.config.GetHicon());
+            this.Icon = Icon.FromHandle(Properties.Resources.config_taskbar.GetHicon());
             lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
 

@@ -320,10 +320,7 @@
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(365, 35);
             this.Name = "WordInfoForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Deactivate += new System.EventHandler(this.WordInfoForm_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WordInfoForm_FormClosing);
             this.Shown += new System.EventHandler(this.WordInfoForm_Shown);
             this.SizeChanged += new System.EventHandler(this.WordInfoForm_SizeChanged);
