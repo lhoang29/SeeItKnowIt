@@ -31,7 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.lblTranslateSiteAddress = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.translateSiteAddressToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.pbDisabledDelete = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDisabledDelete)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTranslateSiteAddress
@@ -59,18 +61,28 @@
             this.btnDelete.Size = new System.Drawing.Size(16, 16);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.EnabledChanged += new System.EventHandler(this.btnDelete_EnabledChanged);
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // translateSiteAddressToolTip
+            // toolTip
             // 
-            this.translateSiteAddressToolTip.BackColor = System.Drawing.SystemColors.Window;
+            this.toolTip.BackColor = System.Drawing.SystemColors.Window;
+            // 
+            // pbDisabledDelete
+            // 
+            this.pbDisabledDelete.BackgroundImage = global::SeeItKnowIt.Properties.Resources.delete_disabled;
+            this.pbDisabledDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pbDisabledDelete.Location = new System.Drawing.Point(203, 3);
+            this.pbDisabledDelete.Name = "pbDisabledDelete";
+            this.pbDisabledDelete.Size = new System.Drawing.Size(16, 16);
+            this.pbDisabledDelete.TabIndex = 2;
+            this.pbDisabledDelete.TabStop = false;
             // 
             // TranslationSiteControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.pbDisabledDelete);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblTranslateSiteAddress);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -80,6 +92,7 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TranslationSiteControl_MouseDown);
             this.MouseEnter += new System.EventHandler(this.TranslationSiteControl_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.TranslationSiteControl_MouseLeave);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDisabledDelete)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -89,6 +102,7 @@
 
         private System.Windows.Forms.Label lblTranslateSiteAddress;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.ToolTip translateSiteAddressToolTip;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.PictureBox pbDisabledDelete;
     }
 }

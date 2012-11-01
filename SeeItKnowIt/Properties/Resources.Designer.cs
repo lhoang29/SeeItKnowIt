@@ -320,6 +320,24 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete a default site.
+        /// </summary>
+        internal static string Configuration_TranslateSite_DeleteButton_DisabledToolTip {
+            get {
+                return ResourceManager.GetString("Configuration_TranslateSite_DeleteButton_DisabledToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete this site.
+        /// </summary>
+        internal static string Configuration_TranslateSite_DeleteButton_EnabledToolTip {
+            get {
+                return ResourceManager.GetString("Configuration_TranslateSite_DeleteButton_EnabledToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use this site.
         /// </summary>
         internal static string Configuration_TranslateSite_MakeActive {

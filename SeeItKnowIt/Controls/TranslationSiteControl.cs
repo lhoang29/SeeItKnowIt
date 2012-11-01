@@ -30,7 +30,11 @@ namespace SeeItKnowIt
                 m_IsRequired = value;
                 if (m_IsRequired)
                 {
-                    btnDelete.Enabled = false;
+                    pbDisabledDelete.BringToFront();
+                }
+                else
+                {
+                    btnDelete.BringToFront();
                 }
             }
         }
@@ -43,12 +47,12 @@ namespace SeeItKnowIt
                 m_IsActive = value;
                 if (m_IsActive)
                 {
-                    translateSiteAddressToolTip.SetToolTip(this, String.Empty);
+                    toolTip.SetToolTip(this, String.Empty);
                     this.BackColor = Color.Gainsboro;
                 }
                 else
                 {
-                    translateSiteAddressToolTip.SetToolTip(this, Properties.Resources.Configuration_TranslateSite_MakeActive);
+                    toolTip.SetToolTip(this, Properties.Resources.Configuration_TranslateSite_MakeActive);
                     this.BackColor = Color.Transparent;
                 }
             }
@@ -84,8 +88,10 @@ namespace SeeItKnowIt
         private void UpdateContent()
         {
             lblTranslateSiteAddress.Text = m_TranslateSiteAddress;
-            translateSiteAddressToolTip.SetToolTip(this, Properties.Resources.Configuration_TranslateSite_MakeActive);
-            translateSiteAddressToolTip.SetToolTip(lblTranslateSiteAddress, m_TranslateSiteAddress);
+            toolTip.SetToolTip(this, Properties.Resources.Configuration_TranslateSite_MakeActive);
+            toolTip.SetToolTip(lblTranslateSiteAddress, m_TranslateSiteAddress);
+            toolTip.SetToolTip(btnDelete, Properties.Resources.Configuration_TranslateSite_DeleteButton_EnabledToolTip);
+            toolTip.SetToolTip(pbDisabledDelete, Properties.Resources.Configuration_TranslateSite_DeleteButton_DisabledToolTip);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -140,18 +146,6 @@ namespace SeeItKnowIt
                 {
                     this.BackColor = Color.Transparent;
                 }
-            }
-        }
-
-        private void btnDelete_EnabledChanged(object sender, EventArgs e)
-        {
-            if (btnDelete.Enabled)
-            {
-                btnDelete.BackgroundImage = Properties.Resources.delete;
-            }
-            else
-            {
-                btnDelete.BackgroundImage = Properties.Resources.delete_disabled;
             }
         }
     }

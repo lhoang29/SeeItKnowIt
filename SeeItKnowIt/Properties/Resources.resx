@@ -274,4 +274,10 @@
   <data name="Configuration_Label_To" xml:space="preserve">
     <value>to</value>
   </data>
+  <data name="Configuration_TranslateSite_DeleteButton_DisabledToolTip" xml:space="preserve">
+    <value>Cannot delete a default site</value>
+  </data>
+  <data name="Configuration_TranslateSite_DeleteButton_EnabledToolTip" xml:space="preserve">
+    <value>Delete this site</value>
+  </data>
 </root>
