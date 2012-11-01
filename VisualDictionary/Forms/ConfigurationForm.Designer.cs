@@ -1,4 +1,4 @@
-﻿namespace VisualDictionary
+﻿namespace SeeItKnowIt
 {
     partial class ConfigurationForm
     {
@@ -97,7 +97,7 @@
             // 
             this.pbAddNewSite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbAddNewSite.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbAddNewSite.Image = global::VisualDictionary.Properties.Resources.plus_disabled;
+            this.pbAddNewSite.Image = global::SeeItKnowIt.Properties.Resources.plus_disabled;
             this.pbAddNewSite.Location = new System.Drawing.Point(174, 85);
             this.pbAddNewSite.Name = "pbAddNewSite";
             this.pbAddNewSite.Size = new System.Drawing.Size(16, 16);

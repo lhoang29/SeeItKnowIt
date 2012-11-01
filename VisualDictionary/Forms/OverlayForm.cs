@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.IO;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     public partial class OverlayForm : Form
     {

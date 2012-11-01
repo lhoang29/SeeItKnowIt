@@ -8,7 +8,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     public partial class ConfigurationForm : Form
     {   

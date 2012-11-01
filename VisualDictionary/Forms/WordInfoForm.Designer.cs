@@ -1,4 +1,4 @@
-﻿namespace VisualDictionary
+﻿namespace SeeItKnowIt
 {
     partial class WordInfoForm
     {
@@ -107,7 +107,7 @@
             // 
             // pbDirection
             // 
-            this.pbDirection.BackgroundImage = global::VisualDictionary.Properties.Resources.right;
+            this.pbDirection.BackgroundImage = global::SeeItKnowIt.Properties.Resources.right;
             this.pbDirection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbDirection.Location = new System.Drawing.Point(123, 0);
             this.pbDirection.Margin = new System.Windows.Forms.Padding(0);
@@ -120,7 +120,7 @@
             // btnConfiguration
             // 
             this.btnConfiguration.BackColor = System.Drawing.Color.Transparent;
-            this.btnConfiguration.BackgroundImage = global::VisualDictionary.Properties.Resources.config;
+            this.btnConfiguration.BackgroundImage = global::SeeItKnowIt.Properties.Resources.config;
             this.btnConfiguration.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnConfiguration.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnConfiguration.FlatAppearance.BorderSize = 0;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     public partial class PastWordControl : UserControl
     {

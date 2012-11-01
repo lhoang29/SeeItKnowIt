@@ -1,4 +1,4 @@
-﻿namespace VisualDictionary
+﻿namespace SeeItKnowIt
 {
     partial class ViewFlyoutControl
     {
@@ -38,7 +38,7 @@
             // 
             // pbBoth
             // 
-            this.pbBoth.BackgroundImage = global::VisualDictionary.Properties.Resources.both_right;
+            this.pbBoth.BackgroundImage = global::SeeItKnowIt.Properties.Resources.both_right;
             this.pbBoth.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbBoth.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbBoth.Location = new System.Drawing.Point(1, 51);
@@ -54,7 +54,7 @@
             // 
             // pbLeft
             // 
-            this.pbLeft.BackgroundImage = global::VisualDictionary.Properties.Resources.left;
+            this.pbLeft.BackgroundImage = global::SeeItKnowIt.Properties.Resources.left;
             this.pbLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbLeft.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbLeft.Location = new System.Drawing.Point(1, 26);
@@ -69,7 +69,7 @@
             // 
             // pbRight
             // 
-            this.pbRight.BackgroundImage = global::VisualDictionary.Properties.Resources.right;
+            this.pbRight.BackgroundImage = global::SeeItKnowIt.Properties.Resources.right;
             this.pbRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbRight.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbRight.Location = new System.Drawing.Point(1, 1);

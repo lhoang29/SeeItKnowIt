@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Net;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     public partial class WordInfoForm : Form
     {

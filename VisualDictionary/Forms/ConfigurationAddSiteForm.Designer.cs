@@ -1,4 +1,4 @@
-﻿namespace VisualDictionary
+﻿namespace SeeItKnowIt
 {
     partial class ConfigurationAddSiteForm
     {
@@ -96,7 +96,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.BackgroundImage = global::VisualDictionary.Properties.Resources.tip_disabled;
+            this.btnHelp.BackgroundImage = global::SeeItKnowIt.Properties.Resources.tip_disabled;
             this.btnHelp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHelp.FlatAppearance.BorderSize = 0;
             this.btnHelp.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Window;

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     static class Program
     {
@@ -15,9 +15,9 @@ namespace VisualDictionary
         [STAThread]
         static void Main()
         {
-            if (System.Diagnostics.Process.GetProcessesByName("VisualDictionary").Length > 1)
+            if (System.Diagnostics.Process.GetProcessesByName("SeeItKnowIt").Length > 1)
             {
-                Common.PromptInformation("Dictionary is already running");
+                Common.PromptInformation("SeeItKnowIt is already running");
                 return;
             }
 

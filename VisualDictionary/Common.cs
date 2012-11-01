@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace VisualDictionary
+namespace SeeItKnowIt
 {
     /* Icons are from http://www.gentleface.com/free_icon_set.html */
 
