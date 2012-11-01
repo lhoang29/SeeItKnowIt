@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeItKnowIt", "VisualDictionary\SeeItKnowIt.csproj", "{15B328A4-EEA9-48D4-B58E-B47AEDC0B2EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeItKnowIt", "SeeItKnowIt\SeeItKnowIt.csproj", "{15B328A4-EEA9-48D4-B58E-B47AEDC0B2EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

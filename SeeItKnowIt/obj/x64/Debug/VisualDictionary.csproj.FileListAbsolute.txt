@@ -1,0 +1,13 @@
+D:\Git\VisualDictionary\VisualDictionary\bin\x64\Debug\VisualDictionary.exe.config
+D:\Git\VisualDictionary\VisualDictionary\bin\x64\Debug\VisualDictionary.exe
+D:\Git\VisualDictionary\VisualDictionary\bin\x64\Debug\VisualDictionary.pdb
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.OverlayForm.resources
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.Properties.Resources.resources
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.WordInfoForm.resources
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.csproj.GenerateResource.Cache
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.exe
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.pdb
+D:\Git\VisualDictionary\VisualDictionary\bin\x64\Debug\VisualDictionary.exe.manifest
+D:\Git\VisualDictionary\VisualDictionary\bin\x64\Debug\VisualDictionary.application
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.exe.manifest
+D:\Git\VisualDictionary\VisualDictionary\obj\x64\Debug\VisualDictionary.application
