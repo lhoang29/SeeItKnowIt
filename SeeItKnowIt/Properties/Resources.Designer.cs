@@ -509,7 +509,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;font size=4&gt;Loading...&lt;/font&gt;.
+        ///   Looks up a localized string similar to &lt;font size=4&gt;Loading... Taking too long? &lt;a href=&quot;{0}&quot;&gt;Reload&lt;/a&gt;&lt;/font&gt;.
         /// </summary>
         internal static string WebBrowser_LoadingHTMLText {
             get {

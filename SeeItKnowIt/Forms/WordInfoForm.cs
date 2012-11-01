@@ -289,7 +289,7 @@ namespace SeeItKnowIt
 
                     try
                     {
-                        wbControl.Document.Write(Properties.Resources.WebBrowser_LoadingHTMLText);
+                        wbControl.Document.Write(String.Format(Properties.Resources.WebBrowser_LoadingHTMLText, address));
                         wbControl.Url = new Uri(address);
                     }
                     catch (Exception ex)

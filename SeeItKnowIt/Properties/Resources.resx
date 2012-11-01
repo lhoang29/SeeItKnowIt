@@ -127,7 +127,7 @@
     <value>URL must contain {{0}}</value>
   </data>
   <data name="WebBrowser_LoadingHTMLText" xml:space="preserve">
-    <value>&lt;font size=4&gt;Loading...&lt;/font&gt;</value>
+    <value>&lt;font size=4&gt;Loading... Taking too long? &lt;a href="{0}"&gt;Reload&lt;/a&gt;&lt;/font&gt;</value>
   </data>
   <data name="Configuration_Label_Languages" xml:space="preserve">
     <value>Default language selection:</value>
