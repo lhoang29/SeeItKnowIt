@@ -130,7 +130,7 @@
     <value>&lt;font size=4&gt;Loading... Taking too long? &lt;a href="{0}"&gt;Reload&lt;/a&gt;&lt;/font&gt;</value>
   </data>
   <data name="Configuration_Label_Languages" xml:space="preserve">
-    <value>Default language selection:</value>
+    <value>Default language translation:</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="both_right_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -270,5 +270,8 @@
   </data>
   <data name="config_taskbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\config_taskbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Configuration_Label_To" xml:space="preserve">
+    <value>to</value>
   </data>
 </root>

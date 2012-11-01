@@ -239,7 +239,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default language selection:.
+        ///   Looks up a localized string similar to Default language translation:.
         /// </summary>
         internal static string Configuration_Label_Languages {
             get {
@@ -253,6 +253,15 @@ namespace SeeItKnowIt.Properties {
         internal static string Configuration_Label_RestoreSettings {
             get {
                 return ResourceManager.GetString("Configuration_Label_RestoreSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to.
+        /// </summary>
+        internal static string Configuration_Label_To {
+            get {
+                return ResourceManager.GetString("Configuration_Label_To", resourceCulture);
             }
         }
         

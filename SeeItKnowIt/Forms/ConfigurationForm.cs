@@ -20,6 +20,7 @@ namespace SeeItKnowIt
 
             this.Icon = Icon.FromHandle(Properties.Resources.config_taskbar.GetHicon());
             lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
+            lblTo.Text = Properties.Resources.Configuration_Label_To;
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
 
             // Populate the languages combo box

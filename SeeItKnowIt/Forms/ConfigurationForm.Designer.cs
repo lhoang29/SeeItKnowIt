@@ -31,6 +31,7 @@
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.lblRestoreSettings = new System.Windows.Forms.Label();
             this.btnRestore = new System.Windows.Forms.Button();
+            this.lblTo = new System.Windows.Forms.Label();
             this.pbAddNewSite = new System.Windows.Forms.PictureBox();
             this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanelSites = new System.Windows.Forms.FlowLayoutPanel();
@@ -65,6 +66,7 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerMain.Panel2.Controls.Add(this.lblTo);
             this.splitContainerMain.Panel2.Controls.Add(this.pbAddNewSite);
             this.splitContainerMain.Panel2.Controls.Add(this.cbDestinationLanguage);
             this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelSites);
@@ -93,6 +95,14 @@
             this.btnRestore.UseVisualStyleBackColor = true;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
+            // lblTo
+            // 
+            this.lblTo.AutoSize = true;
+            this.lblTo.Location = new System.Drawing.Point(145, 45);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(0, 13);
+            this.lblTo.TabIndex = 25;
+            // 
             // pbAddNewSite
             // 
             this.pbAddNewSite.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -111,7 +121,7 @@
             // 
             this.cbDestinationLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDestinationLanguage.FormattingEnabled = true;
-            this.cbDestinationLanguage.Location = new System.Drawing.Point(146, 41);
+            this.cbDestinationLanguage.Location = new System.Drawing.Point(166, 41);
             this.cbDestinationLanguage.Name = "cbDestinationLanguage";
             this.cbDestinationLanguage.Size = new System.Drawing.Size(121, 21);
             this.cbDestinationLanguage.TabIndex = 10;
@@ -197,6 +207,7 @@
         private System.Windows.Forms.Label lblRestoreSettings;
         private System.Windows.Forms.ComboBox cbDestinationLanguage;
         private System.Windows.Forms.PictureBox pbAddNewSite;
+        private System.Windows.Forms.Label lblTo;
 
     }
 }

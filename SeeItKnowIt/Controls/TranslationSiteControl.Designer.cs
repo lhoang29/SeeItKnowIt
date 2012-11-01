@@ -38,7 +38,7 @@
             // 
             this.lblTranslateSiteAddress.AutoEllipsis = true;
             this.lblTranslateSiteAddress.AutoSize = true;
-            this.lblTranslateSiteAddress.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblTranslateSiteAddress.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblTranslateSiteAddress.Location = new System.Drawing.Point(3, 4);
             this.lblTranslateSiteAddress.MaximumSize = new System.Drawing.Size(200, 16);
             this.lblTranslateSiteAddress.Name = "lblTranslateSiteAddress";
@@ -51,6 +51,7 @@
             this.btnDelete.BackColor = System.Drawing.Color.Transparent;
             this.btnDelete.BackgroundImage = global::SeeItKnowIt.Properties.Resources.delete;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Location = new System.Drawing.Point(203, 3);
@@ -72,7 +73,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblTranslateSiteAddress);
-            this.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.Name = "TranslationSiteControl";
             this.Size = new System.Drawing.Size(220, 22);

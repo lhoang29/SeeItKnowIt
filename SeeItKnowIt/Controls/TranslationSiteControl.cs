@@ -45,14 +45,10 @@ namespace SeeItKnowIt
                 {
                     translateSiteAddressToolTip.SetToolTip(this, String.Empty);
                     this.BackColor = Color.Gainsboro;
-                    lblTranslateSiteAddress.Cursor = Cursors.Default;
-                    this.Cursor = Cursors.Default;
                 }
                 else
                 {
                     translateSiteAddressToolTip.SetToolTip(this, Properties.Resources.Configuration_TranslateSite_MakeActive);
-                    lblTranslateSiteAddress.Cursor = Cursors.Hand;
-                    this.Cursor = Cursors.Hand;
                     this.BackColor = Color.Transparent;
                 }
             }
