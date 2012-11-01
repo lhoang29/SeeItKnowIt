@@ -280,4 +280,7 @@
   <data name="Configuration_TranslateSite_DeleteButton_EnabledToolTip" xml:space="preserve">
     <value>Delete this site</value>
   </data>
+  <data name="Application_AlreadyRunningMessage" xml:space="preserve">
+    <value>{0} is already running</value>
+  </data>
 </root>

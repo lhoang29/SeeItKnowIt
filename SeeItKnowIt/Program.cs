@@ -15,9 +15,16 @@ namespace SeeItKnowIt
         [STAThread]
         static void Main()
         {
-            if (System.Diagnostics.Process.GetProcessesByName("SeeItKnowIt").Length > 1)
+            Type assemblyType = typeof(Program);
+            string assemblyName = assemblyType.Namespace;
+            if (assemblyType.Assembly != null && assemblyType.Assembly.GetName() != null)
             {
-                Common.PromptInformation("SeeItKnowIt is already running");
+                assemblyName = assemblyType.Assembly.GetName().Name;
+            }
+            
+            if (System.Diagnostics.Process.GetProcessesByName(assemblyName).Length > 1)
+            {
+                Common.PromptInformation(String.Format(Properties.Resources.Application_AlreadyRunningMessage, assemblyName));
                 return;
             }
 

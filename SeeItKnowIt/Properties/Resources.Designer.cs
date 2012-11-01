@@ -61,6 +61,15 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is already running.
+        /// </summary>
+        internal static string Application_AlreadyRunningMessage {
+            get {
+                return ResourceManager.GetString("Application_AlreadyRunningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to {0}.
         /// </summary>
         internal static string Application_WelcomeMessage {
