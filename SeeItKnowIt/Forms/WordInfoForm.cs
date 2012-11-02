@@ -138,10 +138,6 @@ namespace SeeItKnowIt
 
         public void Reopen(string word)
         {
-            if (!this.ContainsFocus)
-            {
-                this.Activate();
-            }
             this.WindowState = FormWindowState.Normal;
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
             UpdatePastWordsPanel();
@@ -156,6 +152,7 @@ namespace SeeItKnowIt
             }
 
             this.Show();
+            this.Activate();
             this.Reload(word);
         }
 
