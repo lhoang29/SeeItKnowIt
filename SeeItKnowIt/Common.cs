@@ -372,8 +372,8 @@ namespace SeeItKnowIt
 
             if (addNewOption)
             {
-                cbSource.Items.Add(Properties.Resources.General_Add);
-                cbDestination.Items.Add(Properties.Resources.General_Add);
+                cbSource.Items.Add(Properties.Resources.General_Add_Delete);
+                cbDestination.Items.Add(Properties.Resources.General_Add_Delete);
             }
 
             foreach (string language in availableLanguages)
@@ -404,6 +404,31 @@ namespace SeeItKnowIt
         private static string MakeLanguageCombinationKey(string sourceLanguage, string destinationLanguage)
         {
             return (sourceLanguage + "-" + destinationLanguage);
+        }
+
+        public static bool DeleteLanguage(string language)
+        {
+            bool deleted = false;
+
+            List<string> keysToRemove = new List<string>();
+            foreach (string key in Properties.Settings.Default.TranslateSites.Keys)
+            {
+                if (key.Contains(language))
+                {
+                    keysToRemove.Add(key);
+                }
+            }
+
+            if (keysToRemove.Count > 0)
+            {
+                deleted = true;
+                foreach (string key in keysToRemove)
+                {
+                    Properties.Settings.Default.TranslateSites.Remove(key);
+                }
+            }
+
+            return deleted;
         }
 
         /// <summary>

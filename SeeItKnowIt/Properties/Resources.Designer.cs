@@ -257,11 +257,47 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To add a lookup site from {0} to {1}:\n- Open your site in a web browser and look up any {0} word\n- Copy the final URL, replace all occurences of the lookup word by {{0}}\n- Example: http://mysite.com/word becomes http://mysite.com/{{0}}.
+        ///   Looks up a localized string similar to To add a lookup site from {0} to {1}:\n- Open your site in a web browser and look up any {0} word\n- Copy the final URL, replace ALL occurences of the lookup word by {{0}}\n- Example: http://mysite.com/word becomes http://mysite.com/{{0}}.
         /// </summary>
         internal static string Configuration_AddSite_Tutorial {
             get {
                 return ResourceManager.GetString("Configuration_AddSite_Tutorial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this language? This will also delete all associated lookup sites..
+        /// </summary>
+        internal static string Configuration_DeleteLanguage_Confirmation {
+            get {
+                return ResourceManager.GetString("Configuration_DeleteLanguage_Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete language: {0}, please try again..
+        /// </summary>
+        internal static string Configuration_DeleteLanguage_Failure {
+            get {
+                return ResourceManager.GetString("Configuration_DeleteLanguage_Failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete a default language.
+        /// </summary>
+        internal static string Configuration_DeleteLanguage_LabelError_DefaultLanguage {
+            get {
+                return ResourceManager.GetString("Configuration_DeleteLanguage_LabelError_DefaultLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully deleted language: {0}..
+        /// </summary>
+        internal static string Configuration_DeleteLanguage_Success {
+            get {
+                return ResourceManager.GetString("Configuration_DeleteLanguage_Success", resourceCulture);
             }
         }
         
@@ -284,7 +320,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default language translation:.
+        ///   Looks up a localized string similar to Default lookup mode:.
         /// </summary>
         internal static string Configuration_Label_Languages {
             get {
@@ -325,6 +361,15 @@ namespace SeeItKnowIt.Properties {
         internal static string Configuration_Language_AddNew {
             get {
                 return ResourceManager.GetString("Configuration_Language_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or select a language to delete:.
+        /// </summary>
+        internal static string Configuration_Language_Delete {
+            get {
+                return ResourceManager.GetString("Configuration_Language_Delete", resourceCulture);
             }
         }
         
@@ -475,11 +520,11 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add....
+        ///   Looks up a localized string similar to Add/Delete....
         /// </summary>
-        internal static string General_Add {
+        internal static string General_Add_Delete {
             get {
-                return ResourceManager.GetString("General_Add", resourceCulture);
+                return ResourceManager.GetString("General_Add_Delete", resourceCulture);
             }
         }
         

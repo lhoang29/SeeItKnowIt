@@ -216,9 +216,10 @@ namespace SeeItKnowIt
         {
             bool updateSites = true;
 
-            if ((string)cbSourceLanguage.SelectedItem == Properties.Resources.General_Add)
+            if ((string)cbSourceLanguage.SelectedItem == Properties.Resources.General_Add_Delete)
             {
-                updateSites = this.AddNewLanguage(cbSourceLanguage, cbDestinationLanguage);
+                cbSourceLanguage.SelectedItem = Properties.Settings.Default.SourceLanguage;
+                updateSites = this.ManageLanguage(cbSourceLanguage, cbDestinationLanguage);
             }
 
             if (updateSites)
@@ -232,9 +233,10 @@ namespace SeeItKnowIt
         {
             bool updateSites = true;
 
-            if ((string)cbDestinationLanguage.SelectedItem == Properties.Resources.General_Add)
+            if ((string)cbDestinationLanguage.SelectedItem == Properties.Resources.General_Add_Delete)
             {
-                updateSites = this.AddNewLanguage(cbDestinationLanguage, cbSourceLanguage);
+                cbDestinationLanguage.SelectedItem = Properties.Settings.Default.DestinationLanguage;
+                updateSites = this.ManageLanguage(cbDestinationLanguage, cbSourceLanguage);
             }
 
             if (updateSites)
@@ -244,15 +246,15 @@ namespace SeeItKnowIt
             }
         }
 
-        private bool AddNewLanguage(ComboBox cbAddFrom, ComboBox cbCompanion)
+        private bool ManageLanguage(ComboBox cbAddFrom, ComboBox cbCompanion)
         {
             bool added = true;
             string newLanguage = String.Empty;
-            string previousSelectedLanguage = Properties.Settings.Default.SourceLanguage;
 
-            ConfigurationAddLanguageForm addLanguageForm = new ConfigurationAddLanguageForm();
-            addLanguageForm.LanguageAdded += (s, ee) => { newLanguage = ee.SiteURL; };
-            addLanguageForm.ShowDialog(Control.FromHandle(this.Handle));
+            ConfigurationManageLanguageForm manageLanguageForm = new ConfigurationManageLanguageForm();
+            manageLanguageForm.LanguageAdded += (s, ee) => { newLanguage = ee.SiteURL; };
+            manageLanguageForm.LanguageDeleted += new SiteAddedEventHandler(ManageLanguageForm_LanguageDeleted);
+            manageLanguageForm.ShowDialog(Control.FromHandle(this.Handle));
 
             if (!String.IsNullOrEmpty(newLanguage))
             {
@@ -269,10 +271,34 @@ namespace SeeItKnowIt
             }
             else
             {
-                cbAddFrom.SelectedItem = previousSelectedLanguage;
                 added = false;
             }
             return added;
+        }
+
+        private void ManageLanguageForm_LanguageDeleted(object sender, SiteAddedEventArgs e)
+        {
+            string deletedLanguage = e.SiteURL;
+            if (!String.IsNullOrEmpty(deletedLanguage))
+            {
+                string selectedSourceLanguage = cbSourceLanguage.SelectedItem as string;
+                string selectedDestinationLanguage = cbDestinationLanguage.SelectedItem as string;
+
+                cbSourceLanguage.Items.Remove(deletedLanguage);
+                cbDestinationLanguage.Items.Remove(deletedLanguage);
+
+                if (selectedSourceLanguage == deletedLanguage)
+                {
+                    cbSourceLanguage.SelectedItem = TranslationLanguage.English.ToString();
+                }
+                if (selectedDestinationLanguage == deletedLanguage)
+                {
+                    cbDestinationLanguage.SelectedItem = TranslationLanguage.English.ToString();
+                }
+                Common.SourceLanguageSelectionChanged(cbSourceLanguage);
+                Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
+                this.PopulateSiteControls();
+            }
         }
     }
 }
