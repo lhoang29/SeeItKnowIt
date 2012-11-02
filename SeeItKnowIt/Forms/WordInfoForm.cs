@@ -94,6 +94,11 @@ namespace SeeItKnowIt
 
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
 
+            if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+            {
+                this.AdjustTranslateDirectionForSameLanguages();
+            }
+
             switch (ActiveTranslateDirection)
             {
                 case TranslateDirection.Left:
@@ -117,6 +122,20 @@ namespace SeeItKnowIt
             this.GetTranslation(word, useDestinationLanguage: true);
         }
 
+        private bool AdjustTranslateDirectionForSameLanguages()
+        {
+            TranslateDirection oldDirection = ActiveTranslateDirection;
+            if (ActiveTranslateDirection == TranslateDirection.Both_Left)
+            {
+                ActiveTranslateDirection = TranslateDirection.Left;
+            }
+            else if (ActiveTranslateDirection == TranslateDirection.Both_Right)
+            {
+                ActiveTranslateDirection = TranslateDirection.Right;
+            }
+            return (ActiveTranslateDirection != oldDirection);
+        }
+
         public void Reopen(string word)
         {
             if (!this.ContainsFocus)
@@ -126,6 +145,15 @@ namespace SeeItKnowIt
             this.WindowState = FormWindowState.Normal;
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
             UpdatePastWordsPanel();
+
+            if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+            {
+                bool adjusted = this.AdjustTranslateDirectionForSameLanguages();
+                if (adjusted)
+                {
+                    this.ViewFlyoutControl_TranslateDirectionChanged(null, new TranslateDirectionChangedEventArgs() { TranslateDirection = ActiveTranslateDirection });
+                }
+            }
 
             this.Show();
             this.Reload(word);
