@@ -18,6 +18,7 @@ namespace SeeItKnowIt
         Chinese,
         French,
         Hindi,
+        Portuguese,
         Spanish,
         Vietnamese
     }
@@ -76,23 +77,6 @@ namespace SeeItKnowIt
     public class Common
     {
         /// <summary>
-        /// List of words used to calibrate when adding a new site for lookup.
-        /// </summary>
-        public static string[] CalibrateWords = 
-        { 
-            "ubiquitous",
-            "simultaneous",
-            "hippopotamus",
-            "labyrinth",
-            "obfuscate",
-            "ephemeral",
-            "acquiesce",
-            "poignant",
-            "obsequious",
-            "equivocate"
-        };
-
-        /// <summary>
         /// List of translation sites for each language
         /// </summary>
         public static Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>[] DefaultTranslationSites = 
@@ -128,6 +112,17 @@ namespace SeeItKnowIt
                     "http://www.shabdkosh.com/translate/{0}/{0}_meaning_in_Hindi_English"
                 }, 
                 null
+            ),
+            // English - Portuguese translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Portuguese, 
+                new string[]
+                {
+                    "http://en.bab.la/dictionary/english-portuguese/{0}"
+                }, 
+                new string[]
+                {
+                    "http://en.bab.la/dictionary/portuguese-english/{0}"
+                }
             ),
             // English - Spanish translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Spanish, 

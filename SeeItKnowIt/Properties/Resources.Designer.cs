@@ -529,7 +529,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Highlight any word then press Windows + {0} to translate.
+        ///   Looks up a localized string similar to Highlight any text then press Windows + {0} to look up its meaning.
         /// </summary>
         internal static string Information_Tutorial {
             get {
