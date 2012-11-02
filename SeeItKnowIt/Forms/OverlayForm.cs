@@ -341,13 +341,7 @@ namespace SeeItKnowIt
             }
             else
             {
-                if (!g_WordInfoForm.ContainsFocus)
-                {
-                    g_WordInfoForm.Activate();
-                }
-                g_WordInfoForm.WindowState = FormWindowState.Normal;
-                g_WordInfoForm.Show();
-                g_WordInfoForm.Reload(word);
+                g_WordInfoForm.Reopen(word);
             }
         }
 

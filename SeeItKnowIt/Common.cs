@@ -349,17 +349,32 @@ namespace SeeItKnowIt
             return added;
         }
 
-        public static string[] GetAvailableLanguages()
+        public static List<string> GetAvailableLanguages()
         {
-            return Enum.GetNames(typeof(TranslationLanguage));
+            List<string> allAvailableLanguages = new List<string>();
+            foreach (object key in Properties.Settings.Default.TranslateSites.Keys)
+            {
+                string[] languages = GetLanguageCombination(key as string);
+                allAvailableLanguages.AddRange(languages);
+            }
+            allAvailableLanguages = allAvailableLanguages.Distinct().ToList();
+            allAvailableLanguages.Sort();
+
+            return allAvailableLanguages;
         }
 
-        public static void InitializeLanguageComboBoxes(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination)
+        public static void InitializeLanguageComboBoxes(System.Windows.Forms.ComboBox cbSource, System.Windows.Forms.ComboBox cbDestination, bool addNewOption = false)
         {
-            string[] availableLanguages = Common.GetAvailableLanguages();
+            List<string> availableLanguages = Common.GetAvailableLanguages();
 
             cbSource.Items.Clear();
             cbDestination.Items.Clear();
+
+            if (addNewOption)
+            {
+                cbSource.Items.Add(Properties.Resources.General_Add);
+                cbDestination.Items.Add(Properties.Resources.General_Add);
+            }
 
             foreach (string language in availableLanguages)
             {

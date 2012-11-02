@@ -21,6 +21,8 @@ namespace SeeItKnowIt
         public ConfigurationAddSiteForm()
         {
             InitializeComponent();
+
+            lblAddNewSite.Text = Properties.Resources.Configuration_AddSite_Title;
             this.SetWatermark(tbCalibrateSiteAddress, Properties.Resources.Configuration_AddSite_EditWatermark);
         }
 

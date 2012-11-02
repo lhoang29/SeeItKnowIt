@@ -1,6 +1,6 @@
 ﻿namespace SeeItKnowIt
 {
-    partial class ConfigurationAddSiteForm
+    partial class ConfigurationAddLanguageForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbCalibrateSiteAddress = new System.Windows.Forms.TextBox();
+            this.tbNewLanguage = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.lblError = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lblAddNewSite = new System.Windows.Forms.Label();
-            this.btnHelp = new System.Windows.Forms.Button();
+            this.lblAddNewLanguage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // tbCalibrateSiteAddress
+            // tbNewLanguage
             // 
-            this.tbCalibrateSiteAddress.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCalibrateSiteAddress.Location = new System.Drawing.Point(15, 40);
-            this.tbCalibrateSiteAddress.Name = "tbCalibrateSiteAddress";
-            this.tbCalibrateSiteAddress.Size = new System.Drawing.Size(270, 24);
-            this.tbCalibrateSiteAddress.TabIndex = 1;
-            this.tbCalibrateSiteAddress.TextChanged += new System.EventHandler(this.tbCalibrateSiteAddress_TextChanged);
-            this.tbCalibrateSiteAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCalibrateSiteAddress_KeyDown);
+            this.tbNewLanguage.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNewLanguage.Location = new System.Drawing.Point(15, 40);
+            this.tbNewLanguage.Name = "tbNewLanguage";
+            this.tbNewLanguage.Size = new System.Drawing.Size(270, 24);
+            this.tbNewLanguage.TabIndex = 1;
+            this.tbNewLanguage.TextChanged += new System.EventHandler(this.tbNewLanguage_TextChanged);
+            this.tbNewLanguage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbNewLanguage_KeyDown);
             // 
             // btnAdd
             // 
@@ -85,49 +84,31 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // lblAddNewSite
+            // lblAddNewLanguage
             // 
-            this.lblAddNewSite.AutoSize = true;
-            this.lblAddNewSite.Location = new System.Drawing.Point(12, 12);
-            this.lblAddNewSite.Name = "lblAddNewSite";
-            this.lblAddNewSite.Size = new System.Drawing.Size(0, 13);
-            this.lblAddNewSite.TabIndex = 12;
+            this.lblAddNewLanguage.AutoSize = true;
+            this.lblAddNewLanguage.Location = new System.Drawing.Point(12, 12);
+            this.lblAddNewLanguage.Name = "lblAddNewLanguage";
+            this.lblAddNewLanguage.Size = new System.Drawing.Size(0, 13);
+            this.lblAddNewLanguage.TabIndex = 12;
             // 
-            // btnHelp
-            // 
-            this.btnHelp.BackgroundImage = global::SeeItKnowIt.Properties.Resources.tip_disabled;
-            this.btnHelp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHelp.FlatAppearance.BorderSize = 0;
-            this.btnHelp.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Window;
-            this.btnHelp.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Window;
-            this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHelp.Location = new System.Drawing.Point(189, 12);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(16, 16);
-            this.btnHelp.TabIndex = 13;
-            this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            this.btnHelp.MouseEnter += new System.EventHandler(this.btnHelp_MouseEnter);
-            this.btnHelp.MouseLeave += new System.EventHandler(this.btnHelp_MouseLeave);
-            // 
-            // ConfigurationAddSiteForm
+            // ConfigurationAddLanguageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(297, 131);
-            this.Controls.Add(this.btnHelp);
-            this.Controls.Add(this.lblAddNewSite);
+            this.Controls.Add(this.lblAddNewLanguage);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.tbCalibrateSiteAddress);
+            this.Controls.Add(this.tbNewLanguage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ConfigurationAddSiteForm";
+            this.Name = "ConfigurationAddLanguageForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ConfigurationAddSiteForm";
+            this.Text = "ConfigurationAddLanguageForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,11 +116,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox tbCalibrateSiteAddress;
+        private System.Windows.Forms.TextBox tbNewLanguage;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lblAddNewSite;
-        private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Label lblAddNewLanguage;
     }
 }

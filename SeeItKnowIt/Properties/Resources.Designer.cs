@@ -185,7 +185,25 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter URL here ....
+        ///   Looks up a localized string similar to Enter language here....
+        /// </summary>
+        internal static string Configuration_AddLanguage_EditWatermark {
+            get {
+                return ResourceManager.GetString("Configuration_AddLanguage_EditWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new language below:.
+        /// </summary>
+        internal static string Configuration_AddLanguage_Title {
+            get {
+                return ResourceManager.GetString("Configuration_AddLanguage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter URL here....
         /// </summary>
         internal static string Configuration_AddSite_EditWatermark {
             get {
@@ -221,11 +239,20 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter chosen word here ....
+        ///   Looks up a localized string similar to Enter chosen word here....
         /// </summary>
         internal static string Configuration_AddSite_LookupWordWatermark {
             get {
                 return ResourceManager.GetString("Configuration_AddSite_LookupWordWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new lookup site below: (help?       ).
+        /// </summary>
+        internal static string Configuration_AddSite_Title {
+            get {
+                return ResourceManager.GetString("Configuration_AddSite_Title", resourceCulture);
             }
         }
         
@@ -284,7 +311,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new language ....
+        ///   Looks up a localized string similar to Add new language....
         /// </summary>
         internal static string Configuration_Language_AddNew {
             get {
@@ -426,6 +453,15 @@ namespace SeeItKnowIt.Properties {
         internal static string Error_RegisterHotKey {
             get {
                 return ResourceManager.GetString("Error_RegisterHotKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add....
+        /// </summary>
+        internal static string General_Add {
+            get {
+                return ResourceManager.GetString("General_Add", resourceCulture);
             }
         }
         

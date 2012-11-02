@@ -117,6 +117,20 @@ namespace SeeItKnowIt
             this.GetTranslation(word, useDestinationLanguage: true);
         }
 
+        public void Reopen(string word)
+        {
+            if (!this.ContainsFocus)
+            {
+                this.Activate();
+            }
+            this.WindowState = FormWindowState.Normal;
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+            UpdatePastWordsPanel();
+
+            this.Show();
+            this.Reload(word);
+        }
+
         void GlobalMouseHandler_GlobalMouseMove(object sender, MouseEventArgs e)
         {
             if (!this.IsDisposed)
