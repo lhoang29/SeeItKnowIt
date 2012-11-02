@@ -61,6 +61,7 @@
             this.btnDelete.Size = new System.Drawing.Size(16, 16);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Visible = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // toolTip

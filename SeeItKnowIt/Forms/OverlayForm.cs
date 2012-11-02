@@ -26,7 +26,7 @@ namespace SeeItKnowIt
 
         private static uint[] g_PotentialHotKeys = { (uint)'A', (uint)'Z', (uint)'W', (uint)'K' };
 
-        private uint m_HotKey = 0;
+        public static uint m_HotKey = 0;
 
         // Register a hot key with Windows
         [DllImport("user32.dll")]

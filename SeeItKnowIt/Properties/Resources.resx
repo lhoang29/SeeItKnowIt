@@ -295,4 +295,10 @@
   <data name="General_Add" xml:space="preserve">
     <value>Add...</value>
   </data>
+  <data name="Configuration_HotkeyCombinationLabel" xml:space="preserve">
+    <value>Hotkey Combination:</value>
+  </data>
+  <data name="Configuration_VersionInfo" xml:space="preserve">
+    <value>{0} Version {1}</value>
+  </data>
 </root>

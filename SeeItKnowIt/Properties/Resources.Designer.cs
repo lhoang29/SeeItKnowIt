@@ -275,6 +275,15 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkey Combination:.
+        /// </summary>
+        internal static string Configuration_HotkeyCombinationLabel {
+            get {
+                return ResourceManager.GetString("Configuration_HotkeyCombinationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default language translation:.
         /// </summary>
         internal static string Configuration_Label_Languages {
@@ -379,6 +388,15 @@ namespace SeeItKnowIt.Properties {
         internal static string Configuration_TranslateSite_MakeActive {
             get {
                 return ResourceManager.GetString("Configuration_TranslateSite_MakeActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Version {1}.
+        /// </summary>
+        internal static string Configuration_VersionInfo {
+            get {
+                return ResourceManager.GetString("Configuration_VersionInfo", resourceCulture);
             }
         }
         

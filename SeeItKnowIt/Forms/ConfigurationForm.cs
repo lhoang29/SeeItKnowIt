@@ -19,9 +19,22 @@ namespace SeeItKnowIt
             this.MinimumSize = this.MaximumSize = this.Size;
 
             this.Icon = Icon.FromHandle(Properties.Resources.config_taskbar.GetHicon());
+
+            string version = String.Empty;
+#if DEBUG
+            version = "Debug";
+#else
+            Version applicationVersion = ClickOnceHelper.GetApplicationVersion();
+            version = (applicationVersion != null) ? applicationVersion.ToString() : version;
+#endif
+            lblVersion.Text = String.Format(Properties.Resources.Configuration_VersionInfo, this.ProductName, version);
+            lblHotkeyCombination.Text = Properties.Resources.Configuration_HotkeyCombinationLabel;
+            tbHotkeyCombination.Text = "Windows + " + Convert.ToChar(OverlayForm.m_HotKey);
             lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
             lblTo.Text = Properties.Resources.Configuration_Label_To;
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
+            lblLanguage.Text = Properties.Resources.Configuration_Label_Languages;
+            lblSites.Text = Properties.Resources.Configuration_Label_TranslateSites;
 
             // Populate the languages combo box
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage, true);
@@ -36,9 +49,6 @@ namespace SeeItKnowIt
             {
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
-
-            lblLanguage.Text = Properties.Resources.Configuration_Label_Languages;
-            lblSites.Text = Properties.Resources.Configuration_Label_TranslateSites;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -145,24 +155,21 @@ namespace SeeItKnowIt
             }
         }
 
-        private void pbAddNewSite_MouseClick(object sender, MouseEventArgs e)
+        private void btnAddSite_Click(object sender, EventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                ConfigurationAddSiteForm addSiteForm = new ConfigurationAddSiteForm();
-                addSiteForm.SiteAdded += new SiteAddedEventHandler(ConfigurationAddSiteForm_SiteAdded);
-                addSiteForm.ShowDialog(Control.FromHandle(this.Handle));
-            }
+            ConfigurationAddSiteForm addSiteForm = new ConfigurationAddSiteForm();
+            addSiteForm.SiteAdded += new SiteAddedEventHandler(ConfigurationAddSiteForm_SiteAdded);
+            addSiteForm.ShowDialog(Control.FromHandle(this.Handle));
         }
 
-        private void pbAddNewSite_MouseEnter(object sender, EventArgs e)
+        private void btnAddSite_MouseEnter(object sender, EventArgs e)
         {
-            pbAddNewSite.Image = Properties.Resources.plus;
+            btnAddSite.Image = Properties.Resources.plus;
         }
 
-        private void pbAddNewSite_MouseLeave(object sender, EventArgs e)
+        private void btnAddSite_MouseLeave(object sender, EventArgs e)
         {
-            pbAddNewSite.Image = Properties.Resources.plus_disabled;
+            btnAddSite.Image = Properties.Resources.plus_disabled;
         }
 
         private void ConfigurationAddSiteForm_SiteAdded(object sender, SiteAddedEventArgs e)

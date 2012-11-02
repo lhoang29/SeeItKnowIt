@@ -30,10 +30,14 @@ namespace SeeItKnowIt
                 m_IsRequired = value;
                 if (m_IsRequired)
                 {
+                    btnDelete.Visible = false;
+                    pbDisabledDelete.Visible = true;
                     pbDisabledDelete.BringToFront();
                 }
                 else
                 {
+                    pbDisabledDelete.Visible = false;
+                    btnDelete.Visible = true;
                     btnDelete.BringToFront();
                 }
             }
