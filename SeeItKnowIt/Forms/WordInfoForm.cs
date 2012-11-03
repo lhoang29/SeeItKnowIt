@@ -33,6 +33,8 @@ namespace SeeItKnowIt
         private const int CS_DROPSHADOW = 0x00020000;
         private const int WS_CAPTION = 0x00C00000;
 
+        private BindingSource m_WordGridSource = new BindingSource();
+
         public bool AllowClose
         {
             get { return m_AllowClose; }
@@ -73,7 +75,7 @@ namespace SeeItKnowIt
 
             m_AllowClose = false;
 
-            this.Text = word;
+            this.Text = this.ProductName + ":" + word;
 
             m_GlobalMouseHandler = new GlobalMouseHandler();
             m_GlobalMouseHandler.GlobalMouseMove += new MouseEventHandler(GlobalMouseHandler_GlobalMouseMove);
@@ -140,7 +142,13 @@ namespace SeeItKnowIt
         {
             this.WindowState = FormWindowState.Normal;
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
-            UpdatePastWordsPanel();
+
+            string wordKey = word.ToUpper();
+            if (Properties.Settings.Default.PastWords[wordKey] != null &&
+                (int)Properties.Settings.Default.PastWords[wordKey] == 1)
+            {
+                m_WordGridSource.Add(new { Word = wordKey });
+            }
 
             if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
             {
@@ -568,54 +576,27 @@ namespace SeeItKnowIt
 
         private void UpdatePastWordsPanel()
         {
-            if (!splitContainerMain.Panel2Collapsed)
+            if (!splitContainerMain.Panel2Collapsed && gridPastWords.Columns.Count < 2)
             {
-                flowLayoutPanelPastWords.Controls.Clear();
-                foreach (object key in Properties.Settings.Default.PastWords.Keys)
-                {
-                    string pastWord = key as string;
-                    this.CreatePastWordControl(pastWord);
-                }
-            }
-        }
+                var bindingWords = from word in Properties.Settings.Default.PastWords.Keys.Cast<string>()
+                                   select new {Word = word};
 
-        private void CreatePastWordControl(string word)
-        {
-            PastWordControl pastWordControl = new PastWordControl(word);
-            pastWordControl.WordChanged += new EventHandler(PastWordControl_WordChanged);
-            pastWordControl.WordDeleted += new EventHandler(PastWordControl_WordDeleted);
+                m_WordGridSource.DataSource = bindingWords.ToList();
 
-            flowLayoutPanelPastWords.Controls.Add(pastWordControl);
-        }
-
-        void PastWordControl_WordChanged(object sender, EventArgs e)
-        {
-            if (sender is PastWordControl)
-            {
-                PastWordControl pwc = sender as PastWordControl;
-                string word = pwc.Word;
-                this.Reload(word);
+                gridPastWords.DataSource = m_WordGridSource;
+                gridPastWords.Columns[0].DisplayIndex = 1;
+                gridPastWords.Columns[1].DisplayIndex = 0;
             }
         }
 
         public void Reload(string word)
         {
-            this.Text = word;
+            this.Text = this.ProductName + ":" + word;
 
             this.GetTranslation(word, useDestinationLanguage: true);
             if (this.IsInSideBySideMode())
             {
                 this.GetTranslation(word, useDestinationLanguage: false);
-            }
-        }
-
-        void PastWordControl_WordDeleted(object sender, EventArgs e)
-        {
-            if (sender is PastWordControl)
-            {
-                PastWordControl pastWordControl = sender as PastWordControl;
-                flowLayoutPanelPastWords.Controls.Remove(pastWordControl);
-                Properties.Settings.Default.PastWords.Remove(pastWordControl.Word.ToUpper());
             }
         }
 
@@ -668,6 +649,49 @@ namespace SeeItKnowIt
             m_ViewFlyoutControl.SideBySideEnabled = (cbSourceLanguage.SelectedItem != cbDestinationLanguage.SelectedItem);
             m_ViewFlyoutControl.Visible = true;
             m_ViewFlyoutControl.BringToFront();
+        }
+
+        private void gridPastWords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                string deletedWord = gridPastWords.Rows[e.RowIndex].Cells[1].Value as string;
+                Properties.Settings.Default.PastWords.Remove(deletedWord.ToUpper());
+                gridPastWords.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+
+        private void gridPastWords_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            gridPastWords.Rows[rowIndex].DefaultCellStyle.BackColor = Color.WhiteSmoke;
+            gridPastWords.Rows[rowIndex].DefaultCellStyle.SelectionBackColor = Color.WhiteSmoke;
+
+            if (e.ColumnIndex == 0)
+            {
+                gridPastWords.Rows[rowIndex].Cells[0].Value = Properties.Resources.delete;
+            }
+        }
+
+        private void gridPastWords_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            gridPastWords.Rows[rowIndex].DefaultCellStyle.BackColor = SystemColors.Window;
+            gridPastWords.Rows[rowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Window;
+
+            if (e.ColumnIndex == 0)
+            {
+                gridPastWords.Rows[rowIndex].Cells[0].Value = Properties.Resources.delete_disabled;
+            }
+        }
+
+        private void gridPastWords_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                string word = gridPastWords.Rows[e.RowIndex].Cells[1].Value as string;
+                this.Reload(word);
+            }
         }
     }
 }

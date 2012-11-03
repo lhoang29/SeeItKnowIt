@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WordInfoForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblWord = new System.Windows.Forms.Label();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
             this.cbDestinationLanguage = new System.Windows.Forms.ComboBox();
@@ -45,7 +46,8 @@
             this.wbDestinationTranslation = new System.Windows.Forms.WebBrowser();
             this.splitContainerPastWords = new System.Windows.Forms.SplitContainer();
             this.lblPastWords = new System.Windows.Forms.Label();
-            this.flowLayoutPanelPastWords = new System.Windows.Forms.FlowLayoutPanel();
+            this.gridPastWords = new System.Windows.Forms.DataGridView();
+            this.DeleteImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.btnPastWordsToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnPinToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnCloseToolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -65,6 +67,7 @@
             this.splitContainerPastWords.Panel1.SuspendLayout();
             this.splitContainerPastWords.Panel2.SuspendLayout();
             this.splitContainerPastWords.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPastWords)).BeginInit();
             this.SuspendLayout();
             // 
             // lblWord
@@ -275,7 +278,7 @@
             // splitContainerPastWords.Panel2
             // 
             this.splitContainerPastWords.Panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.splitContainerPastWords.Panel2.Controls.Add(this.flowLayoutPanelPastWords);
+            this.splitContainerPastWords.Panel2.Controls.Add(this.gridPastWords);
             this.splitContainerPastWords.Size = new System.Drawing.Size(103, 563);
             this.splitContainerPastWords.SplitterDistance = 25;
             this.splitContainerPastWords.SplitterWidth = 1;
@@ -292,16 +295,50 @@
             this.lblPastWords.Text = "PAST WORDS";
             this.lblPastWords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // flowLayoutPanelPastWords
+            // gridPastWords
             // 
-            this.flowLayoutPanelPastWords.AutoScroll = true;
-            this.flowLayoutPanelPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelPastWords.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelPastWords.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanelPastWords.Name = "flowLayoutPanelPastWords";
-            this.flowLayoutPanelPastWords.Size = new System.Drawing.Size(103, 537);
-            this.flowLayoutPanelPastWords.TabIndex = 0;
-            this.flowLayoutPanelPastWords.WrapContents = false;
+            this.gridPastWords.AllowUserToAddRows = false;
+            this.gridPastWords.AllowUserToResizeColumns = false;
+            this.gridPastWords.AllowUserToResizeRows = false;
+            this.gridPastWords.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPastWords.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridPastWords.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPastWords.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.gridPastWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPastWords.ColumnHeadersVisible = false;
+            this.gridPastWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DeleteImage});
+            this.gridPastWords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPastWords.Location = new System.Drawing.Point(0, 0);
+            this.gridPastWords.MultiSelect = false;
+            this.gridPastWords.Name = "gridPastWords";
+            this.gridPastWords.ReadOnly = true;
+            this.gridPastWords.RowHeadersVisible = false;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            this.gridPastWords.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridPastWords.RowTemplate.Height = 30;
+            this.gridPastWords.RowTemplate.ReadOnly = true;
+            this.gridPastWords.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridPastWords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.gridPastWords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPastWords.Size = new System.Drawing.Size(470, 537);
+            this.gridPastWords.TabIndex = 8;
+            this.gridPastWords.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellClick);
+            this.gridPastWords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellContentClick);
+            this.gridPastWords.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellMouseEnter);
+            this.gridPastWords.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellMouseLeave);
+            // 
+            // DeleteImage
+            // 
+            this.DeleteImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DeleteImage.HeaderText = "Delete";
+            this.DeleteImage.Image = global::SeeItKnowIt.Properties.Resources.delete_disabled;
+            this.DeleteImage.MinimumWidth = 32;
+            this.DeleteImage.Name = "DeleteImage";
+            this.DeleteImage.ReadOnly = true;
+            this.DeleteImage.Width = 32;
             // 
             // btnConfigToolTip
             // 
@@ -339,6 +376,7 @@
             this.splitContainerPastWords.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerPastWords)).EndInit();
             this.splitContainerPastWords.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridPastWords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,7 +393,6 @@
         private System.Windows.Forms.SplitContainer splitContainerPastWords;
         private System.Windows.Forms.Label lblPastWords;
         private System.Windows.Forms.Button btnPastWords;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelPastWords;
         private System.Windows.Forms.ToolTip btnPastWordsToolTip;
         private System.Windows.Forms.ToolTip btnPinToolTip;
         private System.Windows.Forms.ToolTip btnCloseToolTip;
@@ -367,5 +404,7 @@
         private System.Windows.Forms.SplitContainer splitContainerWebBrowser;
         private System.Windows.Forms.WebBrowser wbSourceTranslation;
         private System.Windows.Forms.WebBrowser wbDestinationTranslation;
+        private System.Windows.Forms.DataGridView gridPastWords;
+        private System.Windows.Forms.DataGridViewImageColumn DeleteImage;
     }
 }
