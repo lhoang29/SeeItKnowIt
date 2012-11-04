@@ -11,7 +11,9 @@ using System.Windows.Forms;
 namespace SeeItKnowIt
 {
     public partial class ConfigurationForm : Form
-    {   
+    {
+        private ConfigurationManageLanguageForm m_ManageLanguageForm = null;
+
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -246,15 +248,38 @@ namespace SeeItKnowIt
             }
         }
 
+        public void AddDeleteLanguage(bool useSourceLanguage)
+        {
+            bool updateSites = true;
+            if (useSourceLanguage)
+            {
+                updateSites = this.ManageLanguage(cbSourceLanguage, cbDestinationLanguage);
+            }
+            else
+            {
+                updateSites = this.ManageLanguage(cbDestinationLanguage, cbSourceLanguage);
+            }
+            if (updateSites)
+            {
+                Common.DestinationLanguageSelectionChanged(useSourceLanguage ? cbSourceLanguage : cbDestinationLanguage);
+                this.PopulateSiteControls();
+            }
+        }
+
         private bool ManageLanguage(ComboBox cbAddFrom, ComboBox cbCompanion)
         {
             bool added = true;
             string newLanguage = String.Empty;
 
-            ConfigurationManageLanguageForm manageLanguageForm = new ConfigurationManageLanguageForm();
-            manageLanguageForm.LanguageAdded += (s, ee) => { newLanguage = ee.SiteURL; };
-            manageLanguageForm.LanguageDeleted += new SiteAddedEventHandler(ManageLanguageForm_LanguageDeleted);
-            manageLanguageForm.ShowDialog(Control.FromHandle(this.Handle));
+            if (m_ManageLanguageForm != null)
+            {
+                m_ManageLanguageForm.Close();
+            }
+
+            m_ManageLanguageForm = new ConfigurationManageLanguageForm();
+            m_ManageLanguageForm.LanguageAdded += (s, ee) => { newLanguage = ee.SiteURL; };
+            m_ManageLanguageForm.LanguageDeleted += new SiteAddedEventHandler(ManageLanguageForm_LanguageDeleted);
+            m_ManageLanguageForm.ShowDialog(Control.FromHandle(this.Handle));
 
             if (!String.IsNullOrEmpty(newLanguage))
             {

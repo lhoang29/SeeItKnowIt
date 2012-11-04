@@ -368,10 +368,10 @@ namespace SeeItKnowIt
         /// </summary>
         private void TrayIcon_MenuItem_Configuration_Clicked(object sender, EventArgs e)
         {
-            OverlayForm.OpenConfigurationForm();
+            OverlayForm.OpenConfigurationForm(manageLanguage: false, useSourceLanguage: false);
         }
 
-        public static void OpenConfigurationForm()
+        public static void OpenConfigurationForm(bool manageLanguage, bool useSourceLanguage)
         {
             if (g_ConfigurationForm == null || g_ConfigurationForm.IsDisposed)
             {
@@ -381,6 +381,10 @@ namespace SeeItKnowIt
             else
             {
                 g_ConfigurationForm.Activate();
+            }
+            if (manageLanguage)
+            {
+                g_ConfigurationForm.AddDeleteLanguage(useSourceLanguage);
             }
         }
 

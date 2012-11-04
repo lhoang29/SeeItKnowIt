@@ -94,7 +94,7 @@ namespace SeeItKnowIt
 
             this.LoadPersonalSettings();
 
-            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage, addNewOption: true);
 
             if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
             {
@@ -141,7 +141,7 @@ namespace SeeItKnowIt
         public void Reopen(string word)
         {
             this.WindowState = FormWindowState.Normal;
-            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage);
+            Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage, addNewOption: true);
 
             string wordKey = word.ToUpper();
             if (Properties.Settings.Default.PastWords[wordKey] != null &&
@@ -487,24 +487,32 @@ namespace SeeItKnowIt
 
         private void cbSourceLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Common.SourceLanguageSelectionChanged(cbSourceLanguage);
-
-            // If already showing side-by-side translation
-            if (this.IsInSideBySideMode())
+            if ((string)cbSourceLanguage.SelectedItem == Properties.Resources.General_Add_Delete)
             {
-                // If changed to same language translation in side-by-side mode then turn off side-by-side and 
-                // view in normal mode.
-                if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
-                {
-                    this.HideSourceTranslation();
-                    ActiveTranslateDirection = this.GetActualTranslateDirection();
-                }
-                else
-                {
-                    this.GetTranslation(m_Word, useDestinationLanguage: false);
-                }
+                cbSourceLanguage.SelectedItem = Properties.Settings.Default.SourceLanguage;
+                this.OpenConfigurationForm(manageLanguage: true, useSourceLanguage: true);
             }
-            this.GetTranslation(m_Word, useDestinationLanguage: true);
+            else
+            {
+                Common.SourceLanguageSelectionChanged(cbSourceLanguage);
+
+                // If already showing side-by-side translation
+                if (this.IsInSideBySideMode())
+                {
+                    // If changed to same language translation in side-by-side mode then turn off side-by-side and 
+                    // view in normal mode.
+                    if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+                    {
+                        this.HideSourceTranslation();
+                        ActiveTranslateDirection = this.GetActualTranslateDirection();
+                    }
+                    else
+                    {
+                        this.GetTranslation(m_Word, useDestinationLanguage: false);
+                    }
+                }
+                this.GetTranslation(m_Word, useDestinationLanguage: true);
+            }
         }
 
         private bool IsInSideBySideMode()
@@ -514,21 +522,28 @@ namespace SeeItKnowIt
 
         private void cbDestinationLanguage_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
-
-            // If already showing side-by-side translation
-            if (this.IsInSideBySideMode())
+            if ((string)cbDestinationLanguage.SelectedItem == Properties.Resources.General_Add_Delete)
             {
-                // If changed to same language translation in side-by-side mode then turn off side-by-side and 
-                // view in normal mode.
-                if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
-                {
-                    this.HideSourceTranslation();
-                    ActiveTranslateDirection = this.GetActualTranslateDirection();
-                }
+                cbDestinationLanguage.SelectedItem = Properties.Settings.Default.DestinationLanguage;
+                this.OpenConfigurationForm(manageLanguage: true, useSourceLanguage: false);
             }
+            else
+            {
+                Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
 
-            this.GetTranslation(m_Word, useDestinationLanguage: true);
+                // If already showing side-by-side translation
+                if (this.IsInSideBySideMode())
+                {
+                    // If changed to same language translation in side-by-side mode then turn off side-by-side and 
+                    // view in normal mode.
+                    if (cbSourceLanguage.SelectedItem == cbDestinationLanguage.SelectedItem)
+                    {
+                        this.HideSourceTranslation();
+                        ActiveTranslateDirection = this.GetActualTranslateDirection();
+                    }
+                }
+                this.GetTranslation(m_Word, useDestinationLanguage: true);
+            }
         }
 
         private void btnPin_Click(object sender, EventArgs e)
@@ -639,8 +654,13 @@ namespace SeeItKnowIt
 
         private void btnConfiguration_Click(object sender, EventArgs e)
         {
-            OverlayForm.OpenConfigurationForm();
+            this.OpenConfigurationForm(manageLanguage: false, useSourceLanguage: false);
+        }
+
+        private void OpenConfigurationForm(bool manageLanguage, bool useSourceLanguage)
+        {
             this.Hide();
+            OverlayForm.OpenConfigurationForm(manageLanguage, useSourceLanguage);
         }
 
         private void pbRight_MouseEnter(object sender, EventArgs e)
