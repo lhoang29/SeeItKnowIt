@@ -293,6 +293,9 @@ namespace SeeItKnowIt
                 {
                     cbCompanion.Items.Add(newLanguage);
                 }
+                Common.PromptInformation(String.Format(
+                    Properties.Resources.Configuration_AddLanguage_Success,
+                    newLanguage));
             }
             else
             {

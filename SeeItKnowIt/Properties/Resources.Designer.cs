@@ -203,6 +203,15 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Successfully added language: {0}, remember to add a lookup site before using it..
+        /// </summary>
+        internal static string Configuration_AddLanguage_Success {
+            get {
+                return ResourceManager.GetString("Configuration_AddLanguage_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new language below:.
         /// </summary>
         internal static string Configuration_AddLanguage_Title {

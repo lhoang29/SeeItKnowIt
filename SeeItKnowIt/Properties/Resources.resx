@@ -319,4 +319,7 @@
   <data name="Configuration_AddLanguage_InvalidLanguage" xml:space="preserve">
     <value>Language name cannot contain '{0}'</value>
   </data>
+  <data name="Configuration_AddLanguage_Success" xml:space="preserve">
+    <value>Successfully added language: {0}, remember to add a lookup site before using it.</value>
+  </data>
 </root>
