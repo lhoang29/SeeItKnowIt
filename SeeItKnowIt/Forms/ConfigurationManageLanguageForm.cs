@@ -106,6 +106,12 @@ namespace SeeItKnowIt
                             Properties.Resources.Configuration_DeleteLanguage_Success, 
                             languageToDelete));
 
+                        WordInfoForm currentLookupForm = OverlayForm.GetLookupForm();
+                        if (currentLookupForm != null && currentLookupForm.Visible)
+                        {
+                            currentLookupForm.Hide();
+                        }
+
                         this.LanguageDeleted(this, new SiteAddedEventArgs() { SiteURL = languageToDelete });
 
                         this.Close();

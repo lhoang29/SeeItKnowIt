@@ -388,6 +388,11 @@ namespace SeeItKnowIt
             }
         }
 
+        public static WordInfoForm GetLookupForm()
+        {
+            return g_WordInfoForm;
+        }
+
         /// <summary>
         /// Handles the Exit task in the context menu for the tray icon.
         /// </summary>

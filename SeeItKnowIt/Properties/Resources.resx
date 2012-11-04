@@ -308,7 +308,7 @@
     <value>Cannot delete a default language</value>
   </data>
   <data name="Configuration_DeleteLanguage_Confirmation" xml:space="preserve">
-    <value>Are you sure you want to delete this language? This will also delete all associated lookup sites.</value>
+    <value>Are you sure you want to delete this language? This will also delete all associated lookup sites and close any opened lookup window.</value>
   </data>
   <data name="Configuration_DeleteLanguage_Failure" xml:space="preserve">
     <value>Failed to delete language: {0}, please try again.</value>
