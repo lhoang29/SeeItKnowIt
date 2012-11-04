@@ -135,7 +135,14 @@ namespace SeeItKnowIt
 
         private bool ValidateValueToAdd()
         {
-            return true;
+            bool valid = true;
+            if (tbNewLanguage.Text.Contains(Common.LanguageSeparator))
+            {
+                valid = false;
+                lblError.Text = String.Format(Properties.Resources.Configuration_AddLanguage_InvalidLanguage, Common.LanguageSeparator);
+                lblError.Visible = true;
+            }
+            return valid;
         }
 
         private bool ValidateValueToDelete()

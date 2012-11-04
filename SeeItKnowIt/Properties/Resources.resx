@@ -316,4 +316,7 @@
   <data name="Configuration_DeleteLanguage_Success" xml:space="preserve">
     <value>Successfully deleted language: {0}.</value>
   </data>
+  <data name="Configuration_AddLanguage_InvalidLanguage" xml:space="preserve">
+    <value>Language name cannot contain '{0}'</value>
+  </data>
 </root>

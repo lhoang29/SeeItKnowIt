@@ -79,6 +79,8 @@ namespace SeeItKnowIt
 
     public class Common
     {
+        public static char LanguageSeparator = '.';
+
         /// <summary>
         /// List of translation sites for each language
         /// </summary>
@@ -425,12 +427,12 @@ namespace SeeItKnowIt
 
         public static string[] GetLanguageCombination(string languageCombinationKey)
         {
-            return languageCombinationKey.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+            return languageCombinationKey.Split(new char[] { Common.LanguageSeparator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static string MakeLanguageCombinationKey(string sourceLanguage, string destinationLanguage)
         {
-            return (sourceLanguage + "-" + destinationLanguage);
+            return (sourceLanguage + Common.LanguageSeparator + destinationLanguage);
         }
 
         public static bool DeleteLanguage(string language)

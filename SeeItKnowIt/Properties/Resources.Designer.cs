@@ -194,6 +194,15 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language name cannot contain &apos;{0}&apos;.
+        /// </summary>
+        internal static string Configuration_AddLanguage_InvalidLanguage {
+            get {
+                return ResourceManager.GetString("Configuration_AddLanguage_InvalidLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new language below:.
         /// </summary>
         internal static string Configuration_AddLanguage_Title {
