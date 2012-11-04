@@ -18,9 +18,12 @@ namespace SeeItKnowIt
         Chinese,
         French,
         Hindi,
+        Japanese,
         Portuguese,
         Spanish,
-        Vietnamese
+        Vietnamese,
+        Wikipedia,
+        UrbanDictionary
     }
 
     public enum TranslateDirection
@@ -113,6 +116,17 @@ namespace SeeItKnowIt
                 }, 
                 null
             ),
+            // English - Japanese translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Japanese, 
+                new string[]
+                {
+                    "http://jisho.org/words?jap=&eng={0}&dict=edict"
+                }, 
+                new string[]
+                {
+                    "http://jisho.org/words?jap={0}&eng=&dict=edict"
+                }
+            ),
             // English - Portuguese translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Portuguese, 
                 new string[]
@@ -136,12 +150,30 @@ namespace SeeItKnowIt
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Vietnamese, 
                 new string[]
                 {
-                    "http://v2.vdict.com/{0},1,0,0.html"
+                    "http://v2.vdict.com/{0},1,0,0.html",
+                    "http://www.vietdictionary.com/?x=0&y=0&q={0}&db=ev&ft=all"
                 }, 
                 new string[]
                 {
-                    "http://v2.vdict.com/{0},2,0,0.html"
+                    "http://v2.vdict.com/{0},2,0,0.html",
+                    "http://www.vietdictionary.com/?x=49&y=53&q={0}&db=ve&ft=all"
                 }
+            ),
+            // English - Wikipedia translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Wikipedia, 
+                new string[]
+                {
+                    "http://en.wikipedia.org/wiki/{0}"
+                }, 
+                null
+            ),
+            // English - UrbanDictionary translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.UrbanDictionary, 
+                new string[]
+                {
+                    "http://www.urbandictionary.com/define.php?term={0}"
+                }, 
+                null
             ),
             // Vietnamese - Vietnamese translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.Vietnamese, TranslationLanguage.Vietnamese, 
