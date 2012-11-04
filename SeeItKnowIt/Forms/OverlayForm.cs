@@ -24,7 +24,7 @@ namespace SeeItKnowIt
         private static WordInfoForm g_WordInfoForm = null;
         public static ConfigurationForm g_ConfigurationForm = null;
 
-        private static uint[] g_PotentialHotKeys = { (uint)'A', (uint)'Z', (uint)'W', (uint)'K' };
+        private static uint[] g_PotentialHotKeys = { (uint)'A', (uint)'Z', (uint)'W', (uint)'G' };
 
         public static uint m_HotKey = 0;
 
