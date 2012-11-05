@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SeeItKnowIt
@@ -79,6 +80,29 @@ namespace SeeItKnowIt
 
     public class Common
     {
+        // Register a hot key with Windows
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr windowHandle, int id, uint modifiers, uint virtualKey);
+
+        // Unregister a certain hot key with Windows
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr windowHandle, int id);
+
+        private static int HotKey_ActivateWindow = 1;
+        
+        //Win32 message ID for the HotKey event
+        public const int WM_HOTKEY = 0x0312;
+        public static int MOD_ALT = 0x1;
+        public static int MOD_CONTROL = 0x2;
+        public static int MOD_SHIFT = 0x4;
+        public static int MOD_WIN = 0x8;
+
+        public static Keys Hotkey_Modifiers = Keys.None;
+        public static Keys Hotkey_MainKey = Keys.None;
+        public static Keys[] Hotkey_MainKey_DefaultOptions = { Keys.A, Keys.Z, Keys.W, Keys.G };
+        
+        public static IntPtr Hotkey_HWND = IntPtr.Zero;
+
         public static char LanguageSeparator = '.';
 
         /// <summary>
@@ -214,6 +238,94 @@ namespace SeeItKnowIt
             )
         };
 
+        public static bool AssignHotkey()
+        {
+            bool success = false;
+
+            uint nativeModifiers = 0;
+            if ((Common.Hotkey_Modifiers & Keys.LWin) != 0 || (Common.Hotkey_Modifiers & Keys.RWin) != 0)
+            {
+                nativeModifiers = (uint)Common.MOD_WIN;
+            }
+            else
+            {
+                if ((Common.Hotkey_Modifiers & Keys.Control) != 0)
+                {
+                    nativeModifiers |= (uint)Common.MOD_CONTROL;
+                }
+                if ((Common.Hotkey_Modifiers & Keys.Alt) != 0)
+                {
+                    nativeModifiers |= (uint)Common.MOD_ALT;
+                }
+                if ((Common.Hotkey_Modifiers & Keys.Shift) != 0)
+                {
+                    nativeModifiers |= (uint)Common.MOD_SHIFT;
+                }
+            }
+            if (Properties.Settings.Default.FirstUse)
+            {
+                Keys assignedHotkey = Keys.None;
+
+                // Cycle through each potential hotkey combinations and attempts to register until successful
+                foreach (Keys hotKey in Common.Hotkey_MainKey_DefaultOptions)
+                {
+                    if (Common.RegisterHotKey(Common.Hotkey_HWND, Common.HotKey_ActivateWindow, nativeModifiers, (uint)hotKey))
+                    {
+                        assignedHotkey = hotKey;
+                        break;
+                    }
+                }
+                if (assignedHotkey != Keys.None)
+                {
+                    Common.Hotkey_MainKey = assignedHotkey;
+                    success = true;
+                }
+            }
+            else
+            {
+                success = Common.RegisterHotKey(Common.Hotkey_HWND, Common.HotKey_ActivateWindow, nativeModifiers, (uint)Common.Hotkey_MainKey);
+            }
+
+            if (success)
+            {
+                Properties.Settings.Default.HotkeyMainKey = Common.Hotkey_MainKey;
+                Properties.Settings.Default.HotkeyModifiers = Common.Hotkey_Modifiers;
+            }
+
+            return success;
+        }
+
+        public static bool RemoveHotkey()
+        {
+            return Common.UnregisterHotKey(Common.Hotkey_HWND, Common.HotKey_ActivateWindow);
+        }
+
+        public static string CreateHotkeyDisplayText()
+        {
+            string displayText = String.Empty;
+            if ((Common.Hotkey_Modifiers & Keys.LWin) != 0 || (Common.Hotkey_Modifiers & Keys.RWin) != 0)
+            {
+                displayText = "Windows + ";
+            }
+            else
+            {
+                displayText = "Control + Alt + ";
+                if ((Common.Hotkey_Modifiers & Keys.Shift) != 0)
+                {
+                    displayText += "Shift + ";
+                }
+            }
+            if (Common.Hotkey_MainKey > Keys.Z)
+            {
+                displayText += Common.Hotkey_MainKey.ToString();
+            }
+            else
+            {
+                displayText += (char)Common.Hotkey_MainKey;
+            }
+            return displayText;
+        }
+
         public static void InitializeDefaultSettings()
         {
             // Load list of past words
@@ -254,6 +366,18 @@ namespace SeeItKnowIt
             if (String.IsNullOrEmpty(Properties.Settings.Default.DestinationLanguage))
             {
                 Properties.Settings.Default.DestinationLanguage = TranslationLanguage.English.ToString();
+            }
+
+            if (Properties.Settings.Default.HotkeyMainKey != Keys.None &&
+                Properties.Settings.Default.HotkeyModifiers != Keys.None)
+            {
+                Common.Hotkey_Modifiers = Properties.Settings.Default.HotkeyModifiers;
+                Common.Hotkey_MainKey = Properties.Settings.Default.HotkeyMainKey;
+            }
+            else
+            {
+                Common.Hotkey_Modifiers = Keys.LWin | Keys.RWin;
+                Common.Hotkey_MainKey = Keys.None;
             }
         }
 
@@ -477,6 +601,15 @@ namespace SeeItKnowIt
         public static void PromptInformation(string caption, string message)
         {
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Display a warning dialog with the specified message.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        public static void PromptWarning(string message)
+        {
+            MessageBox.Show(message, Properties.Resources.Dialog_Warning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>

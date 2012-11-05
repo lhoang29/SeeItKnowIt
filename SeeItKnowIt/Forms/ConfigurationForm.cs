@@ -14,6 +14,9 @@ namespace SeeItKnowIt
     {
         private ConfigurationManageLanguageForm m_ManageLanguageForm = null;
 
+        private Keys m_TempHotkey_Modifiers = Keys.None;
+        private Keys m_TempHotkey_MainKey = Keys.None;
+
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -31,12 +34,13 @@ namespace SeeItKnowIt
 #endif
             lblVersion.Text = String.Format(Properties.Resources.Configuration_VersionInfo, this.ProductName, version);
             lblHotkeyCombination.Text = Properties.Resources.Configuration_HotkeyCombinationLabel;
-            tbHotkeyCombination.Text = "Windows + " + Convert.ToChar(OverlayForm.m_HotKey);
             lblRestoreSettings.Text = Properties.Resources.Configuration_Label_RestoreSettings;
             lblTo.Text = Properties.Resources.Configuration_Label_To;
             btnRestore.Text = Properties.Resources.Configuration_RestoreText;
             lblLanguage.Text = Properties.Resources.Configuration_Label_Languages;
             lblSites.Text = Properties.Resources.Configuration_Label_TranslateSites;
+
+            this.DisplayCurrentHotkey();
 
             // Populate the languages combo box
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage, true);
@@ -51,6 +55,11 @@ namespace SeeItKnowIt
             {
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
+        }
+
+        private void DisplayCurrentHotkey()
+        {
+            tbHotkeyCombination.Text = Common.CreateHotkeyDisplayText();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -207,10 +216,20 @@ namespace SeeItKnowIt
             {
                 Properties.Settings.Default.Reset();
                 Common.InitializeDefaultSettings();
+                bool success = Common.AssignHotkey();
 
-                MessageBox.Show(Control.FromHandle(this.Handle),
-                    Properties.Resources.Configuration_SuccessfulRestore,
-                    Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (success)
+                {
+                    MessageBox.Show(Control.FromHandle(this.Handle),
+                        Properties.Resources.Configuration_SuccessfulRestore,
+                        Properties.Resources.Dialog_Success, MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                }
+                else
+                {
+                    Common.PromptWarning(Properties.Resources.Configuration_RegisterHotKey_Failure);
+                }
+
+                this.Close();
             }
         }
 
@@ -326,6 +345,83 @@ namespace SeeItKnowIt
                 Common.SourceLanguageSelectionChanged(cbSourceLanguage);
                 Common.DestinationLanguageSelectionChanged(cbDestinationLanguage);
                 this.PopulateSiteControls();
+            }
+        }
+
+        private void tbHotkeyCombination_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void tbHotkeyCombination_KeyDown(object sender, KeyEventArgs e)
+        {
+            string hotkeyDisplay = String.Empty;
+
+            uint keyValue = (uint)e.KeyValue;
+
+            // Convert from numpad number to regular number
+            if (keyValue >= (uint)Keys.NumPad0 && keyValue <= (uint)Keys.NumPad9)
+            {
+                keyValue = (keyValue - (uint)Keys.NumPad0 + (uint)Keys.D0);
+            }
+
+            // Only allow hotkey using letters from A-Z or 0-9 or F1-F12
+            if ((keyValue >= (uint)Keys.A  && keyValue <= (uint)Keys.Z)   ||
+                (keyValue >= (uint)Keys.D0 && keyValue <= (uint)Keys.D9)  ||
+                (keyValue >= (uint)Keys.F1 && keyValue <= (uint)Keys.F12))
+            {
+                hotkeyDisplay = "Control + Alt + ";
+                m_TempHotkey_Modifiers = Keys.Control | Keys.Alt;
+                m_TempHotkey_MainKey = (Keys)keyValue;
+
+                if (e.Alt && e.Control && e.Shift)
+                {
+                    hotkeyDisplay += "Shift + ";
+                    m_TempHotkey_Modifiers |= Keys.Shift;
+                }
+                if (keyValue > (uint)Keys.Z)
+                {
+                    hotkeyDisplay += e.KeyCode.ToString();
+                }
+                else
+                {
+                    hotkeyDisplay += Convert.ToChar(keyValue);
+                }
+            }
+
+            bool isValidHotkey = 
+                (m_TempHotkey_MainKey != Keys.None) &&
+                (m_TempHotkey_Modifiers != Keys.None) &&
+                ((m_TempHotkey_MainKey != Properties.Settings.Default.HotkeyMainKey) || 
+                (m_TempHotkey_Modifiers != Properties.Settings.Default.HotkeyModifiers)) &&
+                (m_TempHotkey_MainKey != Keys.C);
+
+            btnAssignHotkey.Enabled = isValidHotkey;
+
+            if (!String.IsNullOrEmpty(hotkeyDisplay))
+            {
+                tbHotkeyCombination.Text = hotkeyDisplay;
+            }
+
+        }
+
+        private void btnAssignHotkey_Click(object sender, EventArgs e)
+        {
+            if (m_TempHotkey_Modifiers != Keys.None && m_TempHotkey_MainKey != Keys.None)
+            {
+                Common.Hotkey_MainKey = m_TempHotkey_MainKey;
+                Common.Hotkey_Modifiers = m_TempHotkey_Modifiers;
+                
+                Common.RemoveHotkey();
+                
+                if (!Common.AssignHotkey())
+                {
+                    Common.PromptWarning(Properties.Resources.Configuration_RegisterHotKey_Failure);
+                }
+                else
+                {
+                    Common.PromptInformation(Properties.Resources.Configuration_RegisterHotKey_Success);
+                }
             }
         }
     }

@@ -166,5 +166,29 @@ namespace SeeItKnowIt.Properties {
                 this["TranslateDirection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys HotkeyMainKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["HotkeyMainKey"]));
+            }
+            set {
+                this["HotkeyMainKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys HotkeyModifiers {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["HotkeyModifiers"]));
+            }
+            set {
+                this["HotkeyModifiers"] = value;
+            }
+        }
     }
 }

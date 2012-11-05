@@ -4,52 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace SimulateKeys
+namespace SeeItKnowIt
 {
-    static class Keyboard
+    public static class Keyboard
     {
-        public static void SimulateKeyStroke(char key, bool ctrl = false, bool alt = false, bool shift = false)
-        {
-            List<ushort> keys = new List<ushort>();
+        const int INPUT_TYPE_KEYBOARD = 1;
+        const uint KEYEVENTF_KEYUP = 0x0002;
 
-            if (ctrl)
-                keys.Add(VK_CONTROL);
-
-            if (alt)
-                keys.Add(VK_MENU);
-
-            if (shift)
-                keys.Add(VK_SHIFT);
-
-            keys.Add(char.ToUpper(key));
-
-            INPUT input = new INPUT();
-            input.type = INPUT_KEYBOARD;
-            int inputSize = Marshal.SizeOf(input);
-
-            for (int i = 0; i < keys.Count; ++i)
-            {
-                input.mkhi.ki.wVk = keys[i];
-
-                bool isKeyDown = (GetAsyncKeyState(keys[i]) & 0x10000) != 0;
-
-                if (!isKeyDown)
-                    SendInput(1, ref input, inputSize);
-            }
-
-            input.mkhi.ki.dwFlags = KEYEVENTF_KEYUP;
-            for (int i = keys.Count - 1; i >= 0; --i)
-            {
-                input.mkhi.ki.wVk = keys[i];
-                SendInput(1, ref input, inputSize);
-            }
-        }
-
-        [DllImport("user32.dll")]
-        static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
-
-        [DllImport("user32.dll")]
-        static extern short GetAsyncKeyState(ushort vKey);
+        const ushort VK_SHIFT = 0x10;
+        const ushort VK_CONTROL = 0x11;
+        const ushort VK_MENU = 0x12;
 
         struct MOUSEINPUT
         {
@@ -63,7 +27,7 @@ namespace SimulateKeys
 
         struct KEYBDINPUT
         {
-            public ushort wVk;
+            public ushort wVirtualKey;
             public ushort wScan;
             public uint dwFlags;
             public uint time;
@@ -81,26 +45,72 @@ namespace SimulateKeys
         struct MOUSEKEYBDHARDWAREINPUT
         {
             [FieldOffset(0)]
-            public MOUSEINPUT mi;
+            public MOUSEINPUT MouseInput;
 
             [FieldOffset(0)]
-            public KEYBDINPUT ki;
+            public KEYBDINPUT KeyboardInput;
 
             [FieldOffset(0)]
-            public HARDWAREINPUT hi;
+            public HARDWAREINPUT HardwareInput;
         }
 
         struct INPUT
         {
             public int type;
-            public MOUSEKEYBDHARDWAREINPUT mkhi;
+            public MOUSEKEYBDHARDWAREINPUT AllInput;
         }
 
-        const int INPUT_KEYBOARD = 1;
-        const uint KEYEVENTF_KEYUP = 0x0002;
+        [DllImport("user32.dll")]
+        static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
 
-        const ushort VK_SHIFT = 0x10;
-        const ushort VK_CONTROL = 0x11;
-        const ushort VK_MENU = 0x12;
+        [DllImport("user32.dll")]
+        static extern short GetAsyncKeyState(ushort vKey);
+
+        public static void SimulateCopyToClipboard()
+        {
+            if (Keyboard.IsKeyDown(VK_MENU))
+            {
+                Keyboard.SimulateKeyUp(VK_MENU);
+            }
+            if (Keyboard.IsKeyDown(VK_SHIFT))
+            {
+                Keyboard.SimulateKeyUp(VK_SHIFT);
+            }
+
+            if (!Keyboard.IsKeyDown(VK_CONTROL))
+            {
+                Keyboard.SimulateKeyDown(VK_CONTROL);
+            }
+            if (!Keyboard.IsKeyDown('C'))
+            {
+                Keyboard.SimulateKeyDown('C');
+            }
+            Keyboard.SimulateKeyUp('C');
+            Keyboard.SimulateKeyUp(VK_CONTROL);
+        }
+
+        private static bool IsKeyDown(ushort key)
+        {
+            return (GetAsyncKeyState(key) & 0x10000) != 0;
+        }
+
+        private static void SimulateKeyUp(ushort key)
+        {
+            INPUT input = new INPUT();
+            input.type = INPUT_TYPE_KEYBOARD;
+            int size = Marshal.SizeOf(input);
+            input.AllInput.KeyboardInput.wVirtualKey = key;
+            input.AllInput.KeyboardInput.dwFlags = KEYEVENTF_KEYUP;
+            SendInput(1, ref input, size);
+        }
+
+        private static void SimulateKeyDown(ushort key)
+        {
+            INPUT input = new INPUT();
+            input.type = INPUT_TYPE_KEYBOARD;
+            int size = Marshal.SizeOf(input);
+            input.AllInput.KeyboardInput.wVirtualKey = key;
+            SendInput(1, ref input, size);
+        }
     }
 }

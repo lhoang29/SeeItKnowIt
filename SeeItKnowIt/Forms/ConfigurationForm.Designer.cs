@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
+            this.btnAssignHotkey = new System.Windows.Forms.Button();
             this.tbHotkeyCombination = new System.Windows.Forms.TextBox();
             this.lblHotkeyCombination = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             // splitContainerMain.Panel1
             // 
             this.splitContainerMain.Panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitContainerMain.Panel1.Controls.Add(this.btnAssignHotkey);
             this.splitContainerMain.Panel1.Controls.Add(this.tbHotkeyCombination);
             this.splitContainerMain.Panel1.Controls.Add(this.lblHotkeyCombination);
             this.splitContainerMain.Panel1.Controls.Add(this.lblVersion);
@@ -85,14 +87,25 @@
             this.splitContainerMain.TabIndex = 4;
             this.splitContainerMain.TabStop = false;
             // 
+            // btnAssignHotkey
+            // 
+            this.btnAssignHotkey.Enabled = false;
+            this.btnAssignHotkey.Location = new System.Drawing.Point(212, 28);
+            this.btnAssignHotkey.Name = "btnAssignHotkey";
+            this.btnAssignHotkey.Size = new System.Drawing.Size(75, 23);
+            this.btnAssignHotkey.TabIndex = 27;
+            this.btnAssignHotkey.Text = "Assign";
+            this.btnAssignHotkey.UseVisualStyleBackColor = true;
+            this.btnAssignHotkey.Click += new System.EventHandler(this.btnAssignHotkey_Click);
+            // 
             // tbHotkeyCombination
             // 
-            this.tbHotkeyCombination.Location = new System.Drawing.Point(128, 31);
+            this.tbHotkeyCombination.Location = new System.Drawing.Point(66, 31);
             this.tbHotkeyCombination.Name = "tbHotkeyCombination";
-            this.tbHotkeyCombination.ReadOnly = true;
-            this.tbHotkeyCombination.Size = new System.Drawing.Size(159, 20);
+            this.tbHotkeyCombination.Size = new System.Drawing.Size(140, 20);
             this.tbHotkeyCombination.TabIndex = 2;
-            this.tbHotkeyCombination.TabStop = false;
+            this.tbHotkeyCombination.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbHotkeyCombination_KeyDown);
+            this.tbHotkeyCombination.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbHotkeyCombination_KeyPress);
             // 
             // lblHotkeyCombination
             // 
@@ -246,6 +259,7 @@
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.TextBox tbHotkeyCombination;
         private System.Windows.Forms.Button btnAddSite;
+        private System.Windows.Forms.Button btnAssignHotkey;
 
     }
 }

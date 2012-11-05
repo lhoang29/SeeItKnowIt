@@ -158,7 +158,7 @@
     <value>..\Resources\delete_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Information_Tutorial" xml:space="preserve">
-    <value>Highlight any text then press Windows + {0} to look up its meaning</value>
+    <value>Highlight any text then press {0} to look up its meaning</value>
   </data>
   <data name="both_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\both_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,8 +208,8 @@
   <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Error_RegisterHotKey" xml:space="preserve">
-    <value>Couldn't register keyboard shortcut activation</value>
+  <data name="Configuration_RegisterHotKey_FirstUse_Failure" xml:space="preserve">
+    <value>Couldn't assign default hotkey to activate the application, please update manually from Configuration settings. </value>
   </data>
   <data name="TrayIcon_BalloonTipText" xml:space="preserve">
     <value>{0} is running</value>
@@ -296,7 +296,7 @@
     <value>Add/Delete...</value>
   </data>
   <data name="Configuration_HotkeyCombinationLabel" xml:space="preserve">
-    <value>Hotkey Combination:</value>
+    <value>Hotkey:</value>
   </data>
   <data name="Configuration_VersionInfo" xml:space="preserve">
     <value>{0} Version {1}</value>
@@ -321,5 +321,14 @@
   </data>
   <data name="Configuration_AddLanguage_Success" xml:space="preserve">
     <value>Successfully added language: {0}, remember to add a lookup site before using it.</value>
+  </data>
+  <data name="Configuration_RegisterHotKey_Failure" xml:space="preserve">
+    <value>Couldn't assign the selected hotkey combination, please choose a different value.</value>
+  </data>
+  <data name="Dialog_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Configuration_RegisterHotKey_Success" xml:space="preserve">
+    <value>Hotkey was successfully registered.</value>
   </data>
 </root>

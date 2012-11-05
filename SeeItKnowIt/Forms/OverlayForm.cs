@@ -24,27 +24,6 @@ namespace SeeItKnowIt
         private static WordInfoForm g_WordInfoForm = null;
         public static ConfigurationForm g_ConfigurationForm = null;
 
-        private static uint[] g_PotentialHotKeys = { (uint)'A', (uint)'Z', (uint)'W', (uint)'G' };
-
-        public static uint m_HotKey = 0;
-
-        // Register a hot key with Windows
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr windowHandle, int id, uint modifiers, uint virtualKey);
-
-        // Unregister a certain hot key with Windows
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr windowHandle, int id);
-
-        //Win32 message ID for the HotKey event
-        private const int WM_HOTKEY = 0x0312;
-        public static int MOD_ALT = 0x1;
-        public static int MOD_CONTROL = 0x2;
-        public static int MOD_SHIFT = 0x4;
-        public static int MOD_WIN = 0x8;
-
-        private const int HotKey_ActivateWindow = 1;
-
         public OverlayForm()
         {
             InitializeComponent();
@@ -225,27 +204,18 @@ namespace SeeItKnowIt
         /// </summary>
         private void OverlayForm_Shown(object sender, EventArgs e)
         {
-            IntPtr hWnd = this.Handle;
+            Common.Hotkey_HWND = this.Handle;
 
-            // Cycle through each potential hotkey combinations and attempts to register until successful
-            foreach (uint hotKey in g_PotentialHotKeys)
-            {
-                if (RegisterHotKey(hWnd, HotKey_ActivateWindow, (uint)MOD_WIN, hotKey))
-                {
-                    m_HotKey = hotKey;
-                    break;
-                }
-            }
             // No hotkey combination was available
-            if (m_HotKey == 0)
+            if (!Common.AssignHotkey())
             {
-                Common.PromptError(Properties.Resources.Error_RegisterHotKey);
+                Common.PromptWarning(Properties.Resources.Configuration_RegisterHotKey_FirstUse_Failure);
             }
             else if (Properties.Settings.Default.FirstUse) // Only display tutorial the first time the application runs
             {
                 Common.PromptInformation(
                     String.Format(Properties.Resources.Application_WelcomeMessage, this.ProductName),
-                    String.Format(Properties.Resources.Information_Tutorial, ((Char)m_HotKey).ToString())
+                    String.Format(Properties.Resources.Information_Tutorial, Common.CreateHotkeyDisplayText())
                     );
             }
             Properties.Settings.Default.FirstUse = false;
@@ -263,7 +233,7 @@ namespace SeeItKnowIt
             {
                 // The WM_ACTIVATEAPP message occurs when the application
                 // becomes the active application or becomes inactive.
-                case WM_HOTKEY:
+                case Common.WM_HOTKEY:
                     // get the keys.
                     uint key = (uint)(((int)m.LParam >> 16) & 0xFFFF);
                     int modifiers = ((int)m.LParam & 0xFFFF);
@@ -282,9 +252,29 @@ namespace SeeItKnowIt
         /// <param name="key">The actual keys that were pressed.</param>
         public void HandleHotKeys(int modifiers, uint key)
         {
-            if (m_HotKey != 0 && key == m_HotKey && modifiers == MOD_WIN)
+            Keys managedModifiers = Keys.None;
+            if (modifiers == Common.MOD_WIN)
             {
-                SimulateKeys.Keyboard.SimulateKeyStroke('c', ctrl: true);
+                managedModifiers = Keys.LWin | Keys.RWin;
+            }
+            else
+            {
+                if ((modifiers & Common.MOD_CONTROL) != 0)
+                {
+                    managedModifiers |= Keys.Control;
+                }
+                if ((modifiers & Common.MOD_ALT) != 0)
+                {
+                    managedModifiers |= Keys.Alt;
+                }
+                if ((modifiers & Common.MOD_SHIFT) != 0)
+                {
+                    managedModifiers |= Keys.Shift;
+                }
+            }
+            if (Common.Hotkey_MainKey != Keys.None && key == (uint)Common.Hotkey_MainKey && managedModifiers == Common.Hotkey_Modifiers)
+            {
+                Keyboard.SimulateCopyToClipboard();
                 Thread.Sleep(100);
                 Application.DoEvents();
 
@@ -360,7 +350,7 @@ namespace SeeItKnowIt
         /// </summary>
         private void OverlayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            UnregisterHotKey(this.Handle, HotKey_ActivateWindow);
+            Common.RemoveHotkey();
         }
 
         /// <summary>
