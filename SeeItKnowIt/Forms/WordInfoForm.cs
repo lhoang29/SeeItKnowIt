@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Net;
 
 namespace SeeItKnowIt
@@ -86,6 +87,10 @@ namespace SeeItKnowIt
             m_ViewFlyoutControl.HideRequest += new EventHandler(ViewFlyoutControl_HideRequest);
             m_ViewFlyoutControl.TranslateDirectionChanged += new TranslateDirectionChangedEventHandler(ViewFlyoutControl_TranslateDirectionChanged);
             this.Controls.Add(m_ViewFlyoutControl);
+
+            Type dgvType = gridPastWords.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(gridPastWords, true, null);
 
             splitContainerPastWords.SplitterWidth = 1;
             splitContainerWebBrowser.SplitterWidth = 1;
