@@ -13,6 +13,7 @@ namespace SeeItKnowIt
     public partial class ConfigurationForm : Form
     {
         private ConfigurationManageLanguageForm m_ManageLanguageForm = null;
+        private DimForm m_DimForm = null;
 
         private Keys m_TempHotkey_Modifiers = Keys.None;
         private Keys m_TempHotkey_MainKey = Keys.None;
@@ -55,6 +56,14 @@ namespace SeeItKnowIt
             {
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
+
+            m_DimForm = new DimForm();
+            m_DimForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            m_DimForm.Opacity = 0.6;
+            m_DimForm.Size = this.Size;
+            m_DimForm.StartPosition = FormStartPosition.Manual;
+            m_DimForm.BackColor = Color.Gainsboro;
+            m_DimForm.ShowInTaskbar = false;
         }
 
         private void DisplayCurrentHotkey()
@@ -170,11 +179,11 @@ namespace SeeItKnowIt
         {
             ConfigurationAddSiteForm addSiteForm = new ConfigurationAddSiteForm();
             addSiteForm.SiteAdded += new SiteAddedEventHandler(ConfigurationAddSiteForm_SiteAdded);
-            addSiteForm.ShowDialog(Control.FromHandle(this.Handle));
+            addSiteForm.FormClosed += new FormClosedEventHandler(ModalChildForm_FormClosed);
+            this.ShowModalChildForm(addSiteForm);
         }
 
-        private void btnAddSite_MouseEnter(object sender, EventArgs e)
-        {
+        private void btnAddSite_MouseEnter(object sender, EventArgs e){
             btnAddSite.Image = Properties.Resources.plus;
         }
 
@@ -298,7 +307,8 @@ namespace SeeItKnowIt
             m_ManageLanguageForm = new ConfigurationManageLanguageForm();
             m_ManageLanguageForm.LanguageAdded += (s, ee) => { newLanguage = ee.SiteURL; };
             m_ManageLanguageForm.LanguageDeleted += new SiteAddedEventHandler(ManageLanguageForm_LanguageDeleted);
-            m_ManageLanguageForm.ShowDialog(Control.FromHandle(this.Handle));
+            m_ManageLanguageForm.FormClosed += new FormClosedEventHandler(ModalChildForm_FormClosed);
+            this.ShowModalChildForm(m_ManageLanguageForm);
 
             if (!String.IsNullOrEmpty(newLanguage))
             {
@@ -422,6 +432,29 @@ namespace SeeItKnowIt
                 {
                     Common.PromptInformation(Properties.Resources.Configuration_RegisterHotKey_Success);
                 }
+            }
+        }
+
+        void ModalChildForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_DimForm.Hide();
+        }
+
+        private void ShowModalChildForm(Form childForm)
+        {
+            m_DimForm.Location = this.Location;
+            m_DimForm.Show(Control.FromHandle(this.Handle));
+            childForm.ShowDialog(Control.FromHandle(m_DimForm.Handle));
+        }
+    }
+
+    public class DimForm : Form
+    {
+        protected override bool ShowWithoutActivation
+        {
+            get
+            {
+                return true;
             }
         }
     }
