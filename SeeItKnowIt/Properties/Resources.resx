@@ -182,7 +182,7 @@
     <value>Enter chosen word here...</value>
   </data>
   <data name="ButtonPinToolTip" xml:space="preserve">
-    <value>Pin</value>
+    <value>Always on top</value>
   </data>
   <data name="Configuration_AddSite_Tutorial" xml:space="preserve">
     <value>To add a lookup site from {0} to {1}:\n- Open your site in a web browser and look up any {0} word\n- Copy the final URL, replace ALL occurences of the lookup word by {{0}}\n- Example: http://mysite.com/word becomes http://mysite.com/{{0}}</value>

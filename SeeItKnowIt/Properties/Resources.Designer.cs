@@ -147,7 +147,7 @@ namespace SeeItKnowIt.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pin.
+        ///   Looks up a localized string similar to Always on top.
         /// </summary>
         internal static string ButtonPinToolTip {
             get {
