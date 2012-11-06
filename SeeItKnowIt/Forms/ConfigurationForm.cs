@@ -184,12 +184,12 @@ namespace SeeItKnowIt
         }
 
         private void btnAddSite_MouseEnter(object sender, EventArgs e){
-            btnAddSite.Image = Properties.Resources.plus;
+            btnAddSite.BackgroundImage = Properties.Resources.plus;
         }
 
         private void btnAddSite_MouseLeave(object sender, EventArgs e)
         {
-            btnAddSite.Image = Properties.Resources.plus_disabled;
+            btnAddSite.BackgroundImage = Properties.Resources.plus_disabled;
         }
 
         private void ConfigurationAddSiteForm_SiteAdded(object sender, SiteAddedEventArgs e)
