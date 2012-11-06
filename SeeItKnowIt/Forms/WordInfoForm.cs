@@ -97,6 +97,8 @@ namespace SeeItKnowIt
 
             m_Online = online;
 
+            this.Icon = Icon.FromHandle(Properties.Resources.app_icon.GetHicon());
+
             this.LoadPersonalSettings();
 
             Common.InitializeLanguageComboBoxes(cbSourceLanguage, cbDestinationLanguage, addNewOption: true);
