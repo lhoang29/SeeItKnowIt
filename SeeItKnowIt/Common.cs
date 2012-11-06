@@ -24,7 +24,7 @@ namespace SeeItKnowIt
         Spanish,
         Vietnamese,
         Wikipedia,
-        UrbanDictionary
+        SlangDictionary
     }
 
     public enum TranslateDirection
@@ -134,6 +134,17 @@ namespace SeeItKnowIt
                     "http://hk.dictionary.yahoo.com/dictionary?p={0}"
                 }
             ),
+            // English - French translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.French, 
+                new string[]
+                {
+                    "http://www.wordreference.com/enfr/{0}"
+                }, 
+                new string[]
+                {
+                    "http://www.wordreference.com/fren/{0}"
+                }
+            ),
             // English - Hindi translation
             new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.Hindi, 
                 new string[]
@@ -193,11 +204,27 @@ namespace SeeItKnowIt
                 }, 
                 null
             ),
-            // English - UrbanDictionary translation
-            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.UrbanDictionary, 
+            // English - SlangDictionary translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.English, TranslationLanguage.SlangDictionary, 
                 new string[]
                 {
                     "http://www.urbandictionary.com/define.php?term={0}"
+                }, 
+                null
+            ),
+            // Chinese - Wikipedia translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.Chinese, TranslationLanguage.Wikipedia, 
+                new string[]
+                {
+                    "http://zh.wikipedia.org/wiki/{0}"
+                }, 
+                null
+            ),
+            // Chinese - SlangDictionary translation
+            new Tuple<TranslationLanguage, TranslationLanguage, string[], string[]>( TranslationLanguage.Chinese, TranslationLanguage.SlangDictionary, 
+                new string[]
+                {
+                    "http://www.chinese-tools.com/chinese/slang/?q={0}"
                 }, 
                 null
             ),
