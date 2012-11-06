@@ -329,12 +329,13 @@
             this.gridPastWords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellContentClick);
             this.gridPastWords.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellMouseEnter);
             this.gridPastWords.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPastWords_CellMouseLeave);
+            this.gridPastWords.CellToolTipTextNeeded += new System.Windows.Forms.DataGridViewCellToolTipTextNeededEventHandler(this.gridPastWords_CellToolTipTextNeeded);
             // 
             // DeleteImage
             // 
             this.DeleteImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.DeleteImage.HeaderText = "Delete";
-            this.DeleteImage.Image = global::SeeItKnowIt.Properties.Resources.delete_disabled;
+            this.DeleteImage.Image = global::SeeItKnowIt.Properties.Resources.delete;
             this.DeleteImage.MinimumWidth = 32;
             this.DeleteImage.Name = "DeleteImage";
             this.DeleteImage.ReadOnly = true;

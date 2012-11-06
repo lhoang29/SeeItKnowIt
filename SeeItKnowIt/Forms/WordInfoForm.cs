@@ -689,7 +689,7 @@ namespace SeeItKnowIt
 
             if (e.ColumnIndex == 0)
             {
-                gridPastWords.Rows[rowIndex].Cells[0].Value = Properties.Resources.delete;
+                gridPastWords.Cursor = Cursors.Hand;
             }
         }
 
@@ -701,7 +701,7 @@ namespace SeeItKnowIt
 
             if (e.ColumnIndex == 0)
             {
-                gridPastWords.Rows[rowIndex].Cells[0].Value = Properties.Resources.delete_disabled;
+                gridPastWords.Cursor = Cursors.Default;
             }
         }
 
@@ -712,6 +712,11 @@ namespace SeeItKnowIt
                 string word = gridPastWords.Rows[e.RowIndex].Cells[1].Value as string;
                 this.Reload(word);
             }
+        }
+
+        private void gridPastWords_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            e.ToolTipText = gridPastWords.Columns[0].HeaderText;
         }
     }
 }
