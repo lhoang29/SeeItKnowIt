@@ -316,6 +316,10 @@ namespace SeeItKnowIt
 
         private void ShowTranslationWindow(string word)
         {
+            if (g_ConfigurationForm != null && g_ConfigurationForm.Visible)
+            {
+                g_ConfigurationForm.Close();
+            }
             if (g_WordInfoForm == null || g_WordInfoForm.IsDisposed)
             {
                 g_WordInfoForm = new WordInfoForm(word, online: true);
@@ -363,6 +367,10 @@ namespace SeeItKnowIt
 
         public static void OpenConfigurationForm(bool manageLanguage, bool useSourceLanguage)
         {
+            if (g_WordInfoForm != null && g_WordInfoForm.Visible)
+            {
+                g_WordInfoForm.Hide();
+            }
             if (g_ConfigurationForm == null || g_ConfigurationForm.IsDisposed)
             {
                 g_ConfigurationForm = new ConfigurationForm();

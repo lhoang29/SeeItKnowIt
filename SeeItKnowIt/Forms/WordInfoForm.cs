@@ -664,7 +664,6 @@ namespace SeeItKnowIt
 
         private void OpenConfigurationForm(bool manageLanguage, bool useSourceLanguage)
         {
-            this.Hide();
             OverlayForm.OpenConfigurationForm(manageLanguage, useSourceLanguage);
         }
 
