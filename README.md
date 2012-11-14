@@ -1,4 +1,4 @@
-VisualDictionary
-================
-
-Visual Dictionary
+This program leverages the existence of numerous language translation sites (e.g. Dictionary.com, or WordReference, etc...) and other general-purpose sites (such as Wikipedia, or Urban Dictionary, etc...) to provide 
+detailed information related to the query term. Users have the ability to add new languages and lookup sites which were not included in the default installation. By allowing this option, many internet lookup sites 
+are thus compatible with SeeItKnowIt, enabling immediate access to a vast resource pool from the web. Websites that generally include lookup terms in their URLs are excellent candidates for SeeItKnowIt. 
+Some examples of these include (but may not be part of default installation): Google Translate, Merriam-Webster, TheFreeDictionary, etc...
