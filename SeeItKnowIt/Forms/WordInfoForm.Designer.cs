@@ -362,6 +362,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WordInfoForm_FormClosing);
             this.Shown += new System.EventHandler(this.WordInfoForm_Shown);
             this.SizeChanged += new System.EventHandler(this.WordInfoForm_SizeChanged);
+            this.VisibleChanged += new System.EventHandler(this.WordInfoForm_VisibleChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordInfoForm_KeyDown);
             this.pnlTitleBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbDirection)).EndInit();

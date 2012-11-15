@@ -449,21 +449,33 @@ namespace SeeItKnowIt
 
         private void WordInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.AllowClose)
+            if (e.CloseReason != CloseReason.WindowsShutDown)
             {
-                wbSourceTranslation.Dispose();
-                wbDestinationTranslation.Dispose();
-
-                // Activate the configuration form if it's currently opened
-                if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
+                if (this.AllowClose)
                 {
-                    OverlayForm.g_ConfigurationForm.Focus();
+                    wbSourceTranslation.Dispose();
+                    wbDestinationTranslation.Dispose();
+
+                    // Activate the configuration form if it's currently opened
+                    if (OverlayForm.g_ConfigurationForm != null && !OverlayForm.g_ConfigurationForm.IsDisposed)
+                    {
+                        OverlayForm.g_ConfigurationForm.Focus();
+                    }
+                }
+                else
+                {
+                    e.Cancel = true;
+                    this.Hide();
                 }
             }
-            else
+        }
+
+        private void WordInfoForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if (!this.Visible)
             {
-                e.Cancel = true;
-                this.Hide();
+                wbSourceTranslation.Url = new Uri("about:blank");
+                wbDestinationTranslation.Url = new Uri("about:blank");
             }
         }
 
