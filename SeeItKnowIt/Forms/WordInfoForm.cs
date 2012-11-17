@@ -97,7 +97,7 @@ namespace SeeItKnowIt
 
             m_Online = online;
 
-            this.Icon = Icon.FromHandle(Properties.Resources.app_icon.GetHicon());
+            this.Icon = Properties.Resources.app_icon_ico;
 
             this.LoadPersonalSettings();
 
